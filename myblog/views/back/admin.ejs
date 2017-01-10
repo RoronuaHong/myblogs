@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport"/>
+	<title>Slim。</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body ng-app="myApp" id="particles-js" style="background-size: cover;">
+	<script src="/javascripts/particles.min.js"></script>
+	<script src="/javascripts/particlesset.js"></script>
+	<div class="center">
+		<div class="login-container" ng-controller="formControl">
+			<div class="titletab clearfix">
+				<span ng-class="{tabsel:tabSel.first}" ng-click="formHide('first')">手机账户登录</span>
+				<span ng-class="{tabsel:tabSel.second}" ng-click="formHide('second')">网站账号登录</span>
+			</div>
+			<div class="tabcon">
+				<div class="contitle">
+					<img src="/images/slimlogo.png" alt="" class="mylogo">
+				</div>
+				<form name="phoneforms">
+					<div class="form-group" ng-show="showFirst.first">
+						<input type="text" ng-model="phonename" name="phonen" ng-required="true" placeholder="请输入手机号" class="firstinput">
+						<input type="password" ng-model="phonepwd" name="phonep" ng-required="true" placeholder="请输入密码" class="secondinput">
+						<div class="error-container text-danger">
+							<p ng-show="phoneforms.phonen.$dirty && phoneforms.phonen.$invalid">请输入手机号</p>
+							<p ng-show="phoneforms.phonep.$dirty && phoneforms.phonep.$invalid">请输入密码</p>
+							<p ng-bind="phoneError"></p>
+						</div>
+					</div>
+					<button ng-click="login()" ng-show="showFirst.first" ng-disabled="phoneforms.$invalid" class="btn btn-success">登录</button>
+				</form>
+				<form name="webforms">
+					<div class="form-group" ng-show="showFirst.second">
+						<input type="text" ng-model="webname" name="webn" ng-required="true" placeholder="请输入网站账号" class="firstinput">
+						<input type="password" ng-model="webpwd" name="webp" ng-required="true" placeholder="请输入密码" class="secondinput">
+						<div class="error-container text-danger">
+							<p ng-show="webforms.webn.$dirty && webforms.webn.$invalid">请输入网站账号</p>
+							<p ng-show="webforms.webp.$dirty && webforms.webp.$invalid">请输入密码</p>
+							<p ng-bind="webError"></p>
+						</div>
+					</div>
+					<button ng-click="login()" ng-show="showFirst.second" ng-disabled="webforms.$invalid" class="btn btn-success">登录</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="/javascripts/angular.min.js"></script>
+	<script>
+		/*切换背景图*/
+		window.onload = function() {
+			var bg = document.getElementById("particles-js");
+			bg.style.background = "url('/images/loginbg" + Math.floor((Math.random() * 10 + 1)) + ".jpg') 50% 0";
+			bg.style.backgroundSize = "cover";
+		}
+
+		var app = angular.module("myApp", []);
+
+		app.controller("formControl", function($scope, $http) {
+
+			//显隐操作
+			$scope.showFirst = {
+				first: true,
+				second: false
+			}
+			$scope.tabSel = {
+				first: true,
+				second: false
+			}
+			$scope.formHide = function(formsHide) {
+				for(var i in this.tabSel) {
+					this.tabSel[i] = false;
+				}
+				for(var i in this.showFirst) {
+					this.showFirst[i] = false;
+				}
+				$scope.showFirst[formsHide] = true;
+				$scope.tabSel[formsHide] = true;
+			}
+
+			//登录交互判断
+			$scope.login = function() {
+				if($scope.showFirst.first && $scope.phoneforms.$valid) {
+					$http({
+						url: "/users/index",
+						method: "POST",
+						dataType: "json",
+						data: {
+							phonen: $scope.phonename,
+							phonep: $scope.phonepwd,
+							num: 1
+						}
+					})
+					.success(function(data) {
+						if(data.result == 0) {
+							$scope.phoneError = data.message;
+						} else if(data.result == 1) {
+							window.location.href = "/users/indexs";
+						}
+					})
+					.error(function(data) {
+						console.log(data);
+					});
+				} else if($scope.showFirst.second && $scope.webforms.$valid) {
+					$http({
+						url: "/users/index",
+						method: "POST",
+						dataType: "json",
+						data: {
+							webn: $scope.webname,
+							webp: $scope.webpwd,
+							num: 2
+						}
+					})
+					.success(function(data) {
+						if(data.result == 0) {
+							$scope.webError = data.message;
+						} else if(data.result == 1) {
+							window.location.href = "/users/indexs";
+						}
+					})
+					.error(function(data) {
+						console.log(data);
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>

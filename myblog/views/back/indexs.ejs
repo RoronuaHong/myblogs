@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport"/>
+	<title>Slim。的后台管理系统</title>
+	<link rel="stylesheet" href="/stylesheets/animate.min.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/backindex.css">
+</head>
+<body>
+	<div ng-app="myApp">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<button type="button" data-toggle="collapse" data-target="#example-navbar-collapse" class="navbar-toggle animated flip" ng-controller="buttonControl">
+					<!-- <span class="sr-only"></span> -->
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="/users/indexs" class="navbar-brand">Slim。的后台管理系统</a>
+				<div class="headerright" ng-controller="headerControl">
+					<span>{{date | date : "yyyy-MM-dd HH:mm:ss"}}</span>
+					<span class="welcome">欢迎回来！</span>
+					<span ng-bind="username"></span>
+					<a href="/users/logout" class="logouts btn btn-default">退出</a>
+				</div>
+			</div>
+		</div>
+		<div class="ch-container">
+			<div class="row">
+				<div class="col-sm-2 col-lg-2">
+					<div class="sidebar-nav">
+						<div class="nav-canvas" ng-controller="navCtrl">
+							<ul class="navbar-collapse collapse nav main-menu" id="example-navbar-collapse">
+								<li ng-repeat="item in list" class="bigli">
+									<div ng-bind="item.title" class="titles"></div>
+									<ul class="nav main-menu">
+										<li ng-repeat="childItem in item.childList"  class="smallli">
+											<a ng-href="{{childItem.link}}" ng-bind="childItem.title"></a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="content" class="col-sm-10 col-lg-10" ng-view></div>
+			</div>
+		</div>
+	</div>
+	<script src="/javascripts/angular.min.js"></script>
+	<script src="/javascripts/angular-route.min.js"></script>
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script>
+		var app = angular.module("myApp", ["ngRoute"]);
+
+		app.config(function($routeProvider) {
+
+			//配置用户模块路由，用户模块应该有三个路由，创建用户，用户详情，用户列表
+			$routeProvider
+			.when("/", {
+				templateUrl: "/templates/index.html",
+				controller: "indexCtrl"
+			})
+			.when("/createuser", {
+				templateUrl: "/templates/user/create.html",
+				controller: "createUserCtrl"
+			})
+			.when("/userinfo", {
+				templateUrl: "/templates/user/info.html",
+				controller: "userInfoCtrl"
+			})
+			.when("/userlist/:pageNum", {
+				templateUrl: "/templates/user/list.html",
+				controller: "userListCtrl"
+			})
+			//配置文章模块路由，文章模块应该有三个路由，创建文章，文章详情，文章列表
+			.when("/createarticle", {
+				templateUrl: "/templates/articles/create.html",
+				controller: "createArticleCtrl"
+			})
+			.when("/articlelist/:pageNum", {
+				templateUrl: "/templates/articles/info.html",
+				controller: "articleListCtrl"
+			})
+			.when("/articleinfo/:articleId", {
+				templateUrl: "/templates/articles/list.html",
+				controller: "articleInfoCtrl"
+			});
+		});
+
+		//首页控制器
+		app.controller("indexCtrl", function($scope) {
+
+		});
+
+		//创建用户控制器
+		app.controller("createUserCtrl", function($scope) {
+
+		});
+
+		//用户信息控制器
+		app.controller("userInfoCtrl", function($scope) {
+
+		});
+
+		//创建列表控制器
+		app.controller("userListCtrl", function($scope) {
+
+		});
+
+		//创建文章控制器
+		app.controller("createArticleCtrl", function($scope) {
+
+		});
+
+		//文章信息控制器
+		app.controller("userInfoCtrl", function($scope) {
+
+		});
+
+		//创建列表控制器
+		app.controller("userListCtrl", function($scope) {
+
+		});
+
+		app.controller("headerControl", function($scope, $http, $interval) {
+			$scope.date = new Date();
+
+			$interval(function() {
+				$scope.date = new Date();
+			}, 1000);
+
+			$http({
+				url: "/users/indexs",
+				method: "POST",
+				dataType: "json"
+			})
+			.success(function(data) {
+				$scope.username = data.name;
+			})
+			.error(function(data) {
+				console.log(data);
+			});
+		});
+		app.controller("buttonControl", function($scope, $element) {
+			$element.on("click", function() {
+				if($element.hasClass("active")) {
+					$element.removeClass("active");
+				} else {
+					$element.addClass("active");
+				}
+			});
+		});
+
+		//定义导航控制器
+		app.controller("navCtrl", function($scope) {
+			$scope.list = [
+				{
+					title: "用户模块",
+					childList: [
+						{
+							title: "用户列表",
+							//对于用户列表，我们发送请求的时候，要携带请求的页码
+							link: "#/userlist/1"
+						},
+						{
+							title: "创建用户",
+							link: "#/createuser"
+						}
+					]
+				},
+				{
+					title: "文章模块",
+					childList: [
+						{
+							title: "文章列表",
+							//对于用户列表，我们发送请求的时候，要携带请求的页码
+							link: "#/articlelist/1"
+						},
+						{
+							title: "创建文章",
+							link: "#/createarticle"
+						}
+					]
+				},
+			];
+		});
+
+		/*实现tab切换*/
+		app.controller("formControl", function($scope, $http) {
+
+			//显隐操作
+			$scope.showFirst = {
+				first: true,
+				second: false
+			}
+			$scope.tabSel = {
+				first: true,
+				second: false
+			}
+			$scope.formHide = function(formsHide) {
+				for(var i in this.tabSel) {
+					this.tabSel[i] = false;
+				}
+				for(var i in this.showFirst) {
+					this.showFirst[i] = false;
+				}
+				$scope.showFirst[formsHide] = true;
+				$scope.tabSel[formsHide] = true;
+			}
+
+			//注册交互判断
+		});
+		app.directive("pwCheck", function() {
+			return {
+				require: "ngModel",
+				link: function(scope, elem, attrs, ctrl) {
+					var firstPassword = "." + attrs.pwCheck;
+					elem.addClass(firstPassword).on("input", function() {
+						if($(firstPassword).val() != scope.phoneconpwds) {
+							scope.isTrue = true;
+						} else {
+							scope.isTrue = false;
+						}
+					});
+				}
+			}
+		});
+		app.directive("pwChecks", function() {
+			return {
+				require: "ngModel",
+				link: function(scope, elem, attrs, ctrl) {
+					var firstPassword = "." + attrs.pwChecks;
+					elem.addClass(firstPassword).on("input", function() {
+						if($(firstPassword).val() != scope.phoneconpwdss) {
+							scope.isTrue = true;
+						} else {
+							scope.isTrue = false;
+						}
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>
