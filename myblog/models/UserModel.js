@@ -21,7 +21,8 @@ module.exports = {
 
 			conn.query(userSql, param, function(err, rs) {
 				if(err) {
-					res.send("数据库错误，错误原因" + err.message);
+					res.send("数据库查询错误，错误原因" + err.message);
+					return;
 				}
 
 				//判断登录是否成功
@@ -41,6 +42,32 @@ module.exports = {
 				}
 			});
 			conn.release();
+		});
+	},
+	register: function(req, res) {
+		pool = connPool();
+
+		//从pool中获取连接(异步，取到后回调)
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+			if(req.body["num"] == 1) {
+				var userAddSql = "insert into phoneadmin (name,phonename,password)  values (?,?,?)";
+				var param = [req.body["newname"], req.body["pname"], req.body["ppwd"]];
+				conn.query(userAddSql, param, function(err, rs) {
+					if(err) {
+						res.send("数据库错误，错误原因" + err.message);
+						return;
+					}
+					res.json({
+						result: "1",
+						message: "用户录入成功"
+					})
+				});
+				conn.release();
+			}
 		});
 	}
 }

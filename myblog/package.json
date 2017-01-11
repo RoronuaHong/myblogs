@@ -25,6 +25,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
     "lodash.clonedeep": "^4.5.0",
+    "mongodb": "^2.2.19",
     "set-immediate-shim": "^1.0.1",
     "vinyl-sourcemaps-apply": "^0.2.1"
   }
