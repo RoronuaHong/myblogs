@@ -53,18 +53,66 @@ module.exports = {
 				res.send("获取连接错误,错误原因:" + err.message);
 				return;
 			}
+			//查询用户名是否已存在
 			if(req.body["num"] == 1) {
-				var userAddSql = "insert into phoneadmin (name,phonename,password)  values (?,?,?)";
-				var param = [req.body["newname"], req.body["pname"], req.body["ppwd"]];
-				conn.query(userAddSql, param, function(err, rs) {
+				var userSql = "select name from phoneadmin where phonename=?";
+				var param = [req.body["pname"], req.body["ppwd"]];
+
+				conn.query(userSql, param, function(err, rs) {
 					if(err) {
-						res.send("数据库错误，错误原因" + err.message);
+						res.send("数据库查询错误，错误原因" + err.message);
 						return;
 					}
-					res.json({
-						result: "1",
-						message: "用户录入成功"
-					})
+
+					//判断登录是否成功
+					if(rs.length > 0) {
+						res.json({
+							result: "0",
+							message: "手机号已存在"
+						});
+					} else {
+						var userAddSql = "insert into phoneadmin (name,phonename,password)  values (?,?,?)";
+						var param = [req.body["newname"], req.body["pname"], req.body["ppwd"]];
+						conn.query(userAddSql, param, function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							res.json({
+								result: "1",
+								message: "手机号用户录入成功"
+							});
+						});
+					}
+				});
+				conn.release();
+			} else if(req.body["num"] == 2) {
+				var userSql = "select name from webadmin where webname=?";
+				var param = [req.body["wname"], req.body["wpwd"]];
+
+				conn.query(userSql, param, function(err, rs) {
+
+					//判断登录是否成功
+					if(rs.length > 0) {
+						res.json({
+							result: "0",
+							message: "网站账号已存在"
+						});
+					} else {
+						var userAddSql = "insert into webadmin (name,webname,password)  values (?,?,?)";
+						var param = [req.body["newname"], req.body["wname"], req.body["wpwd"]];
+
+						conn.query(userAddSql, param, function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							res.json({
+								result: "1",
+								message: "网站账号用户录入成功"
+							});
+						});
+					}
 				});
 				conn.release();
 			}
