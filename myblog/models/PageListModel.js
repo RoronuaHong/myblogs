@@ -13,30 +13,31 @@ module.exports = {
 
 			var userlistSql = "select id,name,phonename,password from phoneadmin";
 			var params = [];
-
 			var userslistSql = "select id,name,webname,password from webadmin";
 			var param = [];
 
-			conn.query(userlistSql, params, function(err, rs) {
-				if(err) {
-					res.send("数据库错误，错误原因" + err.message);
-					return;
-				}
-				res.json({
-					result: rs
+			if(req.body["gets"] == 1) {
+				conn.query(userlistSql, params, function(err, rs) {
+					if(err) {
+						res.send("数据库错误，错误原因" + err.message);
+						return;
+					}
+					res.json({
+						result: rs
+					})
 				});
-			});
-
-			//不能同时查询两次
-			// conn.query(userslistSql, param, function(err, rs) {
-			// 	if(err) {
-			// 		res.send("数据库错误，错误原因" + err.message);
-			// 		return;
-			// 	}
-			// 	res.json({
-			// 		result: rs
-			// 	});
-			// });
+			} else if(req.body["gets"] == 2) {
+				conn.query(userslistSql, param, function(err, rs) {
+					if(err) {
+						res.send("数据库错误，错误原因" + err.message);
+						return;
+					}
+					res.json({
+						result: rs
+					});
+				});
+			}
+			conn.release();
 		});
 	}
 }

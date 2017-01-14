@@ -103,6 +103,9 @@
 
 		//用户列表控制器
 		app.controller("userListCtrl", function($scope, $routeParams, $http) {
+			console.log(1)
+			//获取页面参数，保存在作用域中
+			$scope.num = $routeParams.pageNum;
 
 			//显隐操作
 			$scope.showFirst = {
@@ -122,14 +125,28 @@
 				}
 				$scope.showFirst[formsHide] = true;
 				$scope.tabSel[formsHide] = true;
-			}
 
-			//获取页面参数，保存在作用域中
-			$scope.num = $routeParams.pageNum;
+				//根据pageNum请求数据
+				$http({
+					url: "/users/indexs",
+					method: "POST",
+					dataType: "json",
+					data: {
+						gets: 2,
+						pagenum: $scope.num
+					}
+				})
+				.success(function(data) {
+					$scope.pageslists = data.result;
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
 
 			//根据pageNum请求数据
 			$http({
-				url: "indexs#/userlist",
+				url: "/users/indexs",
 				method: "POST",
 				dataType: "json",
 				data: {
