@@ -102,8 +102,47 @@
 		});
 
 		//用户列表控制器
-		app.controller("userListCtrl", function($scope) {
+		app.controller("userListCtrl", function($scope, $routeParams, $http) {
 
+			//显隐操作
+			$scope.showFirst = {
+				first: true,
+				second: false
+			}
+			$scope.tabSel = {
+				first: true,
+				second: false
+			}
+			$scope.formHide = function(formsHide) {
+				for(var i in this.tabSel) {
+					this.tabSel[i] = false;
+				}
+				for(var i in this.showFirst) {
+					this.showFirst[i] = false;
+				}
+				$scope.showFirst[formsHide] = true;
+				$scope.tabSel[formsHide] = true;
+			}
+
+			//获取页面参数，保存在作用域中
+			$scope.num = $routeParams.pageNum;
+
+			//根据pageNum请求数据
+			$http({
+				url: "indexs#/userlist",
+				method: "POST",
+				dataType: "json",
+				data: {
+					gets: 1,
+					pagenum: $scope.num
+				}
+			})
+			.success(function(data) {
+				$scope.pagelists = data.result;
+			})
+			.error(function(data) {
+				console.log(data);
+			});
 		});
 
 		//用户信息控制器

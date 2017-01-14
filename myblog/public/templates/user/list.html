@@ -1,1 +1,59 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-user"></i>用户列表</h1>
+<div class="userlistbox">
+	<div class="container">
+		<div class="col-md-12 column">
+			<div class="row">
+				<div class="col-md-2 column"></div>
+					<div class="col-md-8 column">
+						<div class="titletab clearfix">
+							<span ng-class="{tabsel:tabSel.first}" ng-click="formHide('first')">手机号用户列表</span>
+							<span ng-class="{tabsel:tabSel.second}" ng-click="formHide('second')">网站账户用户列表</span>
+						</div>
+						<div class="tabcon">
+							<div class="contitle">
+								<img src="/images/slimlogo.png" alt="" class="mylogo">
+							</div>
+							<form name="userforms">
+								<div class="form-group" ng-show="showFirst.first">
+									<div class="row title">
+										<div class="col-md-12 column">
+											<div class="col-md-3">用户ID</div>
+											<div class="col-md-3">昵称</div>
+											<div class="col-md-3">手机号账号</div>
+											<div class="col-md-3">密码</div>
+										</div>
+									</div>
+									<div class="row" ng-repeat="item in pagelists">
+										<div class="col-md-3" ng-bind="item.id"></div>
+										<div class="col-md-3" ng-bind="item.name"></div>
+										<div class="col-md-3" ng-bind="item.phonename"></div>
+										<div class="col-md-3" ng-bind="item.password"></div>
+									</div>
+								</div>
+							</form>
+							<form name="webforms">
+								<div class="form-group" ng-show="showFirst.second">
+									<div class="row title">
+										<div class="col-md-12 column">
+											<div class="col-md-3">用户ID</div>
+											<div class="col-md-3">昵称</div>
+											<div class="col-md-3">网站账号</div>
+											<div class="col-md-3">密码</div>
+										</div>
+									</div>
+									<div class="row" ng-repeat="item in list">
+										<div class="col-md-3" ng-bind="item.id"></div>
+										<div class="col-md-3" ng-bind="item.name"></div>
+										<div class="col-md-3" ng-bind="item.webname"></div>
+										<div class="col-md-3" ng-bind="item.password"></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="col-md-2 column"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

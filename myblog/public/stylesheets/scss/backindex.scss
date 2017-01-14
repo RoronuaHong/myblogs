@@ -167,6 +167,56 @@ body {
 		padding-right: 10px;
 	}
 }
+.titletab {
+	width: 100%;
+	span {
+		float: left;
+		width: 50%;
+		height: 50px;
+		line-height: 50px;
+		font-family: "Microsoft YaHei";
+		font-size: 18px;
+		text-align: center;
+		color: #fff;
+		cursor: pointer;
+	}
+	.tabsel {
+		-webkit-box-shadow: 0 2px 0 0 #fff;
+		-moz-box-shadow: 0 2px 0 0 #fff;
+		-ms-box-shadow: 0 2px 0 0 #fff;
+		box-shadow: 0 2px 0 0 #fff;
+	}
+}
+.tabcon {
+	width: 100%;
+	padding-bottom: 40px;
+	font-family: "Microsoft YaHei";
+	text-align: center;
+	color: #fff;
+	.row {
+		padding: 10px 0;
+		label {
+			display: block;
+			height: 30px;
+			line-height: 30px;
+		}
+		input {
+			float: right;
+			width: 100%;
+			padding: 4px 10px;
+		}
+	}
+	.col-md-4 {
+		text-align: left;
+	}
+}
+.contitle {
+	width: 100%;
+	padding: 10px 0;
+	line-height: 50px;
+	text-align: center;
+	color: #fff;
+}
 .app-user-create {
 	font-family: "Microsoft YaHei";
 	.app-inner {
@@ -175,54 +225,6 @@ body {
 	.newnames {
 		font-size: 16px;
 		text-align: left;
-		color: #fff;
-	}
-	.titletab {
-		width: 100%;
-		span {
-			float: left;
-			width: 50%;
-			height: 50px;
-			line-height: 50px;
-			font-size: 18px;
-			text-align: center;
-			color: #fff;
-			cursor: pointer;
-		}
-		.tabsel {
-			-webkit-box-shadow: 0 2px 0 0 #fff;
-			-moz-box-shadow: 0 2px 0 0 #fff;
-			-ms-box-shadow: 0 2px 0 0 #fff;
-			box-shadow: 0 2px 0 0 #fff;
-		}
-	}
-	.tabcon {
-		width: 100%;
-		padding-bottom: 40px;
-		text-align: center;
-		color: #fff;
-		.row {
-			padding: 10px 0;
-			label {
-				display: block;
-				height: 30px;
-				line-height: 30px;
-			}
-			input {
-				float: right;
-				width: 100%;
-				padding: 4px 10px;
-			}
-		}
-		.col-md-4 {
-			text-align: left;
-		}
-	}
-	.contitle {
-		width: 100%;
-		padding: 10px 0;
-		line-height: 50px;
-		text-align: center;
 		color: #fff;
 	}
 	.btn {
