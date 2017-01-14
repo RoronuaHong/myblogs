@@ -103,9 +103,9 @@
 
 		//用户列表控制器
 		app.controller("userListCtrl", function($scope, $routeParams, $http) {
-			console.log(1)
+
 			//获取页面参数，保存在作用域中
-			$scope.num = $routeParams.pageNum;
+			$scope.num = parseInt($routeParams.pageNum);
 
 			//显隐操作
 			$scope.showFirst = {
@@ -128,7 +128,7 @@
 
 				//根据pageNum请求数据
 				$http({
-					url: "/users/indexs",
+					url: "/users/indexs#/userlist/",
 					method: "POST",
 					dataType: "json",
 					data: {
@@ -146,7 +146,7 @@
 
 			//根据pageNum请求数据
 			$http({
-				url: "/users/indexs",
+				url: "/users/indexs#/userlist/",
 				method: "POST",
 				dataType: "json",
 				data: {

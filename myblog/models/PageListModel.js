@@ -1,4 +1,5 @@
 var connPool = require("./ConnPool");
+var async = require("async");
 
 module.exports = {
 	pageLists: function(req, res) {
@@ -11,32 +12,91 @@ module.exports = {
 				return;
 			}
 
-			var userlistSql = "select id,name,phonename,password from phoneadmin";
-			var params = [];
-			var userslistSql = "select id,name,webname,password from webadmin";
-			var param = [];
+			var pageSize = 5;
+			var page = req.body["pagenum"];
 
-			if(req.body["gets"] == 1) {
-				conn.query(userlistSql, params, function(err, rs) {
-					if(err) {
-						res.send("数据库错误，错误原因" + err.message);
-						return;
+			//开始的页面数
+			var pointStart = (page - 1) * pageSize;
+
+			var countSql = "select count(*) from phoneadmin";
+			var countsSql = "select count(*) from webadmin";
+
+			var userlistSql = "select id,name,phonename,password from phoneadmin limit ?, ?";
+			var params = [pointStart, pageSize];
+
+			var userslistSql = "select id,name,webname,password from webadmin limit ?,?";
+			var param = [pointStart, pageSize];
+
+			async.series({
+				one: function(callback) {
+					if(req.body["gets"] == 1) {
+						conn.query(countSql, [], function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							callback(null, rs);
+						});
+					} else if(req.body["gets"] == 2) {
+						conn.query(countSql, [], function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							callback(null, rs);
+						});
 					}
-					res.json({
-						result: rs
-					})
-				});
-			} else if(req.body["gets"] == 2) {
-				conn.query(userslistSql, param, function(err, rs) {
-					if(err) {
-						res.send("数据库错误，错误原因" + err.message);
-						return;
+				},
+				two: function(callback) {
+					if(req.body["gets"] == 1) {
+						conn.query(userlistSql, params, function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							res.json({
+								result: rs
+							});
+							callback(null, rs);
+						});
+					} else if(req.body["gets"] == 2) {
+						conn.query(userslistSql, param, function(err, rs) {
+							if(err) {
+								res.send("数据库错误，错误原因" + err.message);
+								return;
+							}
+							res.json({
+								result: rs
+							});
+							callback(null, rs);
+						});
 					}
-					res.json({
-						result: rs
-					});
-				});
-			}
+				}
+			}, function(err, results) {
+				console.log(results);
+			});
+
+			// if(req.body["gets"] == 1) {
+			// 	conn.query(userlistSql, params, function(err, rs) {
+			// 		if(err) {
+			// 			res.send("数据库错误，错误原因" + err.message);
+			// 			return;
+			// 		}
+			// 		res.json({
+			// 			result: rs
+			// 		});
+			// 	});
+			// } else if(req.body["gets"] == 2) {
+			// 	conn.query(userslistSql, param, function(err, rs) {
+			// 		if(err) {
+			// 			res.send("数据库错误，错误原因" + err.message);
+			// 			return;
+			// 		}
+			// 		res.json({
+			// 			result: rs
+			// 		});
+			// 	});
+			// }
 			conn.release();
 		});
 	}

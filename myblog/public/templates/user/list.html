@@ -29,6 +29,16 @@
 										<div class="col-md-3" ng-bind="item.phonename"></div>
 										<div class="col-md-3" ng-bind="item.password"></div>
 									</div>
+									<div class="pull-right">
+										<ul class="pagination">
+											<li>
+												<a href="#/userlist/{{num <= 1 ? 1 : num - 1}}">上一页</a>
+											</li>
+											<li>
+												<a href="#/userlist/{{num + 1}}">下一页</a>
+											</li>
+										</ul>
+									</div>
 								</div>
 							</form>
 							<form name="webforms">
@@ -46,6 +56,16 @@
 										<div class="col-md-3" ng-bind="item.name"></div>
 										<div class="col-md-3" ng-bind="item.webname"></div>
 										<div class="col-md-3" ng-bind="item.password"></div>
+									</div>
+									<div class="pull-right">
+										<ul class="pagination">
+											<li>
+												<a href="#/userlist/{{num <= 1 ? 1 : num - 1}}">上一页</a>
+											</li>
+											<li>
+												<a href="#/userlist/{{num + 1}}">下一页</a>
+											</li>
+										</ul>
 									</div>
 								</div>
 							</form>
