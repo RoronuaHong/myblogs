@@ -13,7 +13,7 @@
 								<div class="col-md-12 column">
 									<div class="col-md-3">用户ID</div>
 									<div class="col-md-3">昵称</div>
-									<div class="col-md-3">手机号账号</div>
+									<div class="col-md-3">网站账号</div>
 									<div class="col-md-3">密码</div>
 								</div>
 							</div>
@@ -21,17 +21,17 @@
 								<div class="row" ng-repeat="item in pagelists">
 									<div class="col-md-3" ng-bind="item.id"></div>
 									<div class="col-md-3" ng-bind="item.name"></div>
-									<div class="col-md-3" ng-bind="item.phonename"></div>
+									<div class="col-md-3" ng-bind="item.webname"></div>
 									<div class="col-md-3" ng-bind="item.password"></div>
 								</div>
 							</div>
 							<div class="pull-right">
 								<ul class="pagination">
 									<li>
-										<a href="#/phoneuserlist/{{num <= 1 ? 1 : num - 1}}">上一页</a>
+										<a href="#/webuserlist/{{num <= 1 ? 1 : num - 1}}">上一页</a>
 									</li>
 									<li>
-										<a href="#/phoneuserlist/{{num >= allsum ? allsum : num + 1}}">下一页</a>
+										<a href="#/webuserlist/{{num >= allsums ? allsums : num + 1}}">下一页</a>
 									</li>
 								</ul>
 							</div>

@@ -72,9 +72,13 @@
 				templateUrl: "/templates/user/info.html",
 				controller: "userInfoCtrl"
 			})
-			.when("/userlist/:pageNum", {
+			.when("/phoneuserlist/:pageNum", {
 				templateUrl: "/templates/user/list.html",
 				controller: "userListCtrl"
+			})
+			.when("/webuserlist/:pageNum", {
+				templateUrl: "/templates/user/lists.html",
+				controller: "usersListCtrl"
 			})
 			//配置文章模块路由，文章模块应该有三个路由，创建文章，文章详情，文章列表
 			.when("/createarticle", {
@@ -101,52 +105,15 @@
 
 		});
 
-		//用户列表控制器
+		//手机号用户列表控制器
 		app.controller("userListCtrl", function($scope, $routeParams, $http) {
 
 			//获取页面参数，保存在作用域中
 			$scope.num = parseInt($routeParams.pageNum);
 
-			//显隐操作
-			$scope.showFirst = {
-				first: true,
-				second: false
-			}
-			$scope.tabSel = {
-				first: true,
-				second: false
-			}
-			$scope.formHide = function(formsHide) {
-				for(var i in this.tabSel) {
-					this.tabSel[i] = false;
-				}
-				for(var i in this.showFirst) {
-					this.showFirst[i] = false;
-				}
-				$scope.showFirst[formsHide] = true;
-				$scope.tabSel[formsHide] = true;
-
-				//根据pageNum请求数据
-				$http({
-					url: "/users/indexs#/userlist/",
-					method: "POST",
-					dataType: "json",
-					data: {
-						gets: 2,
-						pagenum: $scope.num
-					}
-				})
-				.success(function(data) {
-					$scope.pageslists = data.result;
-				})
-				.error(function(data) {
-					console.log(data);
-				});
-			}
-
 			//根据pageNum请求数据
 			$http({
-				url: "/users/indexs#/userlist/",
+				url: "/users/indexs#/phoneuserlist/",
 				method: "POST",
 				dataType: "json",
 				data: {
@@ -155,6 +122,33 @@
 				}
 			})
 			.success(function(data) {
+				$scope.allsum = data.datasum;
+				$scope.pagelists = data.result;
+				console.log($scope.allsum)
+			})
+			.error(function(data) {
+				console.log(data);
+			});
+		});
+
+		//网站用户列表控制器
+		app.controller("usersListCtrl", function($scope, $routeParams, $http) {
+
+			//获取页面参数，保存在作用域中
+			$scope.num = parseInt($routeParams.pageNum);
+
+			//根据pageNum请求数据
+			$http({
+				url: "/users/indexs#/phoneuserlist/",
+				method: "POST",
+				dataType: "json",
+				data: {
+					gets: 2,
+					pagenum: $scope.num
+				}
+			})
+			.success(function(data) {
+				$scope.allsums = data.datasum;
 				$scope.pagelists = data.result;
 			})
 			.error(function(data) {
@@ -220,9 +214,14 @@
 					title: "用户模块",
 					childList: [
 						{
-							title: "用户列表",
+							title: "手机号用户列表",
 							//对于用户列表，我们发送请求的时候，要携带请求的页码
-							link: "#/userlist/1",
+							link: "#/phoneuserlist/1",
+						},
+						{
+							title: "网站用户列表",
+							//对于用户列表，我们发送请求的时候，要携带请求的页码
+							link: "#/webuserlist/1",
 						},
 						{
 							title: "创建用户",

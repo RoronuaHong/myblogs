@@ -193,6 +193,10 @@ body {
 	font-family: "Microsoft YaHei";
 	text-align: center;
 	color: #fff;
+	.title {
+		font-size: 20px;
+		color: #f93;
+	}
 	.row {
 		padding: 10px 0;
 		label {
@@ -291,5 +295,20 @@ body {
 		margin: 0 auto;
 		background: linear-gradient(#222222, #ffffff 90%, #222222);
 		color: #fff;
+	}
+}
+.conts {
+	min-height: 240px;
+}
+.pagination {
+	li {
+		a {
+		    background: linear-gradient(#020202, #101112 40%, #191b1d);
+			color: #999999;
+			&:hover {
+				background: linear-gradient(#222222, #ffffff 90%, #222222);
+				color: #ffffff;
+			}
+		}
 	}
 }
