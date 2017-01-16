@@ -92,6 +92,10 @@
 			.when("/articleinfo/:articleId", {
 				templateUrl: "/templates/articles/list.html",
 				controller: "articleInfoCtrl"
+			})
+			.when("/myresume/", {
+				templateUrl: "/templates/user/resume.html",
+				controller: "resumeCtrl"
 			});
 		});
 
@@ -124,7 +128,6 @@
 			.success(function(data) {
 				$scope.allsum = data.datasum;
 				$scope.pagelists = data.result;
-				console.log($scope.allsum)
 			})
 			.error(function(data) {
 				console.log(data);
@@ -173,6 +176,10 @@
 
 		//创建列表控制器
 		app.controller("articleListCtrl", function($scope) {
+
+		});
+
+		app.controller("resumeCtrl", function($scope) {
 
 		});
 

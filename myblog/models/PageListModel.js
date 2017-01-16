@@ -67,34 +67,11 @@ module.exports = {
 					}
 				}
 			}, function(err, results) {
-				console.log(results);
 				res.json({
 					datasum: Math.ceil(results.one[0]["count(*)"] / pageSize),
 					result: results.two
 				});
 			});
-
-			// if(req.body["gets"] == 1) {
-			// 	conn.query(userlistSql, params, function(err, rs) {
-			// 		if(err) {
-			// 			res.send("数据库错误，错误原因" + err.message);
-			// 			return;
-			// 		}
-			// 		res.json({
-			// 			result: rs
-			// 		});
-			// 	});
-			// } else if(req.body["gets"] == 2) {
-			// 	conn.query(userslistSql, param, function(err, rs) {
-			// 		if(err) {
-			// 			res.send("数据库错误，错误原因" + err.message);
-			// 			return;
-			// 		}
-			// 		res.json({
-			// 			result: rs
-			// 		});
-			// 	});
-			// }
 			conn.release();
 		});
 	}
