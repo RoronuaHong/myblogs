@@ -18,21 +18,25 @@ router.get('/indexs', function(req, res) {
 });
 
 router.post('/indexs', function(req, res) {
-	loginbean = req.session.loginbean;
-	if(!req.body["num"] && !req.body["pagenum"]) {
-		res.json({
-			name: loginbean.nicheng
-		});
-	}
 
 	//用户录入
 	if(req.body["num"]) {
 		userModel.register(req, res);
-	}
+	} else if(req.body["pagenum"]) {
 
-	//获取分页信息
-	if(req.body["pagenum"]) {
+		//获取分页信息
 		PageListModel.pageLists(req, res);
+	} else if(req.body["del"]) {
+
+		//删除用户功能
+		PageListModel.pagelistDel(req, res);
+	} else {
+
+		//获取名字
+		loginbean = req.session.loginbean;
+		res.json({
+			name: loginbean.nicheng
+		});
 	}
 });
 

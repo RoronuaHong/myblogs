@@ -11,18 +11,20 @@
 							</div>
 							<div class="row title">
 								<div class="col-md-12 column">
-									<div class="col-md-3">用户ID</div>
+									<div class="col-md-2">用户ID</div>
 									<div class="col-md-3">昵称</div>
 									<div class="col-md-3">网站账号</div>
 									<div class="col-md-3">密码</div>
+									<div class="col-md-1">操作</div>
 								</div>
 							</div>
 							<div class="conts">
 								<div class="row" ng-repeat="item in pagelists">
-									<div class="col-md-3" ng-bind="item.id"></div>
+									<div class="col-md-2" ng-bind="item.id"></div>
 									<div class="col-md-3" ng-bind="item.name"></div>
 									<div class="col-md-3" ng-bind="item.webname"></div>
 									<div class="col-md-3" ng-bind="item.password"></div>
+									<div class="col-md-1 deletes" ng-click="deletebtns(item.id)">×</div>
 								</div>
 							</div>
 							<div class="pull-right">

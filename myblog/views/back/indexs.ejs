@@ -115,48 +115,98 @@
 			//获取页面参数，保存在作用域中
 			$scope.num = parseInt($routeParams.pageNum);
 
-			//根据pageNum请求数据
-			$http({
-				url: "/users/indexs#/phoneuserlist/",
-				method: "POST",
-				dataType: "json",
-				data: {
-					gets: 1,
-					pagenum: $scope.num
-				}
-			})
-			.success(function(data) {
-				$scope.allsum = data.datasum;
-				$scope.pagelists = data.result;
-			})
-			.error(function(data) {
-				console.log(data);
-			});
+			function newList() {
+
+				//根据pageNum请求数据
+				$http({
+					url: "/users/indexs#/phoneuserlist/",
+					method: "POST",
+					dataType: "json",
+					data: {
+						gets: 1,
+						pagenum: $scope.num
+					}
+				})
+				.success(function(data) {
+					$scope.allsum = data.datasum;
+					$scope.pagelists = data.result;
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
+
+			new newList();
+
+			//删除功能
+			$scope.deletebtn = function(ids) {
+				$http({
+					url: "/users/indexs#/phoneuserlist/",
+					method: "POST",
+					dataType:"json",
+					data: {
+						del: 1,
+						ids: ids
+					}
+				})
+				.success(function(data) {
+					if(data.result == 1) {
+						new newList();
+					}
+				})
+				.error(function(data) {
+					console.log("->" + data);
+				})
+			}
 		});
 
 		//网站用户列表控制器
 		app.controller("usersListCtrl", function($scope, $routeParams, $http) {
 
-			//获取页面参数，保存在作用域中
-			$scope.num = parseInt($routeParams.pageNum);
+			function newLists() {
+				//获取页面参数，保存在作用域中
+				$scope.num = parseInt($routeParams.pageNum);
 
-			//根据pageNum请求数据
-			$http({
-				url: "/users/indexs#/phoneuserlist/",
-				method: "POST",
-				dataType: "json",
-				data: {
-					gets: 2,
-					pagenum: $scope.num
-				}
-			})
-			.success(function(data) {
-				$scope.allsums = data.datasum;
-				$scope.pagelists = data.result;
-			})
-			.error(function(data) {
-				console.log(data);
-			});
+				//根据pageNum请求数据
+				$http({
+					url: "/users/indexs#/phoneuserlist/",
+					method: "POST",
+					dataType: "json",
+					data: {
+						gets: 2,
+						pagenum: $scope.num
+					}
+				})
+				.success(function(data) {
+					$scope.allsums = data.datasum;
+					$scope.pagelists = data.result;
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
+			new newLists();
+
+			//删除功能
+			$scope.deletebtns = function(ids) {
+				$http({
+					url: "/users/indexs#/webuserlist/",
+					method: "POST",
+					dataType:"json",
+					data: {
+						del: 2,
+						ids: ids
+					}
+				})
+				.success(function(data) {
+					if(data.result == 1) {
+						new newLists();
+					}
+				})
+				.error(function(data) {
+					console.log("->" + data);
+				})
+			}
 		});
 
 		//用户信息控制器

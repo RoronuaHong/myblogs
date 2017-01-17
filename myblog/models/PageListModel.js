@@ -74,5 +74,34 @@ module.exports = {
 			});
 			conn.release();
 		});
+	},
+	pagelistDel: function(req, res) {
+		pool = connPool();
+
+		//从pool中获取连接(异步, 取到后回调)
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			if(req.body["del"] == 1) {
+				var userlistSql = "delete from phoneadmin where id=?";
+			} else if(req.body["del"] == 2) {
+				var userlistSql = "delete from webadmin where id=?";
+			}
+			var params = req.body["ids"];
+
+			conn.query(userlistSql, params, function(err, rs) {
+				if(err) {
+					res.send("数据库错误，错误原因" + err.message);
+					return;
+				}
+				res.json({
+					result: 1
+				});
+			});
+			conn.release();
+		});
 	}
 }
