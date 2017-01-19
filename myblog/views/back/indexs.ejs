@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport"/>
 	<title>Slim。的后台管理系统</title>
+	<link rel="stylesheet" href="/stylesheets/reset.css">
 	<link rel="stylesheet" href="/stylesheets/animate.min.css">
 	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 	<link rel="stylesheet" href="/stylesheets/backindex.css">
@@ -93,9 +94,9 @@
 				templateUrl: "/templates/articles/list.html",
 				controller: "articleInfoCtrl"
 			})
-			.when("/myresume/", {
-				templateUrl: "/templates/user/resume.html",
-				controller: "resumeCtrl"
+			.when("/myskill", {
+				templateUrl: "/templates/resumes/myskill.html",
+				controller: "myskillCtrl"
 			});
 		});
 
@@ -164,6 +165,7 @@
 		app.controller("usersListCtrl", function($scope, $routeParams, $http) {
 
 			function newLists() {
+
 				//获取页面参数，保存在作用域中
 				$scope.num = parseInt($routeParams.pageNum);
 
@@ -224,13 +226,21 @@
 
 		});
 
-		//创建列表控制器
+		//创建文章列表控制器
 		app.controller("articleListCtrl", function($scope) {
 
 		});
 
-		app.controller("resumeCtrl", function($scope) {
+		// 我的技能控制器
+		app.controller("myskillCtrl", function($scope, $compile) {
+			$scope.myNum = [];
+			$scope.num = 1;
+			$scope.myNum.push($scope.num);
 
+			$scope.addskillbtn = function() {
+				$scope.num++;
+				$scope.myNum.push($scope.num);
+			}
 		});
 
 		app.controller("headerControl", function($scope, $http, $interval) {
@@ -263,7 +273,7 @@
 		});
 
 		//定义导航控制器
-		app.controller("navCtrl", function($scope) {
+		app.controller("navCtrl", function($scope, $location) {
 
 			//模块的内容
 			$scope.list = [
@@ -301,16 +311,24 @@
 					]
 				},
 				{
-					title: "简历",
+					title: "Slim。的简历",
 					childList: [
 						{
-							title: "Slim。的简历",
-							link: "#/myresume"
+							title: "添加技能",
+							link: "#/myskill"
 						}
 					]
 				}
 			];
 
+			//根据路径实现TAB切换
+			for(var i in $scope.list) {
+				for(var j in $scope.list[i].childList) {
+					if($location.$$path == (($scope.list[i].childList[j].link).split("#")[1])) {
+						($scope.list[i].childList[j]).classnames = "smalllisel";
+					}
+				}
+			}
 			//实现tab切换功能
 			$scope.Show = function(shows) {
 

@@ -1,5 +1,8 @@
 @import "./mixin.scss";
 
+html {
+	overflow-x: hidden;
+}
 body {
 	background: #272b30;
 }
@@ -313,7 +316,70 @@ body {
 	}
 }
 .deletes {
-	text-align: left;
 	cursor: pointer;
 	color: #fc0404;
+}
+/*我的技能页面布局*/
+.myskillbox {
+	width: 100%;
+	padding: 30px 0;
+	font-family: "Microsoft YaHei";
+	text-align: center;
+	.skilltitle {
+		padding-bottom: 30px;
+	}
+	.myskillname {
+		padding-right: 5%;
+		font-size: 22px;
+		color: #fff;
+	}
+	.skillcontent {
+		display: block;
+		float: left;
+		width: 80%;
+	}
+	.number {
+		float: left;
+		width: 20%;
+		font-size: 22px;
+		color: #fff;
+	}
+	h5 {
+		width: 26%;
+		height: 30px;
+		margin: 30px auto;
+		line-height: 30px;
+		font-size: 22px;
+		font-family: 'Shojumaru',cursive,Arial,serif;
+		color: #fff;
+		cursor: pointer;
+		background: #383838;
+		box-shadow: 0 0 0 2px #272b2e;
+		border-radius: 5px;
+		&:hover {
+			background: #272b2e;
+			color: #999999;
+		}
+	}
+	.skillcons {
+		width: 100%;
+		li {
+			width: 100%;
+			padding: 10px 0;
+		}
+	}
+	.completebtn {
+		width: 30%;
+		margin: 0 auto;
+		font-size: 30px;
+		text-align: center;
+		color: #fff;
+		cursor: pointer;
+		box-shadow: 0 0 0 1px #fff;
+		border-radius: 5px;
+		&:hover {
+			background: #272b2e;
+			color: #f93;
+		}
+	}
 }
