@@ -163,7 +163,6 @@
 
 		//网站用户列表控制器
 		app.controller("usersListCtrl", function($scope, $routeParams, $http) {
-
 			function newLists() {
 
 				//获取页面参数，保存在作用域中
@@ -232,14 +231,50 @@
 		});
 
 		// 我的技能控制器
-		app.controller("myskillCtrl", function($scope, $compile) {
-			$scope.myNum = [];
-			$scope.num = 1;
-			$scope.myNum.push($scope.num);
+		app.controller("myskillCtrl", function($scope, $http) {
 
+			//存储数据
+			$scope.repeatdata = [];
+
+			$scope.showNum = [];
+			$scope.num = 1;
+			// $scope.showNum.push($scope.num);
+			$scope.showNum.push({
+				no: $scope.num,
+				news: $scope.news
+			});
 			$scope.addskillbtn = function() {
 				$scope.num++;
-				$scope.myNum.push($scope.num);
+				$scope.showNum.push({
+					no: $scope.num,
+					news: $scope.news
+				});
+			}
+
+			//实现技能交互
+			$scope.completebtns = function() {
+				$scope.repeatdata = [];
+		        for (var i = 0; i < $scope.showNum.length; i++) {
+		        	if($scope.showNum[i].news != undefined) {
+		            	$scope.repeatdata.push($scope.showNum[i].news);
+		        	}
+		        }
+		        console.log($scope.repeatdata.length);
+				// $http({
+				// 	url: "/users/indexs#/myskill",
+				// 	method: "POST",
+				// 	dataType: "json",
+				// 	data: {
+				// 		addskill: 1,
+				// 		skillname: $scope.skillcos
+				// 	}
+				// })
+				// .success(function(data) {
+				// 	console.log(data);
+				// })
+				// .error(function(data) {
+				// 	console.log(data);
+				// });
 			}
 		});
 

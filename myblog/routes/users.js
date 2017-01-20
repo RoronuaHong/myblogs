@@ -30,6 +30,11 @@ router.post('/indexs', function(req, res) {
 
 		//删除用户功能
 		PageListModel.pagelistDel(req, res);
+	} else if(req.body["addskill"]) {
+		console.log(res.body["skillname"]);
+		// res.json({
+		// 	skillname: 11
+		// });
 	} else {
 
 		//获取名字

@@ -7,19 +7,19 @@
 				<div class="col-md-6 column">
 					<span class="myskillname">技能名称:</span>
 					<label for="skill">
-						<input type="text" class="form-control" id="skill" placeholder="输入技能名称" name="skills">
+						<input type="text" class="form-control" id="skill" placeholder="输入技能名称" name="skills" ng-model="skilltitle">
 					</label>
 				</div>
 				<div class="col-md-3 column"></div>
 			</div>
 			<div class="row">
-				<form action="">
+				<form action="" name="skillform">
 					<div class="col-md-3 column"></div>
 					<div class="col-md-6 column">
 						<ul class="skillcons">
-							<li ng-repeat="i in myNum" class="clearfix">
-								<span class="number" ng-bind="i"></span>
-								<input name="" class="form-control skillcontent" ng-name="skillcontents{{i}}" placeholder="输入技能内容"></input>
+							<li ng-repeat="i in showNum" class="clearfix">
+								<span class="number" ng-bind="i.no"></span>
+								<input class="form-control skillcontent" ng-model="i.news" placeholder="输入技能内容"></input>
 							</li>
 						</ul>
 						<h5 ng-click="addskillbtn()">添加</h5>
