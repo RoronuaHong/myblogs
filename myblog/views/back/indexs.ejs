@@ -243,12 +243,22 @@
 				no: $scope.num,
 				news: $scope.news
 			});
+
+			//添加技能内容栏
 			$scope.addskillbtn = function() {
 				$scope.num++;
 				$scope.showNum.push({
 					no: $scope.num,
 					news: $scope.news
 				});
+			}
+
+			//删除技能栏
+			$scope.delskillbtn = function() {
+				if($scope.num > 1) {
+					$scope.num--;
+					$scope.showNum.splice($scope.num, 1);
+				}
 			}
 
 			//实现技能交互
