@@ -1,40 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Slim。</title>
-    <link rel='stylesheet' href='/stylesheets/reset.css'/>
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/resumeindex.css">
-  </head>
-  <body>
-    <div class="slimbox" id="slimboxs">
-        <div class="slimimg">
-            <img src="/images/slims.png" alt="">
-        </div>
-        <a href="#">
-            <div class="mybloginter">
-                <h1>Slim。</h1>
-                <span>个人博客</span>
+    <head>
+        <title>Slim。</title>
+        <link rel='stylesheet' href='/stylesheets/reset.css'/>
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/resumeindex.css">
+    </head>
+    <body ng-app="myApp">
+        <div class="slimbox" id="slimboxs">
+            <div class="slimimg">
+                <img src="/images/slims.png" alt="">
             </div>
-        </a>
-    </div>
-    <ul class="skills" id="skillss">
-        <li class="myjavascript">JavaScript
-           <!--  <div class="skillcon">
-                <p>我的技能1</p>
-                <p>我的技能2</p>
-                <p>我的技能3</p>
-                <p>我的技能4</p>
-            </div> -->
-        </li>
-        <li class="myhtmlcss">html&css</li>
-        <li class="myangular">AngularJS</li>
-        <li class="mynodejs">nodeJs</li>
-        <li class="myothers">Others</li>
-    </ul>
-    <div class="slimunderwritebox">
-        <canvas id="myCanvas"></canvas>
-    </div>
-  </body>
+            <a href="#">
+                <div class="mybloginter">
+                    <h1>Slim。</h1>
+                    <span>个人博客</span>
+                </div>
+            </a>
+        </div>
+        <ul class="skills" id="skillss" ng-controller="myskillCtrl">
+            <li ng-repeat="i in list" ng-bind="i.name" ng-class="colors[i.id]"></li>
+           <!--  <li class="myjavascript">JavaScript
+                <div class="skillcon">
+                    <p>我的技能1</p>
+                    <p>我的技能2</p>
+                    <p>我的技能3</p>
+                    <p>我的技能4</p>
+                </div>
+            </li>
+            <li class="myhtmlcss">html&css</li>
+            <li class="myangular">AngularJS</li>
+            <li class="mynodejs">nodeJs</li>
+            <li class="myothers">Others</li> -->
+        </ul>
+        <div class="slimunderwritebox">
+            <canvas id="myCanvas"></canvas>
+        </div>
+    </body>
+    <script src="/javascripts/angular.min.js"></script>
     <script src="/javascripts/resumeindex.js"></script>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myskillCtrl", function($scope, $http) {
+            $http({
+                url: "./",
+                method: "POST",
+                type: "json"
+            })
+            .success(function(data) {
+                console.log(data);
+
+                //设置多种颜色
+                var colors = ["myjavascript", "mynodejs", "myothers"];
+
+                $scope.colors = [];
+                $scope.list = data.arr;
+
+                for(var i = 0; i < data.arr.length; i++) {
+                    $scope.colors[data.arr[i].id] = colors[Math.floor(Math.random() * 3)];
+                }
+
+                //实例化
+                var resumefunction = new Resumes(data.arr);
+
+                //实现技能表效果
+                resumefunction.skillfunc();
+
+                //实现签名功能
+                resumefunction.slimunderwrite();
+
+                //实现技能表内容
+                resumefunction.skillShow();
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+        });
+    </script>
 </html>

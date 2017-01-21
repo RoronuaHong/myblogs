@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var userModel = require("../models/UserModel");
 var PageListModel = require("../models/PageListModel");
+var skillModel = require("../models/SkillModel.js");
 
 /* GET users listing. */
 router.all('/', function(req, res, next) {
@@ -31,10 +32,9 @@ router.post('/indexs', function(req, res) {
 		//删除用户功能
 		PageListModel.pagelistDel(req, res);
 	} else if(req.body["addskill"]) {
-		console.log(res.body["skillname"]);
-		// res.json({
-		// 	skillname: 11
-		// });
+
+		//获取技能和内容
+		skillModel.skillAdd(req, res);
 	} else {
 
 		//获取名字

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -238,7 +238,7 @@
 
 			$scope.showNum = [];
 			$scope.num = 1;
-			// $scope.showNum.push($scope.num);
+
 			$scope.showNum.push({
 				no: $scope.num,
 				news: $scope.news
@@ -259,22 +259,35 @@
 		            	$scope.repeatdata.push($scope.showNum[i].news);
 		        	}
 		        }
-		        console.log($scope.repeatdata.length);
-				// $http({
-				// 	url: "/users/indexs#/myskill",
-				// 	method: "POST",
-				// 	dataType: "json",
-				// 	data: {
-				// 		addskill: 1,
-				// 		skillname: $scope.skillcos
-				// 	}
-				// })
-				// .success(function(data) {
-				// 	console.log(data);
-				// })
-				// .error(function(data) {
-				// 	console.log(data);
-				// });
+
+		        if($scope.repeatdata.length != 0) {
+					$http({
+						url: "/users/indexs#/myskill",
+						method: "POST",
+						dataType: "json",
+						data: {
+							addskill: 1,
+							skilltitle: $scope.skilltitle,
+							skillpro: $scope.skillprocess,
+							repeatdata: $scope.repeatdata
+						}
+					})
+					.success(function(data) {
+						$scope.skillShows = true;
+						if(data.result == 1) {
+							$scope.messages = data.message;
+						}else if(data.result == 0) {
+							$scope.skillShows = false;
+							$scope.messages = data.message;
+						}
+					})
+					.error(function(data) {
+						console.log(data);
+					});
+		        } else {
+		        	$scope.skillShows = false;
+		        	$scope.messages = "请输入技能名称和技能内容";
+		        }
 			}
 		});
 
@@ -316,12 +329,12 @@
 					title: "用户模块",
 					childList: [
 						{
-							title: "手机号用户列表",
+							title: "手机号用户",
 							//对于用户列表，我们发送请求的时候，要携带请求的页码
 							link: "#/phoneuserlist/1",
 						},
 						{
-							title: "网站用户列表",
+							title: "网站用户",
 							//对于用户列表，我们发送请求的时候，要携带请求的页码
 							link: "#/webuserlist/1",
 						},

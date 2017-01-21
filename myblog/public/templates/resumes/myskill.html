@@ -1,16 +1,44 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-tint"></i>Slim。的技能</h1>
 <div class="myskillbox">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel" ng-bind="messages"></h4>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains" ng-show="skillShows">
+						确定
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="col-md-12 column">
 			<div class="row skilltitle">
-				<div class="col-md-3 column"></div>
-				<div class="col-md-6 column">
-					<span class="myskillname">技能名称:</span>
-					<label for="skill">
-						<input type="text" class="form-control" id="skill" placeholder="输入技能名称" name="skills" ng-model="skilltitle">
-					</label>
+				<div class="col-md-1 column"></div>
+				<div class="col-md-10 column">
+					<div class="row">
+						<div class="col-md-6 column">
+							<span class="myskillname">技能名称:</span>
+							<label for="skill">
+								<input type="text" class="form-control" id="skill" placeholder="输入技能名称" name="skills" ng-model="skilltitle">
+							</label>
+						</div>
+						<div class="col-md-6 column">
+							<span class="myskillname">技能掌握:</span>
+							<label for="skillpro">
+								<input type="text" class="form-control" id="skillpro" placeholder="输入技能掌握程度(XX.XX)" name="skillpros" ng-model="skillprocess" ng-pattern="/^([1-9]\d?(\.\d{1,2})?|0\.\d{1,2}|100)$/">
+							</label>
+							<span class="myskillname">%</span>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-3 column"></div>
+				<div class="col-md-1 column"></div>
 			</div>
 			<div class="row">
 				<form action="" name="skillform">
@@ -23,7 +51,7 @@
 							</li>
 						</ul>
 						<h5 ng-click="addskillbtn()">添加</h5>
-						<div class="completebtn" ng-click="completebtns()">完成</div>
+						<div class="completebtn" ng-click="completebtns()"  data-toggle="modal" data-target="#myModal">完成</div>
 					</div>
 				</form>
 				<div class="col-md-3 column"></div>

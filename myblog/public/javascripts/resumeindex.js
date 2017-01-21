@@ -1,9 +1,18 @@
-function Resumes() {
+function Resumes(widtharr) {
 	this.slimboxEle = document.getElementById("slimboxs");
 	this.skillsEle = document.getElementById("skillss");
 	this.skillsLi = this.skillsEle.getElementsByTagName("li");
+
+	//设置技能掌握程度数组
+	this.widtharr = [];
+	this.arr = widtharr;
+
+	for(var i = 0; i < this.arr.length; i++) {
+		this.widtharr.push(this.arr[i].pro);
+	}
 }
 Resumes.prototype = {
+
 	/*显示技能表*/
 	skillfunc: function() {
 		var _this = this;
@@ -12,13 +21,15 @@ Resumes.prototype = {
 			_this.skilllineShow();
 		}, false);
 	},
+
 	/*技能表进度条显示*/
 	skilllineShow: function() {
 		var _this = this;
 
 		this.skilltimer = 0;
 		this.num = 0;
-		this.widtharr = ["85%", "75%", "60%", "50%", "80%"];
+
+		// this.widtharr = ["85%", "75%", "60%", "50%", "80%"];
 		this.skilltimer = setInterval(function() {
 			_this.skilltime();
 		}, 500);
@@ -194,13 +205,13 @@ Resumes.prototype = {
 	}
 }
 
-var resumes = new Resumes();
+// var resumes = new Resumes();
 
 //实现技能表效果
-resumes.skillfunc();
+// resumes.skillfunc();
 
 //实现技能表内容
-resumes.skillShow();
+// resumes.skillShow();
 
 //实现签名功能
-resumes.slimunderwrite();
+// resumes.slimunderwrite();

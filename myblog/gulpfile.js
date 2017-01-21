@@ -18,7 +18,7 @@ gulp.task("default", ["sass"], function() {
 	gulp.watch("./public/stylesheets/scss/*.scss", ["sass"]);
 	gulp.watch("./public/javascripts/*.js").on("change", reload);
 	gulp.watch("./views/*").on("change", reload);
-	gulp.watch("./public/templates/**/*.html").on("change", reload);
+	gulp.watch("./public/templates/").on("change", reload);
 });
 
 gulp.task("sass", function() {

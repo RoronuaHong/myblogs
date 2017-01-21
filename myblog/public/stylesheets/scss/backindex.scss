@@ -369,9 +369,9 @@ body {
 		}
 	}
 	.completebtn {
-		width: 30%;
+		width: 28%;
 		margin: 0 auto;
-		font-size: 30px;
+		font-size: 28px;
 		text-align: center;
 		color: #fff;
 		cursor: pointer;
@@ -380,6 +380,7 @@ body {
 		&:hover {
 			background: #272b2e;
 			color: #f93;
+			box-shadow: 0 0 0 1px #f93;
 		}
 	}
 }
