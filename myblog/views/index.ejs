@@ -19,29 +19,25 @@
             </a>
         </div>
         <ul class="skills" id="skillss" ng-controller="myskillCtrl">
-            <li ng-repeat="i in list" ng-bind="i.name" ng-class="colors[i.id]"></li>
-           <!--  <li class="myjavascript">JavaScript
-                <div class="skillcon">
-                    <p>我的技能1</p>
-                    <p>我的技能2</p>
-                    <p>我的技能3</p>
-                    <p>我的技能4</p>
+            <li ng-repeat="i in list" ng-class="colors[i.id]">
+                <div ng-bind="i.name"></div>
+                <div class="skillcon" ng-if="true">
+                    <p ng-bind-html="i.cons"></p>
                 </div>
             </li>
-            <li class="myhtmlcss">html&css</li>
-            <li class="myangular">AngularJS</li>
-            <li class="mynodejs">nodeJs</li>
-            <li class="myothers">Others</li> -->
         </ul>
         <div class="slimunderwritebox">
             <canvas id="myCanvas"></canvas>
         </div>
+        <!-- <div class="mainbox" id="mainboxs">
+
+        </div> -->
     </body>
     <script src="/javascripts/angular.min.js"></script>
     <script src="/javascripts/resumeindex.js"></script>
     <script>
         var app = angular.module("myApp", []);
-        app.controller("myskillCtrl", function($scope, $http) {
+        app.controller("myskillCtrl", function($scope, $http, $sce) {
             $http({
                 url: "./",
                 method: "POST",
@@ -54,11 +50,13 @@
                 var colors = ["myjavascript", "mynodejs", "myothers"];
 
                 $scope.colors = [];
-                $scope.list = data.arr;
 
                 for(var i = 0; i < data.arr.length; i++) {
                     $scope.colors[data.arr[i].id] = colors[Math.floor(Math.random() * 3)];
+                    data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/,/g, "<br>"))
                 }
+
+                $scope.list = data.arr;
 
                 //实例化
                 var resumefunction = new Resumes(data.arr);
@@ -71,6 +69,7 @@
 
                 //实现技能表内容
                 resumefunction.skillShow();
+
             })
             .error(function(data) {
                 console.log(data);

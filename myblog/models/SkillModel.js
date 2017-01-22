@@ -11,13 +11,16 @@ module.exports = {
 			}
 			var selectskilltitleSql = "select name from t_skilltitle where name=?";
 
-			var skilltitleSql = "insert into t_skilltitle (name,process) values (?,?)";
+			var skilltitleSql = "insert into t_skilltitle (name, process, content) values (?,?,?)";
 
-			var skillconsSql = "insert into t_skillcon (name) values (?)";
-
-			var params = req.body["skilltitle"];
-			var titparams = [req.body["skilltitle"], req.body["skillpro"] + "%"];
 			var conparams = req.body["repeatdata"];
+			var conallparams = "";
+
+			for(var i = 0; i < conparams.length; i++) {
+				conallparams += (i + 1) + "." + conparams[i] + ",";
+			}
+			var params = req.body["skilltitle"];
+			var titparams = [req.body["skilltitle"], req.body["skillpro"] + "%", conallparams];
 
 			conn.query(selectskilltitleSql, params, function(err, rs) {
 				if(err) {
@@ -31,7 +34,6 @@ module.exports = {
 						message: "已存在该技能名称"
 					});
 				} else {
-					console.log(req.body["skillpro"])
 					if(req.body["skillpro"]) {
 
 						//添加技能名称和掌握程度
@@ -41,16 +43,6 @@ module.exports = {
 								return;
 							}
 
-							for(var i = 0; i < conparams.length; i++) {
-
-								//添加技能内容
-								conn.query(skillconsSql, conparams[i], function(err, rs) {
-									if(err) {
-										res.send("数据库错误,错误原因:" + err.message);
-										return;
-									}
-								});
-							}
 							res.json({
 								result: 1,
 								message: "添加技能成功"
@@ -59,7 +51,7 @@ module.exports = {
 					} else {
 						res.json({
 							result: 0,
-							message: "输入的技能掌握程度数据错误"
+							message: "输入的技能掌握程度0-100之间"
 						});
 					}
 				}
@@ -76,7 +68,7 @@ module.exports = {
 				return;
 			}
 
-			var selectskillSql = "select id, name, process from t_skilltitle";
+			var selectskillSql = "select id, name, process, content from t_skilltitle";
 			var params = [];
 
 			//技能数组
@@ -94,10 +86,12 @@ module.exports = {
 					skillarrs.push({
 						"id": rs[i].id,
 						"name": rs[i].name,
-						"pro": rs[i].process
-					})
+						"pro": rs[i].process,
+						"cons":rs[i].content
+					});
 				}
 
+				console.log(skillarrs);
 				res.json({
 					arr: skillarrs
 				});

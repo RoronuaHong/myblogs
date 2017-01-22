@@ -51,23 +51,23 @@ Resumes.prototype = {
 		var _this = this;
 		this.pcon = [];
 
-		this.skillcon = document.createElement("div");
-		this.skillcon.className = "skillcon";
+		// this.skillcon = document.createElement("div");
+		// this.skillcon.className = "skillcon";
 
-		for(var i = 0; i < 4; i++) {
-			this.pcon[i] = document.createElement("p");
-			this.pcon[i].innerHTML = "我的技能1";
-			this.skillcon.appendChild(this.pcon[i]);
-		}
+		// for(var i = 0; i < 4; i++) {
+		// 	this.pcon[i] = document.createElement("p");
+		// 	this.pcon[i].innerHTML = "我的技能1";
+		// 	this.skillcon.appendChild(this.pcon[i]);
+		// }
 
-		for(var i = 0; i < this.skillsLi.length; i++) {
-			this.skillsLi[i].addEventListener("mouseenter", function() {
-				this.appendChild(_this.skillcon);
-			}, false);
-			this.skillsLi[i].addEventListener("mouseleave", function() {
-				_this.skillcon.remove();
-			}, false);
-		}
+		// for(var i = 0; i < this.skillsLi.length; i++) {
+		// 	this.skillsLi[i].addEventListener("mouseenter", function() {
+		// 		this.appendChild(_this.skillcon);
+		// 	}, false);
+		// 	this.skillsLi[i].addEventListener("mouseleave", function() {
+		// 		_this.skillcon.remove();
+		// 	}, false);
+		// }
 	},
 	slimunderwrite: function() {
 		var _this = this;
