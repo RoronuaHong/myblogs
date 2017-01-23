@@ -19,9 +19,9 @@
             </a>
         </div>
         <ul class="skills" id="skillss" ng-controller="myskillCtrl">
-            <li ng-repeat="i in list" ng-class="colors[i.id]">
+            <li ng-repeat="i in list" ng-class="colors[i.id]" ng-mouseover="hover=true" ng-mouseleave="hover=false">
                 <div ng-bind="i.name"></div>
-                <div class="skillcon" ng-if="true">
+                <div class="skillcon" ng-if="hover">
                     <p ng-bind-html="i.cons"></p>
                 </div>
             </li>
@@ -44,7 +44,6 @@
                 type: "json"
             })
             .success(function(data) {
-                console.log(data);
 
                 //设置多种颜色
                 var colors = ["myjavascript", "mynodejs", "myothers"];
@@ -53,7 +52,7 @@
 
                 for(var i = 0; i < data.arr.length; i++) {
                     $scope.colors[data.arr[i].id] = colors[Math.floor(Math.random() * 3)];
-                    data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/,/g, "<br>"))
+                    data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/;/g, "<br>"));
                 }
 
                 $scope.list = data.arr;

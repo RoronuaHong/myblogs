@@ -97,7 +97,11 @@
 			.when("/myskill", {
 				templateUrl: "/templates/resumes/myskill.html",
 				controller: "myskillCtrl"
-			});
+			})
+			.when("/showskill", {
+				templateUrl: "/templates/resumes/showskill.html",
+				controller: "showskillCtrl"
+			})
 		});
 
 		//首页控制器
@@ -139,7 +143,7 @@
 
 			new newList();
 
-			//删除功能
+			//手机号用户删除功能
 			$scope.deletebtn = function(ids) {
 				$http({
 					url: "/users/indexs#/phoneuserlist/",
@@ -188,7 +192,7 @@
 			}
 			new newLists();
 
-			//删除功能
+			//网站用户删除功能
 			$scope.deletebtns = function(ids) {
 				$http({
 					url: "/users/indexs#/webuserlist/",
@@ -330,6 +334,55 @@
 			});
 		});
 
+		//技能列表控制器
+		app.controller("showskillCtrl", function($scope, $http, $sce) {
+			function showSki() {
+				$http({
+					url: "#/showskill",
+					method: "POST",
+					type: "json",
+					data: {
+						showskill: 1
+					}
+				})
+				.success(function(data) {
+
+					for(var i = 0; i < data.arr.length; i++) {
+						data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/;/g, "<br>"));
+					}
+
+					$scope.list = data.arr;
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
+
+			new showSki();
+
+			//删除技能功能
+			$scope.deletebtn = function(ids) {
+				$http({
+					url: "#/showskill",
+					method: "POST",
+					type: "json",
+					data: {
+						skidel: 1,
+						ids: ids
+					}
+				})
+				.success(function(data) {
+					console.log(data);
+					if(data.result == 1) {
+						new showSki();
+					}
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
+		});
+
 		//定义导航控制器
 		app.controller("navCtrl", function($scope, $location) {
 
@@ -374,6 +427,10 @@
 						{
 							title: "添加技能",
 							link: "#/myskill"
+						},
+						{
+							title: "技能列表",
+							link: "#/showskill"
 						}
 					]
 				}

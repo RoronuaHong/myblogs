@@ -1,0 +1,32 @@
+<h1 class="htitle"><i class="glyphicon glyphicon-align-justify"></i>Slim。的技能列表</h1>
+<div class="showskill">
+	<div class="container">
+		<div class="col-md-12 column">
+			<div class="row">
+				<div class="col-md-10 column">
+					<div class="tabcon">
+						<div class="contitle">
+							<img src="/images/slimlogo.png" alt="" class="mylogo">
+						</div>
+						<div class="row title">
+							<div class="col-md-12 column">
+								<div class="col-md-3">技能名称</div>
+								<div class="col-md-2">技能掌握程度</div>
+								<div class="col-md-6">技能内容</div>
+								<div class="col-md-1">操作</div>
+							</div>
+						</div>
+						<div class="conts">
+							<div class="row" ng-repeat="i in list">
+								<div class="col-md-3" ng-bind="i.name"></div>
+								<div class="col-md-2" ng-bind="i.pro">技能掌握程度</div>
+								<div class="col-md-6" ng-bind-html="i.cons">技能内容</div>
+								<div class="col-md-1 deletes" ng-click="deletebtn(i.id)">×</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -17,7 +17,7 @@ module.exports = {
 			var conallparams = "";
 
 			for(var i = 0; i < conparams.length; i++) {
-				conallparams += (i + 1) + "." + conparams[i] + ",";
+				conallparams += (i + 1) + "." + conparams[i] + ";";
 			}
 			var params = req.body["skilltitle"];
 			var titparams = [req.body["skilltitle"], req.body["skillpro"] + "%", conallparams];
@@ -91,11 +91,32 @@ module.exports = {
 					});
 				}
 
-				console.log(skillarrs);
 				res.json({
 					arr: skillarrs
 				});
 			});
+		});
+	},
+	skillDel: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+			var delskillSql = "delete from t_skilltitle where id=?";
+			var params = req.body["ids"];
+
+			conn.query(delskillSql, params, function(err, rs) {
+				if(err) {
+					res.send("数据库错误,错误原因:" + err.message);
+				}
+				res.json({
+					result: 1
+				})
+			});
+			conn.release();
 		});
 	}
 }
