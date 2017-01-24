@@ -5,13 +5,14 @@
         <link rel='stylesheet' href='/stylesheets/reset.css'/>
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/resumeindex.css">
+        <link rel="shortcut icon" href="/images/favicon.ico">
     </head>
     <body ng-app="myApp">
         <div class="slimbox" id="slimboxs">
             <div class="slimimg">
                 <img src="/images/slims.png" alt="">
             </div>
-            <a href="#">
+            <a href="#/blogindexs.html">
                 <div class="mybloginter">
                     <h1>Slim。</h1>
                     <span>个人博客</span>
@@ -34,9 +35,26 @@
         </div> -->
     </body>
     <script src="/javascripts/angular.min.js"></script>
+    <script src="/javascripts/angular-route.min.js"></script>
     <script src="/javascripts/resumeindex.js"></script>
     <script>
-        var app = angular.module("myApp", []);
+        var app = angular.module("myApp", ["ngRoute"]);
+
+        //配置路由
+        app.config(function($routeProvider) {
+
+            //配置博客主页
+            $routeProvider
+            .when("/blogindexs", {
+                templateUrl: "/templates/blogindexs.html",
+                controller: "blogindexsCtrl"
+            })
+        });
+
+        app.controller("blogindexsCtrl", function() {
+
+        });
+
         app.controller("myskillCtrl", function($scope, $http, $sce) {
             $http({
                 url: "./",
