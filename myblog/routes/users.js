@@ -36,9 +36,17 @@ router.post('/indexs', function(req, res) {
 		//获取技能和内容
 		skillModel.skillAdd(req, res);
 	} else if(req.body["showskill"]) {
+
+		//展示技能内容
 		skillModel.myskillShow(req, res);
 	} else if(req.body["skidel"]) {
+
+		//删除技能内容
 		skillModel.skillDel(req, res);
+	} else if(req.body["reviseskill"]) {
+
+		//修改技能内容
+		skillModel.skillRevise(req, res);
 	} else {
 
 		//获取名字

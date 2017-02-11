@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-02-05 07:25:29
+-- Generation Time: 2017-02-11 13:55:09
 -- 服务器版本： 5.7.14
 -- PHP Version: 5.6.25
 
@@ -131,7 +131,7 @@ ALTER TABLE `phoneadmin`
 -- 使用表AUTO_INCREMENT `t_skilltitle`
 --
 ALTER TABLE `t_skilltitle`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- 使用表AUTO_INCREMENT `webadmin`
 --

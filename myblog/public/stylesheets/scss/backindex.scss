@@ -135,7 +135,7 @@ body {
 }
 #content {
 	position: relative;
-	height: 500px;
+	min-height: 500px;
 }
 .welcomebox {
 	width: 100%;
@@ -384,5 +384,13 @@ body {
 			color: #f93;
 			box-shadow: 0 0 0 1px #f93;
 		}
+	}
+}
+/*修改技能页面布局*/
+.reviseskillbox {
+	.btn-primary {
+		display: block;
+		width: 15%;
+		margin: 0 auto;
 	}
 }

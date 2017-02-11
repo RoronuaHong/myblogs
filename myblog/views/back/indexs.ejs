@@ -99,6 +99,10 @@
 				templateUrl: "/templates/resumes/myskill.html",
 				controller: "myskillCtrl"
 			})
+			.when("/reviseskill", {
+				templateUrl: "/templates/resumes/reviseskill.html",
+				controller: "reviseskillCtrl"
+			})
 			.when("/showskill", {
 				templateUrl: "/templates/resumes/showskill.html",
 				controller: "showskillCtrl"
@@ -306,33 +310,43 @@
 			}
 		});
 
-		app.controller("headerControl", function($scope, $http, $interval) {
-			$scope.date = new Date();
+		app.controller("reviseskillCtrl", function($scope, $http, $sce) {
+			function showSki() {
+				$http({
+					url: "#/reviseskill",
+					method: "POST",
+					type: "json",
+					data: {
+						showskill: 1
+					}
+				})
+				.success(function(data) {
+					$scope.list = data.arr;
+				})
+				.error(function(data) {
+					console.log(data);
+				});
+			}
 
-			$interval(function() {
-				$scope.date = new Date();
-			}, 1000);
+			new showSki();
 
-			$http({
-				url: "/users/indexs",
-				method: "POST",
-				dataType: "json"
-			})
-			.success(function(data) {
-				$scope.username = data.name;
-			})
-			.error(function(data) {
-				console.log(data);
-			});
-		});
-		app.controller("buttonControl", function($scope, $element) {
-			$element.on("click", function() {
-				if($element.hasClass("active")) {
-					$element.removeClass("active");
-				} else {
-					$element.addClass("active");
-				}
-			});
+			$scope.reviseBtn = function() {
+				$http({
+					url: "#/reviseskill",
+					method: "POST",
+					type: "json",
+					data: {
+						arr: $scope.list,
+						reviseskill: 1
+					}
+				})
+				.success(function(data) {
+					console.log(data);
+				})
+				.error(function(data) {
+					console.log(data);
+				})
+			}
 		});
 
 		//技能列表控制器
@@ -373,7 +387,6 @@
 					}
 				})
 				.success(function(data) {
-					console.log(data);
 					if(data.result == 1) {
 						new showSki();
 					}
@@ -382,6 +395,35 @@
 					console.log(data);
 				});
 			}
+		});
+
+		app.controller("headerControl", function($scope, $http, $interval) {
+			$scope.date = new Date();
+
+			$interval(function() {
+				$scope.date = new Date();
+			}, 1000);
+
+			$http({
+				url: "/users/indexs",
+				method: "POST",
+				dataType: "json"
+			})
+			.success(function(data) {
+				$scope.username = data.name;
+			})
+			.error(function(data) {
+				console.log(data);
+			});
+		});
+		app.controller("buttonControl", function($scope, $element) {
+			$element.on("click", function() {
+				if($element.hasClass("active")) {
+					$element.removeClass("active");
+				} else {
+					$element.addClass("active");
+				}
+			});
 		});
 
 		//定义导航控制器
@@ -428,6 +470,10 @@
 						{
 							title: "添加技能",
 							link: "#/myskill"
+						},
+						{
+							title: "修改技能",
+							link: "#/reviseskill"
 						},
 						{
 							title: "技能列表",

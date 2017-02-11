@@ -118,5 +118,22 @@ module.exports = {
 			});
 			conn.release();
 		});
+	},
+	skillRevise: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			var selectskilltitleSql = "select name from t_skilltitle where name=?";
+
+			var skilltitleSql = "update t_skilltitle set (name, process, content) values (?,?,?)";
+
+			var params = req.body["arr"];
+			console.log(params);
+		});
 	}
 }
