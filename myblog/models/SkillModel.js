@@ -95,6 +95,7 @@ module.exports = {
 					arr: skillarrs
 				});
 			});
+			conn.release();
 		});
 	},
 	skillDel: function(req, res) {
@@ -128,12 +129,25 @@ module.exports = {
 				return;
 			}
 
-			var selectskilltitleSql = "select name from t_skilltitle where name=?";
+			var pars = req.body["arr"];
 
-			var skilltitleSql = "update t_skilltitle set (name, process, content) values (?,?,?)";
+			var reviseskilltitleSql = "update t_skilltitle set name=?, process=?, content=? where id=?";
 
-			var params = req.body["arr"];
-			console.log(params);
+			for(var i = 0; i < pars.length; i++) {
+				var params = [pars[i].name, pars[i].pro, pars[i].cons, pars[i].id];
+				conn.query(reviseskilltitleSql, params, function(err, rs) {
+					if(err) {
+						res.send("获取连接错误,错误原因:" + err.message);
+						return;
+					}
+				});
+				if(i === pars.length - 1) {
+					res.json({
+						result: 1
+					});
+				}
+			}
+			conn.release();
 		});
 	}
 }

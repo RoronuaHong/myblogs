@@ -16,22 +16,24 @@
 							</div>
 						</div>
 						<div class="conts">
+						<form action="" name="reviseform">
 							<div class="row" ng-repeat="i in list">
 								<div class="col-md-3">
-									<input class="form-control" ng-model="i.name">
+									<input class="form-control" ng-model="i.name" ng-required="true">
 								</div>
 								<div class="col-md-2">
-									<input class="form-control" ng-model="i.pro">
+									<input class="form-control" ng-required="true" ng-model="i.pro" ng-pattern="/^([1-9]\d?(\.\d{1,2})?|0\.\d{1,2}|100)%$/">
 								</div>
 								<div class="col-md-7">
-									<input class="form-control" ng-model="i.cons">
+									<input class="form-control" ng-model="i.cons" ng-required="true">
 								</div>
 							</div>
+						</form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<button class="btn btn-primary" ng-click="reviseBtn()">修改</button>
+			<button class="btn btn-primary" ng-click="reviseBtn()" ng-disabled="reviseform.$invalid">修改</button>
 		</div>
 	</div>
 </div>
