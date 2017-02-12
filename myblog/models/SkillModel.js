@@ -143,7 +143,8 @@ module.exports = {
 				});
 				if(i === pars.length - 1) {
 					res.json({
-						result: 1
+						result: 1,
+						message: "完成修改"
 					});
 				}
 			}

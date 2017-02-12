@@ -295,7 +295,7 @@
 						$scope.skillShows = true;
 						if(data.result == 1) {
 							$scope.messages = data.message;
-						}else if(data.result == 0) {
+						} else if(data.result == 0) {
 							$scope.skillShows = false;
 							$scope.messages = data.message;
 						}
@@ -341,7 +341,9 @@
 					}
 				})
 				.success(function(data) {
-					console.log(data);
+					if(data.result == 1) {
+						$scope.messages = data.message;
+					}
 				})
 				.error(function(data) {
 					console.log(data);

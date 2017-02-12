@@ -1,5 +1,22 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-align-justify"></i>Slim。的技能列表</h1>
 <div class="reviseskillbox">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel" ng-bind="messages"></h4>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains">
+						确定
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="col-md-12 column">
 			<div class="row">
@@ -33,7 +50,7 @@
 					</div>
 				</div>
 			</div>
-			<button class="btn btn-primary" ng-click="reviseBtn()" ng-disabled="reviseform.$invalid">修改</button>
+			<button class="btn btn-primary" ng-click="reviseBtn()" ng-disabled="reviseform.$invalid" data-toggle="modal" data-target="#myModal">修改</button>
 		</div>
 	</div>
 </div>
