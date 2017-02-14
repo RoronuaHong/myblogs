@@ -12,7 +12,7 @@
             <div class="slimimg">
                 <img src="/images/slims.png" alt="">
             </div>
-            <a href="#/blogindexs.html">
+            <a href="/blogindex">
                 <div class="mybloginter">
                     <h1>Slim。</h1>
                     <span>个人博客</span>
@@ -40,20 +40,20 @@
     <script>
         var app = angular.module("myApp", ["ngRoute"]);
 
-        //配置路由
-        app.config(function($routeProvider) {
+        // //配置路由
+        // app.config(function($routeProvider) {
 
-            //配置博客主页
-            $routeProvider
-            .when("/blogindexs", {
-                templateUrl: "/templates/blogindexs.html",
-                controller: "blogindexsCtrl"
-            })
-        });
+        //     //配置博客主页
+        //     $routeProvider
+        //     .when("/blogindexs", {
+        //         templateUrl: "/templates/blogindexs.html",
+        //         controller: "blogindexsCtrl"
+        //     })
+        // });
 
-        app.controller("blogindexsCtrl", function() {
+        // app.controller("blogindexsCtrl", function() {
 
-        });
+        // });
 
         app.controller("myskillCtrl", function($scope, $http, $sce) {
             $http({
