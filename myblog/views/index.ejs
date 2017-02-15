@@ -40,21 +40,6 @@
     <script>
         var app = angular.module("myApp", ["ngRoute"]);
 
-        // //配置路由
-        // app.config(function($routeProvider) {
-
-        //     //配置博客主页
-        //     $routeProvider
-        //     .when("/blogindexs", {
-        //         templateUrl: "/templates/blogindexs.html",
-        //         controller: "blogindexsCtrl"
-        //     })
-        // });
-
-        // app.controller("blogindexsCtrl", function() {
-
-        // });
-
         app.controller("myskillCtrl", function($scope, $http, $sce) {
             $http({
                 url: "./",

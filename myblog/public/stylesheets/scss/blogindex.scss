@@ -1,6 +1,103 @@
-@import "./mixin.scss";
-@import "./navbar.scss";
+@import "./reset.css";
 
+body {
+	width: 100%;
+	height: 100%;
+	background: #d1e9e9 !important;
+	font-family: "Microsoft YaHei";
+}
 .navbar {
-	background: #020202\9;
+	width: 100%;
+	min-height: 150px;
+	line-height: 150px;
+	background: #cffbfb;
+	border-bottom: 2px solid #fff;
+	.navbar-inner {
+		width: 100%;
+		height: 100%;
+		line-height: 150px;
+	}
+	.navbar-brand {
+		position: relative;
+		height: 100%;
+		line-height: 115px;
+		margin-left: 50px;
+		font-family: 'Shojumaru',cursive,Arial,serif;
+		font-size: 30px;
+		color: #f93;
+		&:hover {
+			color: #fff;
+		}
+	}
+	.navbar-brand::before {
+		position: absolute;
+		top: 45px;
+		left: -50px;
+		display: block;
+		width: 70px;
+		height: 50px;
+		content: "";
+		background: url("/images/slimlogo.png") center center no-repeat;
+		background-size: 60%;
+		animation: logos 3s linear infinite;
+	}
+	@keyframes logos {
+		0% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+}
+.blogtitle {
+	float: right;
+	width: 70% !important;
+	height: 150px;
+	line-height: 150px;
+/* 	li {
+		float: left;
+		height: 95%;
+		padding: 0 3%; */
+		a {
+			float: left;
+			/* display: block;
+			height: 150px;
+			padding: 0 3% !important; */
+			font-size: 25px;
+			color: #70f;
+			font-family: "Microsoft YaHei";
+			text-decoration: none;
+			text-shadow: -1px -1px rgba(197, 223, 248,0.8),-2px -2px rgba(197, 223, 248,0.8),-3px -3px rgba(197, 223, 248,0.8),-4px -4px rgba(197, 223, 248,0.8),-5px -5px rgba(197, 223, 248,0.8),-6px -6px rgba(197, 223, 248,0.8);
+			&:hover {
+				color: #566F89;
+  				text-shadow: 1px 1px 0 #E4F1FF;
+			}
+		}
+		.lisel {
+			color: #fff;
+			text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
+		}
+	/* } */
+}
+.navbar-toggle {
+	float: left;
+	margin-left: 3%;
+	border-color: #272b2e;
+	&:hover {
+		background: #272b2e;
+	}
+}
+.active {
+	box-shadow: 0 0 7px rgb(0,255,40);
+	border: solid 1px white;
+}
+.animated.flip {
+	animation-name: flip;
+}
+.icon-bar {
+	background: #c8c8c8;
 }

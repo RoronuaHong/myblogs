@@ -3,22 +3,118 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Slim。微博主页</title>
-	<link rel="stylesheet" href="/stylesheets/reset.css">
 	<link rel="stylesheet" href="/stylesheets/blogindex.css">
 	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 	<link rel="shortcut icon" href="/images/favicon.ico">
 </head>
 <body ng-app="blogApp">
-	<div class="navbar">
-		<div class="navbar-inner">
-			<button type="button" data-toggle="collapse" data-target="#example-navbar-collapse" class="navbar-toggle animated flip">
-				<!-- <span class="sr-only"></span> -->
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a href="/blogindex" class="navbar-brand">Slim。博客主页</a>
+	<div class="container">
+		<div class="navbar">
+			<!-- <div class="navbar-inner clearfix" ng-controller="navCtrl">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+					<span class="sr-only"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class="sidebar-nav clearfix">
+					<a href="/blogindex nav navbar-nav" class="navbar-brand">Slim。的博客</a>
+					<ul class="blogtitle ">
+						<li ng-repeat="item in lilist">
+							<a href="{{item.link}}" ng-bind="item.title"></a>
+						</li>
+					</ul>
+				</div>
+			</div> -->
+		</div>
+		<div class="blog-contentbox">
+			<div ng-view></div>
 		</div>
 	</div>
+	<script src="/javascripts/angular.min.js"></script>
+	<script src="/javascripts/angular-route.min.js"></script>
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script>
+		var app = angular.module("blogApp", ["ngRoute"]);
+
+		app.config(function($routeProvider) {
+
+			//配置导航栏
+			$routeProvider
+			.when("/javascript", {
+				templateUrl: "/templates/myblog/javascript/javascriptindex.html",
+				controller: "jsindexCtrl"
+			})
+			.when("/nodejs", {
+				templateUrl: "/templates/myblog/nodejs/nodejsindex.html",
+				controller: "nodejsCtrl"
+			})
+			.when("/webframework", {
+				templateUrl: "/templates/myblog/webframework/webframeworkindex.html",
+				controller: "webframeworkCtrl"
+			})
+			.when("/joke", {
+				templateUrl: "/templates/myblog/joke/jokeindex.html",
+				controller: "jokeCtrl"
+			})
+		});
+
+		//博客首页控制器
+		app.controller("indexCtrl", function($scope) {
+
+		});
+
+		//JavaScript首页控制器
+		app.controller("jsindexCtrl", function($scope) {
+
+		});
+
+		//NodeJS首页控制器
+		app.controller("nodejsCtrl", function($scope) {
+
+		});
+
+		//webframework首页控制器
+		app.controller("webframeworkCtrl", function($scope) {
+
+		});
+
+		//joke首页控制器
+		app.controller("jokeCtrl", function($scope) {
+
+		});
+
+		app.controller("navCtrl", function($scope) {
+
+			//实现导航栏模块
+			$scope.lilist = [
+				{
+					title: "首页",
+					link: "/blogindex"
+				},
+				{
+					title: "JavaScript",
+					link: "#/javascript"
+				},
+				{
+					title: "NodeJS",
+					link: "#/nodejs"
+				},
+				{
+					title: "web框架",
+					link: "#/webframework"
+				},
+				{
+					title: "趣味",
+					link: "#/joke"
+				},
+				{
+					title: "陈鸿",
+					link: "/"
+				}
+			];
+		});
+	</script>
 </body>
 </html>
