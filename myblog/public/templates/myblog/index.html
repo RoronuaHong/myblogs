@@ -1,0 +1,11 @@
+<div class="indexbannerbox" id="indexbannerboxs" ng-controller="bannerimg">
+	<div ng-repeat="imgitem in imglist" ng-class="{lisel: imgitem.imgshow}" ng-mouseover="mouseover()" ng-mouseleave="mouseleave()" class="imgli">
+		<a href="{{imgitem.links}}">
+			<img src="{{imgitem.src}}" alt="">
+		</a>
+	</div>
+	<div class="directionbox">
+		<span class="left" ng-click="Lefts()"><</span>
+		<span class="right" ng-click="Rights()">></span>
+	</div>
+</div>

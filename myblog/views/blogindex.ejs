@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Slim。微博主页</title>
 	<link rel="stylesheet" href="/stylesheets/blogindex.css">
 	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
@@ -9,39 +10,49 @@
 </head>
 <body ng-app="blogApp">
 	<div class="container">
-		<div class="navbar">
-			<!-- <div class="navbar-inner clearfix" ng-controller="navCtrl">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-					<span class="sr-only"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<div class="sidebar-nav clearfix">
-					<a href="/blogindex nav navbar-nav" class="navbar-brand">Slim。的博客</a>
-					<ul class="blogtitle ">
-						<li ng-repeat="item in lilist">
-							<a href="{{item.link}}" ng-bind="item.title"></a>
-						</li>
-					</ul>
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="navbar" ng-controller="navCtrl">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+								data-target="#example-navbar-collapse" id="toggle">
+							<span class="sr-only">切换导航</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a href="/blogindex" class="navbar-brand">Slim。的博客</a>
+					</div>
+					<div class="collapse navbar-collapse" id="example-navbar-collapse">
+						<ul class="navbar-nav">
+							<li ng-repeat="item in lilist">
+								<a href="{{item.link}}" ng-bind="item.title" ng-class="{lisel:item.classnames}" ng-click="Show(item)"></a>
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div> -->
-		</div>
-		<div class="blog-contentbox">
-			<div ng-view></div>
+				<div class="blog-contentbox">
+					<div ng-view></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="/javascripts/angular.min.js"></script>
 	<script src="/javascripts/angular-route.min.js"></script>
+	<script src="/javascripts/angular-animate.min.js"></script>
 	<script src="/javascripts/jquery.min.js"></script>
 	<script src="/javascripts/bootstrap.min.js"></script>
 	<script>
-		var app = angular.module("blogApp", ["ngRoute"]);
+		var app = angular.module("blogApp", ["ngRoute", "ngAnimate"]);
 
 		app.config(function($routeProvider) {
 
 			//配置导航栏
 			$routeProvider
+			.when("/", {
+				templateUrl: "/templates/myblog/index.html",
+				controller: "indexCtrl"
+			})
 			.when("/javascript", {
 				templateUrl: "/templates/myblog/javascript/javascriptindex.html",
 				controller: "jsindexCtrl"
@@ -85,13 +96,13 @@
 
 		});
 
-		app.controller("navCtrl", function($scope) {
+		app.controller("navCtrl", function($scope, $location) {
 
 			//实现导航栏模块
 			$scope.lilist = [
 				{
 					title: "首页",
-					link: "/blogindex"
+					link: "/blogindex/#"
 				},
 				{
 					title: "JavaScript",
@@ -114,6 +125,98 @@
 					link: "/"
 				}
 			];
+
+			//根据路径实现TAB切换
+			for(var i in $scope.lilist) {
+				if($location.$$path == ($scope.lilist[i].link).split("#")[1] || ($scope.lilist[i].link).split("#")[1] == "") {
+					$scope.lilist[i].classnames = "lisel";
+				}
+			}
+
+			//点击实现TAB切换
+			$scope.Show = function(show) {
+				for(var i in $scope.lilist) {
+					$scope.lilist[i].classnames = "";
+				}
+				show.classnames = "lisel";
+			}
+		});
+
+		/*****************************首页轮播效果****************************/
+		app.controller("bannerimg", function($scope, $http, $interval) {
+			$scope.imglist = [
+				{
+					src: "/images/loginbg2.jpg",
+					links: "www.baidu.com"
+				},
+				{
+					src: "/images/loginbg3.jpg",
+					links: "www.baidu.com"
+				},
+				{
+					src: "/images/loginbg4.jpg",
+					links: "www.baidu.com"
+				},
+				{
+					src: "/images/loginbg5.jpg",
+					links: "www.baidu.com"
+				},
+				{
+					src: "/images/loginbg6.jpg",
+					links: "www.jd.com"
+				}
+			];
+
+			//设置显示隐藏功能
+			$scope.imglist[0].imgshow = "lisel";
+
+			var nums = 1;
+			function Mouse() {
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+				}
+
+				$scope.imglist[nums].imgshow = "lisel";
+				nums++;
+				if(nums >= $scope.imglist.length) {
+					nums = 0;
+				}
+			}
+			var timers = $interval(Mouse, 2000);
+
+			//实现hover效果
+			$scope.mouseover = function() {
+				$interval.cancel(timers);
+			}
+			$scope.mouseleave = function() {
+				timers = $interval(Mouse, 2000);
+			}
+
+			//实现点击效果
+			$scope.Lefts = function() {
+				$interval.cancel(timers);
+				nums--;
+				if(nums < 0) {
+					nums = $scope.imglist.length - 1;
+				}
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+				}
+
+				$scope.imglist[nums].imgshow = "lisel";
+			}
+			$scope.Rights = function() {
+				$interval.cancel(timers);
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+				}
+				$scope.imglist[nums].imgshow = "lisel";
+
+				nums++;
+				if(nums >= $scope.imglist.length) {
+					nums = 0;
+				}
+			}
 		});
 	</script>
 </body>

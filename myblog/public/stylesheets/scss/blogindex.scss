@@ -1,8 +1,6 @@
 @import "./reset.css";
 
 body {
-	width: 100%;
-	height: 100%;
 	background: #d1e9e9 !important;
 	font-family: "Microsoft YaHei";
 }
@@ -10,8 +8,8 @@ body {
 	width: 100%;
 	min-height: 150px;
 	line-height: 150px;
+	margin-bottom: 0px !important;
 	background: #cffbfb;
-	border-bottom: 2px solid #fff;
 	.navbar-inner {
 		width: 100%;
 		height: 100%;
@@ -53,40 +51,32 @@ body {
 		}
 	}
 }
-.blogtitle {
-	float: right;
-	width: 70% !important;
-	height: 150px;
-	line-height: 150px;
-/* 	li {
-		float: left;
-		height: 95%;
-		padding: 0 3%; */
-		a {
-			float: left;
-			/* display: block;
-			height: 150px;
-			padding: 0 3% !important; */
-			font-size: 25px;
-			color: #70f;
-			font-family: "Microsoft YaHei";
-			text-decoration: none;
-			text-shadow: -1px -1px rgba(197, 223, 248,0.8),-2px -2px rgba(197, 223, 248,0.8),-3px -3px rgba(197, 223, 248,0.8),-4px -4px rgba(197, 223, 248,0.8),-5px -5px rgba(197, 223, 248,0.8),-6px -6px rgba(197, 223, 248,0.8);
-			&:hover {
-				color: #566F89;
-  				text-shadow: 1px 1px 0 #E4F1FF;
-			}
+.navbar-nav {
+	li {
+		text-align: center;
+	}
+	a {
+		margin: 0 25px;
+		font-size: 25px;
+		color: #70f;
+		font-family: "Microsoft YaHei";
+		text-align: center;
+		text-decoration: none !important;
+		text-shadow: -1px -1px rgba(197, 223, 248,0.8),-2px -2px rgba(197, 223, 248,0.8),-3px -3px rgba(197, 223, 248,0.8),-4px -4px rgba(197, 223, 248,0.8),-5px -5px rgba(197, 223, 248,0.8),-6px -6px rgba(197, 223, 248,0.8);
+		&:hover {
+			color: #566F89;
+				text-shadow: 1px 1px 0 #E4F1FF;
 		}
-		.lisel {
-			color: #fff;
-			text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
-		}
-	/* } */
+	}
+	.lisel {
+		color: #fff;
+		text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;
+	}
 }
 .navbar-toggle {
 	float: left;
 	margin-left: 3%;
-	border-color: #272b2e;
+	border-color: #fff !important;
 	&:hover {
 		background: #272b2e;
 	}
@@ -100,4 +90,54 @@ body {
 }
 .icon-bar {
 	background: #c8c8c8;
+}
+#toggle {
+	margin-top: 50px !important;
+}
+/*实现banner的轮播功能*/
+.indexbannerbox {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 500px;
+	.imgli {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		margin: auto;
+		opacity: 0;
+		transition: all linear 0.5s;
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.lisel {
+		opacity: 1;
+	}
+}
+.directionbox {
+	position: relative;
+	span {
+		position: absolute;
+		display: block;
+		width: 65px;
+		height: 50px;
+		line-height: 50px;
+		font-size: 60px;
+		text-align: center;
+		color: #fff;
+		cursor: pointer;
+	}
+	.left {
+		top: 225px;
+		left: 0;
+	}
+	.right {
+		top: 225px;
+		right: 0;
+	}
 }
