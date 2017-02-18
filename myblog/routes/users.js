@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require("../models/UserModel");
 var PageListModel = require("../models/PageListModel");
 var skillModel = require("../models/SkillModel.js");
+var bannerModel = require("../models/BannerModel.js");
 
 /* GET users listing. */
 router.all('/', function(req, res, next) {
@@ -47,6 +48,10 @@ router.post('/indexs', function(req, res) {
 
 		//修改技能内容
 		skillModel.skillRevise(req, res);
+	} else if(req.body["blogbans"]) {
+
+		//展示banner内容
+		bannerModel.showBanner(req, res);
 	} else {
 
 		//获取名字

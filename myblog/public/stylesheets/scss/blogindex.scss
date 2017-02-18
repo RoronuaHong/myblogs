@@ -121,6 +121,8 @@ body {
 }
 .directionbox {
 	position: relative;
+	top: 0;
+	left: 0;
 	span {
 		position: absolute;
 		display: block;
@@ -139,5 +141,25 @@ body {
 	.right {
 		top: 225px;
 		right: 0;
+	}
+	.orderlistbox {
+		position: absolute;
+		width: 100%;
+		left: 0px;
+		top: 450px;
+		height: 20px;
+		text-align: center;
+		li {
+			display: inline-block;
+			width: 15px;
+			height: 15px;
+			margin: 0 10px;
+			background: #ccc;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		.ordershow {
+			background: #f93;
+		}
 	}
 }

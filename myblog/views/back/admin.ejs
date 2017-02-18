@@ -94,15 +94,15 @@
 							num: 1
 						}
 					})
-					.success(function(data) {
-						if(data.result == 0) {
-							$scope.phoneError = data.message;
-						} else if(data.result == 1) {
+					.then(function(data) {
+						if(data.data.result == 0) {
+							$scope.phoneError = data.data.message;
+						} else if(data.data.result == 1) {
 							window.location.href = "/users/indexs";
 						}
 					})
-					.error(function(data) {
-						console.log(data);
+					.catch(function(data) {
+						console.log(data.data);
 					});
 				} else if($scope.showFirst.second && $scope.webforms.$valid) {
 					$http({
@@ -115,15 +115,15 @@
 							num: 2
 						}
 					})
-					.success(function(data) {
-						if(data.result == 0) {
-							$scope.webError = data.message;
-						} else if(data.result == 1) {
+					.then(function(data) {
+						if(data.data.result == 0) {
+							$scope.webError = data.data.message;
+						} else if(data.data.result == 1) {
 							window.location.href = "/users/indexs";
 						}
 					})
-					.error(function(data) {
-						console.log(data);
+					.catch(function(data) {
+						console.log(data.data);
 					});
 				}
 			}

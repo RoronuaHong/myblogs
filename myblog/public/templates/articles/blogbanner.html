@@ -1,0 +1,39 @@
+<h1 class="htitle"><i class="glyphicon glyphicon-hdd"></i>首页banner</h1>
+<div class="container">
+	<div class="contitle">
+		<img src="/images/slimlogo.png" alt="" class="mylogo">
+	</div>
+	<div class="row blogtitle">
+		<div class="col-md-12 column">
+			<div class="col-md-5">banner图片</div>
+			<div class="col-md-5">banner链接</div>
+			<div class="col-md-2">删除</div>
+		</div>
+	</div>
+	<div class="blogbannerbox">
+		<dl ng-repeat="num in imgNum" class="blogbannerlist clearfix">
+			<div class="col-md-5">
+				<dt>
+					<input type="file" ng-model="num.src">
+					<img src="{num.src}" alt="">
+				</dt>
+			</div>
+			<div class="col-md-5">
+				<dd>
+					<input type="text" class="form-control" ng-model="num.link">
+				</dd>
+			</div>
+			<div class="col-md-2">
+				<dd class="delete" ng-click="deleteSome()">X</dd>
+			</div>
+		</dl>
+		<div class="row buttongrp">
+			<div class="col-md-6">
+				<button class="btn btn-primary">完成</button>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-success" ng-click="addSome()">添加</button>
+			</div>
+		</div>
+	</div>
+</div>

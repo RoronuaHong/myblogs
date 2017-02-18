@@ -57,6 +57,10 @@
 	<script>
 		var app = angular.module("myApp", ["ngRoute"]);
 
+		app.config(["$locationProvider",function($locationProvider){
+			$locationProvider.hashPrefix("");
+		}]);
+
 		app.config(function($routeProvider) {
 
 			//配置用户模块路由，用户模块应该有三个路由，创建用户，用户详情，用户列表
@@ -85,6 +89,10 @@
 			.when("/createarticle", {
 				templateUrl: "/templates/articles/create.html",
 				controller: "createArticleCtrl"
+			})
+			.when("/blogbanners", {
+				templateUrl: "/templates/articles/blogbanner.html",
+				controller: "blogbannersCtrl"
 			})
 			.when("/articlelist/:pageNum", {
 				templateUrl: "/templates/articles/info.html",
@@ -136,12 +144,12 @@
 						pagenum: $scope.num
 					}
 				})
-				.success(function(data) {
-					$scope.allsum = data.datasum;
-					$scope.pagelists = data.result;
+				.then(function(data) {
+					$scope.allsum = data.data.datasum;
+					$scope.pagelists = data.data.result;
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				});
 			}
 
@@ -158,13 +166,13 @@
 						ids: ids
 					}
 				})
-				.success(function(data) {
-					if(data.result == 1) {
+				.then(function(data) {
+					if(data.data.result == 1) {
 						new newList();
 					}
 				})
-				.error(function(data) {
-					console.log("->" + data);
+				.catch(function(data) {
+					console.log("->" + data.data);
 				})
 			}
 		});
@@ -186,12 +194,12 @@
 						pagenum: $scope.num
 					}
 				})
-				.success(function(data) {
-					$scope.allsums = data.datasum;
-					$scope.pagelists = data.result;
+				.then(function(data) {
+					$scope.allsums = data.data.datasum;
+					$scope.pagelists = data.data.result;
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				});
 			}
 			new newLists();
@@ -207,13 +215,13 @@
 						ids: ids
 					}
 				})
-				.success(function(data) {
-					if(data.result == 1) {
+				.then(function(data) {
+					if(data.data.result == 1) {
 						new newLists();
 					}
 				})
-				.error(function(data) {
-					console.log("->" + data);
+				.catch(function(data) {
+					console.log("->" + data.data);
 				})
 			}
 		});
@@ -226,6 +234,53 @@
 		//创建文章控制器
 		app.controller("createArticleCtrl", function($scope) {
 
+		});
+
+		//首页banner设置
+		app.controller("blogbannersCtrl", function($scope, $http) {
+
+			//读取banner功能
+			$http({
+				url: "#/blogbanners",
+				method: "POST",
+				dataType: "json",
+				data: {
+					blogbans: 1
+				}
+			})
+			.then(function(data) {
+				$scope.num.src = data.data.img;
+				$scope.num.link = data.data.link;
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+
+			$scope.num = 1;
+			$scope.imgNum = [];
+			$scope.imgNum.push({
+				img: $scope.num.src,
+				link: $scope.num.link
+			});
+
+			console.log($scope.imgNum);
+
+			//实现添加功能
+			$scope.addSome = function() {
+				$scope.num++;
+				$scope.imgNum.push({
+					img: $scope.num.src,
+					link: $scope.link
+				});
+			}
+
+			//实现删除功能
+			$scope.deleteSome = function() {
+				if($scope.num > 1) {
+					$scope.num--;
+					$scope.imgNum.splice($scope.num, 1);
+				}
+			}
 		});
 
 		//文章信息控制器
@@ -290,17 +345,17 @@
 							repeatdata: $scope.repeatdata
 						}
 					})
-					.success(function(data) {
+					.then(function(data) {
 						$scope.skillShows = true;
-						if(data.result == 1) {
-							$scope.messages = data.message;
-						} else if(data.result == 0) {
+						if(data.data.result == 1) {
+							$scope.messages = data.data.message;
+						} else if(data.data.result == 0) {
 							$scope.skillShows = false;
-							$scope.messages = data.message;
+							$scope.messages = data.data.message;
 						}
 					})
-					.error(function(data) {
-						console.log(data);
+					.catch(function(data) {
+						console.log(data.data);
 					});
 		        } else {
 		        	$scope.skillShows = false;
@@ -319,11 +374,11 @@
 						showskill: 1
 					}
 				})
-				.success(function(data) {
-					$scope.list = data.arr;
+				.then(function(data) {
+					$scope.list = data.data.arr;
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				});
 			}
 
@@ -339,13 +394,13 @@
 						reviseskill: 1
 					}
 				})
-				.success(function(data) {
-					if(data.result == 1) {
-						$scope.messages = data.message;
+				.then(function(data) {
+					if(data.data.result == 1) {
+						$scope.messages = data.data.message;
 					}
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				})
 			}
 		});
@@ -361,16 +416,16 @@
 						showskill: 1
 					}
 				})
-				.success(function(data) {
+				.then(function(data) {
 
-					for(var i = 0; i < data.arr.length; i++) {
-						data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/;/g, "<br>"));
+					for(var i = 0; i < data.data.arr.length; i++) {
+						data.data.arr[i].cons = $sce.trustAsHtml(data.data.arr[i].cons.replace(/;/g, "<br>"));
 					}
 
-					$scope.list = data.arr;
+					$scope.list = data.data.arr;
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				});
 			}
 
@@ -387,13 +442,13 @@
 						ids: ids
 					}
 				})
-				.success(function(data) {
-					if(data.result == 1) {
+				.then(function(data) {
+					if(data.data.result == 1) {
 						new showSki();
 					}
 				})
-				.error(function(data) {
-					console.log(data);
+				.catch(function(data) {
+					console.log(data.data);
 				});
 			}
 		});
@@ -410,11 +465,11 @@
 				method: "POST",
 				dataType: "json"
 			})
-			.success(function(data) {
-				$scope.username = data.name;
+			.then(function(data) {
+				$scope.username = data.data.name;
 			})
-			.error(function(data) {
-				console.log(data);
+			.catch(function(data) {
+				console.log(data.data);
 			});
 		});
 		app.controller("buttonControl", function($scope, $element) {
@@ -454,6 +509,10 @@
 				{
 					title: "文章模块",
 					childList: [
+						{
+							title: "首页banner",
+							link: "#/blogbanners"
+						},
 						{
 							title: "文章列表",
 							//对于用户列表，我们发送请求的时候，要携带请求的页码
@@ -543,11 +602,11 @@
 							num: 1
 						}
 					})
-					.success(function(data) {
-						$scope.messages = data.message;
+					.then(function(data) {
+						$scope.messages = data.data.message;
 					})
-					.error(function(data) {
-						console.log(data);
+					.catch(function(data) {
+						console.log(data.data);
 					});
 				} else if($scope.showFirst.second && $scope.webforms.$valid) {
 					$http({
@@ -561,11 +620,11 @@
 							num: 2
 						}
 					})
-					.success(function(data) {
-						$scope.messages = data.message;
+					.then(function(data) {
+						$scope.messages = data.data.message;
 					})
-					.error(function(data) {
-						console.log(data);
+					.catch(function(data) {
+						console.log(data.data);
 					});
 				}
 			}

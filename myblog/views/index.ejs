@@ -46,22 +46,22 @@
                 method: "POST",
                 type: "json"
             })
-            .success(function(data) {
+            .then(function(data) {
 
                 //设置多种颜色
                 var colors = ["myjavascript", "mynodejs", "myothers"];
 
                 $scope.colors = [];
 
-                for(var i = 0; i < data.arr.length; i++) {
-                    $scope.colors[data.arr[i].id] = colors[Math.floor(Math.random() * 3)];
-                    data.arr[i].cons = $sce.trustAsHtml(data.arr[i].cons.replace(/;/g, "<br>"));
+                for(var i = 0; i < data.data.arr.length; i++) {
+                    $scope.colors[data.data.arr[i].id] = colors[Math.floor(Math.random() * 3)];
+                    data.data.arr[i].cons = $sce.trustAsHtml(data.data.arr[i].cons.replace(/;/g, "<br>"));
                 }
 
-                $scope.list = data.arr;
+                $scope.list = data.data.arr;
 
                 //实例化
-                var resumefunction = new Resumes(data.arr);
+                var resumefunction = new Resumes(data.data.arr);
 
                 //实现技能表效果
                 resumefunction.skillfunc();
@@ -73,8 +73,8 @@
                 resumefunction.skillShow();
 
             })
-            .error(function(data) {
-                console.log(data);
+            .catch(function(data) {
+                console.log(data.data);
             });
         });
     </script>

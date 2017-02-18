@@ -45,6 +45,10 @@
 	<script>
 		var app = angular.module("blogApp", ["ngRoute", "ngAnimate"]);
 
+		app.config(["$locationProvider",function($locationProvider){
+			$locationProvider.hashPrefix("");
+		}]);
+
 		app.config(function($routeProvider) {
 
 			//配置导航栏
@@ -164,23 +168,31 @@
 				{
 					src: "/images/loginbg6.jpg",
 					links: "www.jd.com"
+				},
+				{
+					src: "/images/loginbg1.jpg",
+					links: "www.jd.com"
 				}
 			];
 
 			//设置显示隐藏功能
 			$scope.imglist[0].imgshow = "lisel";
+			$scope.imglist[0].ordershow = "orderli";
 
-			var nums = 1;
+			var nums = 0;
 			function Mouse() {
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-				}
-
-				$scope.imglist[nums].imgshow = "lisel";
 				nums++;
+
 				if(nums >= $scope.imglist.length) {
 					nums = 0;
 				}
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+					$scope.imglist[i].ordershow = "";
+				}
+
+				$scope.imglist[nums].imgshow = "lisel";
+				$scope.imglist[nums].ordershow = "orderli";
 			}
 			var timers = $interval(Mouse, 2000);
 
@@ -201,21 +213,37 @@
 				}
 				for(var i = 0; i < $scope.imglist.length; i++) {
 					$scope.imglist[i].imgshow = "";
+					$scope.imglist[i].ordershow = "";
 				}
 
 				$scope.imglist[nums].imgshow = "lisel";
+				$scope.imglist[nums].ordershow = "orderli";
 			}
 			$scope.Rights = function() {
 				$interval.cancel(timers);
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-				}
-				$scope.imglist[nums].imgshow = "lisel";
-
 				nums++;
 				if(nums >= $scope.imglist.length) {
 					nums = 0;
 				}
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+					$scope.imglist[i].ordershow = "";
+				}
+				$scope.imglist[nums].imgshow = "lisel";
+				$scope.imglist[nums].ordershow = "orderli";
+
+			}
+
+			//点击切换banner
+			$scope.orderClick = function(ordernum) {
+				$interval.cancel(timers);
+				nums = ordernum;
+				for(var i = 0; i < $scope.imglist.length; i++) {
+					$scope.imglist[i].imgshow = "";
+					$scope.imglist[i].ordershow = "";
+				}
+				$scope.imglist[ordernum].imgshow = "lisel";
+				$scope.imglist[ordernum].ordershow = "orderli";
 			}
 		});
 	</script>

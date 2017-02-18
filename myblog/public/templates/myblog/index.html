@@ -7,5 +7,8 @@
 	<div class="directionbox">
 		<span class="left" ng-click="Lefts()"><</span>
 		<span class="right" ng-click="Rights()">></span>
+		<ul class="orderlistbox clearfix">
+			<li ng-repeat="imgitem in imglist" ng-class="{ordershow: imgitem.ordershow}" ng-click="orderClick($index)"></li>
+		</ul>
 	</div>
 </div>
