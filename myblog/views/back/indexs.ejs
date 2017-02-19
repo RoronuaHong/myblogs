@@ -240,45 +240,122 @@
 		app.controller("blogbannersCtrl", function($scope, $http) {
 
 			//读取banner功能
-			$http({
-				url: "#/blogbanners",
-				method: "POST",
-				dataType: "json",
-				data: {
-					blogbans: 1
-				}
-			})
-			.then(function(data) {
-				$scope.num.src = data.data.img;
-				$scope.num.link = data.data.link;
-			})
-			.catch(function(data) {
-				console.log(data);
-			});
+			function ReadBanner() {
+				$http({
+					url: "#/blogbanners",
+					method: "POST",
+					dataType: "json",
+					data: {
+						blogbans: 1
+					}
+				})
+				.then(function(data) {
+					$scope.readNum = data.data.arr;
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
 
-			$scope.num = 1;
+			new ReadBanner();
+
+			$scope.nums = 0;
 			$scope.imgNum = [];
-			$scope.imgNum.push({
-				img: $scope.num.src,
-				link: $scope.num.link
-			});
-
-			console.log($scope.imgNum);
+			// $scope.imgNum.push({
+			// 	img: $scope.img,
+			// 	link: $scope.link
+			// });
 
 			//实现添加功能
 			$scope.addSome = function() {
-				$scope.num++;
+				$scope.nums++;
 				$scope.imgNum.push({
-					img: $scope.num.src,
-					link: $scope.link
+					img: $scope.nums.img,
+					link: $scope.nums.link
 				});
 			}
 
 			//实现删除功能
 			$scope.deleteSome = function() {
-				if($scope.num > 1) {
-					$scope.num--;
-					$scope.imgNum.splice($scope.num, 1);
+				if($scope.nums > 0) {
+					$scope.nums--;
+					$scope.imgNum.splice($scope.nums, 1);
+				}
+			}
+
+			//实现删除功能
+			$scope.deleteSomes = function(ids) {
+				$http({
+					url: "#/blogbanners",
+					method: "POST",
+					dataType: "json",
+					data: {
+						delbans: 1,
+						ids: ids
+					}
+				})
+				.then(function(data) {
+					if(data.data.result == 1) {
+						new ReadBanner();
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			//实现图片完成功能
+			$scope.bannercomplete = function() {
+				var newArr = [];
+
+				for(var i = 0; i < $scope.readNum.length; i++) {
+					newArr.push($scope.readNum[i]);
+				}
+
+				for(var i = 0; i < $scope.imgNum.length; i++) {
+					newArr.push($scope.imgNum[i]);
+				}
+
+				$http({
+					url: "#/blogbanners",
+					method: "POST",
+					dataType: "json",
+					data: {
+						addbans: 1,
+						arr: newArr
+					}
+				})
+				.then(function(data) {
+					// console.log(data);
+				})
+				.catch(function(data) {
+					console.log(data);
+				})
+			}
+		});
+
+		//实现上传banner功能
+		app.directive("fileModel", function() {
+			return {
+				restrict: "A",
+				link: function(scope, element, attrs) {
+					element.on("change", function(event) {
+						var file = this.files[0];
+						if(!/image\/\w+/.test(file.type)) {
+							alert("不是图像格式");
+							return false;
+						}
+						var reader = new FileReader();
+
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							drawToCanvas(this.result);
+						}
+
+						function drawToCanvas(imgData) {
+				            scope.nums.img = imgData;
+						}
+					});
 				}
 			}
 		});

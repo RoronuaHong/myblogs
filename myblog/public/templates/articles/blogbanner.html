@@ -11,25 +11,43 @@
 		</div>
 	</div>
 	<div class="blogbannerbox">
-		<dl ng-repeat="num in imgNum" class="blogbannerlist clearfix">
-			<div class="col-md-5">
-				<dt>
-					<input type="file" ng-model="num.src">
-					<img src="{num.src}" alt="">
-				</dt>
-			</div>
-			<div class="col-md-5">
-				<dd>
-					<input type="text" class="form-control" ng-model="num.link">
-				</dd>
-			</div>
-			<div class="col-md-2">
-				<dd class="delete" ng-click="deleteSome()">X</dd>
-			</div>
-		</dl>
+		<form action="" name="fileform">
+			<dl ng-repeat="nums in readNum" class="blogbannerlist clearfix">
+				<div class="col-md-5">
+					<dt>
+						<input type="file" ng-model="nums.img" name="imginput" file-model="myFile" ng-required="true">
+						<img ng-src="{{nums.img}}" alt="">
+					</dt>
+				</div>
+				<div class="col-md-5">
+					<dd>
+						<input type="text" class="form-control" ng-model="nums.link" ng-required="true">
+					</dd>
+				</div>
+				<div class="col-md-2">
+					<dd class="delete" ng-click="deleteSomes(nums.id)">X</dd>
+				</div>
+			</dl>
+			<dl ng-repeat="nums in imgNum" class="blogbannerlist clearfix">
+				<div class="col-md-5">
+					<dt>
+						<input type="file" ng-model="nums.img" file-model="myFile" ng-required="true">
+						<img ng-src="{{nums.img}}" alt="">
+					</dt>
+				</div>
+				<div class="col-md-5">
+					<dd>
+						<input type="text" class="form-control" ng-model="nums.link" ng-required="true">
+					</dd>
+				</div>
+				<div class="col-md-2">
+					<dd class="delete" ng-click="deleteSome()">X</dd>
+				</div>
+			</dl>
+		</form>
 		<div class="row buttongrp">
 			<div class="col-md-6">
-				<button class="btn btn-primary">完成</button>
+				<button class="btn btn-primary" ng-disabled="fileform.$invalid && fileform.$dirty" ng-click="bannercomplete()">完成</button>
 			</div>
 			<div class="col-md-6">
 				<button class="btn btn-success" ng-click="addSome()">添加</button>

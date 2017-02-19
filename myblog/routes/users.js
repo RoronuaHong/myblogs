@@ -52,6 +52,14 @@ router.post('/indexs', function(req, res) {
 
 		//展示banner内容
 		bannerModel.showBanner(req, res);
+	} else if(req.body["delbans"]) {
+
+		//删除banner内容
+		bannerModel.delBanner(req, res);
+	} else if(req.body["addbans"]) {
+
+		//添加banner内容
+		bannerModel.addBanner(req, res);
 	} else {
 
 		//获取名字
