@@ -1,5 +1,22 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-hdd"></i>首页banner</h1>
 <div class="container">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel" ng-bind="messages"></h4>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains">
+						确定
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="contitle">
 		<img src="/images/slimlogo.png" alt="" class="mylogo">
 	</div>
@@ -47,7 +64,7 @@
 		</form>
 		<div class="row buttongrp">
 			<div class="col-md-6">
-				<button class="btn btn-primary" ng-disabled="fileform.$invalid && fileform.$dirty" ng-click="bannercomplete()">完成</button>
+				<button class="btn btn-primary" ng-disabled="fileform.$invalid && fileform.$dirty" ng-click="bannercomplete()" data-toggle="modal" data-target="#myModal">完成</button>
 			</div>
 			<div class="col-md-6">
 				<button class="btn btn-success" ng-click="addSome()">添加</button>

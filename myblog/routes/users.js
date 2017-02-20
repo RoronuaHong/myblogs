@@ -21,8 +21,9 @@ router.get('/indexs', function(req, res) {
 
 router.post('/indexs', function(req, res) {
 
-	//用户录入
 	if(req.body["num"]) {
+
+		//用户录入
 		userModel.register(req, res);
 	} else if(req.body["pagenum"]) {
 
@@ -59,7 +60,7 @@ router.post('/indexs', function(req, res) {
 	} else if(req.body["addbans"]) {
 
 		//添加banner内容
-		bannerModel.addBanner(req, res);
+		bannerModel.changeBanner(req, res);
 	} else {
 
 		//获取名字

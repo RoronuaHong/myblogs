@@ -306,27 +306,18 @@
 
 			//实现图片完成功能
 			$scope.bannercomplete = function() {
-				var newArr = [];
-
-				for(var i = 0; i < $scope.readNum.length; i++) {
-					newArr.push($scope.readNum[i]);
-				}
-
-				for(var i = 0; i < $scope.imgNum.length; i++) {
-					newArr.push($scope.imgNum[i]);
-				}
-
 				$http({
 					url: "#/blogbanners",
 					method: "POST",
 					dataType: "json",
 					data: {
 						addbans: 1,
-						arr: newArr
+						oldarr: $scope.readNum,
+						newarr: $scope.imgNum
 					}
 				})
 				.then(function(data) {
-					// console.log(data);
+					$scope.messages = data.data.message;
 				})
 				.catch(function(data) {
 					console.log(data);

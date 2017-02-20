@@ -1,7 +1,9 @@
 var connPool = require("./ConnPool");
+var fs = require("fs");
+var async = require("async");
 
 module.exports = {
-	addBanner: function(req, res) {
+	changeBanner: function(req, res) {
 		pool = connPool();
 
 		pool.getConnection(function(err, conn) {
@@ -10,19 +12,114 @@ module.exports = {
 				return;
 			}
 
-			var addSql = "insert into blogbanner (img, link) values (?,?)";
-			var arrs = req.body["arr"];
+			var oldSql = "update blogbanner set img=?, link=? where id=?";
+			var newSql = "insert into blogbanner (img, link) values (?,?)";
+			var oldarrs = req.body["oldarr"];
+			var newarrs = req.body["newarr"];
 
-			for(var i = 0; i < arrs.length; i++) {
-				var params = [arrs[i].img, arrs[i].link];
+			//随机生成6位的随机数
+			var oldimg = [];
+			var newimg = [];
 
-				conn.query(addSql, params, function(err, rs) {
-					if(err) {
-						res.send("数据库错误,错误原因:" + err.message);
+			//设置转换后的图片位置
+			var imgData = [];
+			var imgDatas = [];
+
+			// for(var i = 0; i < oldarrs.length; i++) {
+			// 	var ransSum = parseInt(Math.random() * 1000000);
+			// 	if(/image\/\w+/.test(oldarrs[i].img)) {
+			// 		imgData[i] = (oldarrs[i].img).replace(/^data:image\/\w+;base64,/, "");
+			// 		oldimg[i] = new Buffer(imgData[i], "base64");
+			// 		oldarrs[i].img = "public/images/" + new Date().getTime() + ransSum +".png";
+
+			// 		//写入文件
+			// 		fs.writeFile(oldarrs[i].img, oldimg[i], function(err) {
+			// 			if(err) {
+			// 				console.log("写入成功");
+			// 			} else {
+			// 				console.log("写入成功");
+			// 			}
+			// 		});
+			// 	}
+
+			// 	var oldparams = [(oldarrs[i].img).replace(/public/gi, ""), oldarrs[i].link, oldarrs[i].id];
+
+			// 	conn.query(oldSql, oldparams, function(err, rs) {
+			// 		if(err) {
+			// 			res.send("获取连接错误,错误原因:" + err.message);
+			// 			return;
+			// 		}
+			// 	});
+			// }
+			// conn.release();
+			async.series({
+				one: function(callback) {
+					var rss = [];
+					for(var i = 0; i < oldarrs.length; i++) {
+						var ransSum = parseInt(Math.random() * 1000000);
+						if(/image\/\w+/.test(oldarrs[i].img)) {
+							imgData[i] = (oldarrs[i].img).replace(/^data:image\/\w+;base64,/, "");
+							oldimg[i] = new Buffer(imgData[i], "base64");
+							oldarrs[i].img = "public/images/" + new Date().getTime() + ransSum +".png";
+
+							//写入文件
+							fs.writeFile(oldarrs[i].img, oldimg[i], function(err) {
+								if(err) {
+									console.log("写入成功");
+								} else {
+									console.log("写入成功");
+								}
+							});
+						}
+
+						var oldparams = [(oldarrs[i].img).replace(/public/gi, ""), oldarrs[i].link, oldarrs[i].id];
+
+						conn.query(oldSql, oldparams, function(err, rs) {
+							if(err) {
+								res.send("获取连接错误,错误原因:" + err.message);
+								return;
+							}
+							rss.push(rs);
+						});
 					}
+					callback(null, rss);
+				},
+				two: function(callback) {
+					var rss2 = [];
+					for(var i = 0; i < newarrs.length; i++) {
+						var ransSum = parseInt(Math.random() * 1000000);
+						if(/image\/\w+/.test(newarrs[i].img)) {
+							imgDatas[i] = (newarrs[i].img).replace(/^data:image\/\w+;base64,/, "");
+							newimg[i] = new Buffer(imgDatas[i], "base64");
+							newarrs[i].img = "public/images/" + new Date().getTime() + ransSum +".png";
 
+							//写入文件
+							fs.writeFile(newarrs[i].img, newimg[i], function(err) {
+								if(err) {
+									console.log("写入成功");
+								} else {
+									console.log("写入成功");
+								}
+							});
+						}
+
+						var newparams = [(newarrs[i].img).replace(/public/gi, ""), newarrs[i].link, newarrs[i].id];
+
+						conn.query(newSql, newparams, function(err, rs) {
+							if(err) {
+								res.send("获取连接错误,错误原因:" + err.message);
+								return;
+							}
+							rss2.push(rs);
+						});
+					}
+					callback(null, rss2);
+				}
+			}, function(err, results) {
+				res.json({
+					message: "添加成功"
 				});
-			}
+			});
 			conn.release();
 		});
 	},

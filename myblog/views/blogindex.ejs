@@ -148,32 +148,49 @@
 
 		/*****************************首页轮播效果****************************/
 		app.controller("bannerimg", function($scope, $http, $interval) {
+			// $http({
+			// 	url: "/blogindex",
+			// 	method: "POST",
+			// 	dataType: "json",
+			// 	data: {
+			// 		bannerget: 1
+			// 	}
+			// })
+			// .then(function(data) {
+			// 	console.log(data);
+			// 	$scope.imglist = data.data.arr;
+			// 	console.log($scope.imglist)
+			// })
+			// .catch(function(data) {
+			// 	console.log(data);
+			// });
 			$scope.imglist = [
 				{
-					src: "/images/loginbg2.jpg",
-					links: "www.baidu.com"
+					img: "/images/loginbg2.jpg",
+					link: "www.baidu.com"
 				},
 				{
-					src: "/images/loginbg3.jpg",
-					links: "www.baidu.com"
+					img: "/images/loginbg3.jpg",
+					link: "www.baidu.com"
 				},
 				{
-					src: "/images/loginbg4.jpg",
-					links: "www.baidu.com"
+					img: "/images/loginbg4.jpg",
+					link: "www.baidu.com"
 				},
 				{
-					src: "/images/loginbg5.jpg",
-					links: "www.baidu.com"
+					img: "/images/loginbg5.jpg",
+					link: "www.baidu.com"
 				},
 				{
-					src: "/images/loginbg6.jpg",
-					links: "www.jd.com"
+					img: "/images/loginbg6.jpg",
+					link: "www.jd.com"
 				},
 				{
-					src: "/images/loginbg1.jpg",
-					links: "www.jd.com"
+					img: "/images/loginbg1.jpg",
+					link: "www.jd.com"
 				}
 			];
+			console.log($scope.imglist)
 
 			//设置显示隐藏功能
 			$scope.imglist[0].imgshow = "lisel";
