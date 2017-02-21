@@ -1,4 +1,5 @@
 @import "./reset.css";
+@import "./common.css";
 
 body {
 	background: #d1e9e9 !important;
@@ -160,6 +161,103 @@ body {
 		}
 		.ordershow {
 			background: #f93;
+		}
+	}
+}
+/*微博主页内容*/
+.indexbigbox {
+	width: 100%;
+	margin-top: 20px;
+	overflow: hidden;
+	.leftbox {
+		width: 100%;
+		min-height: 900px;
+		padding: 20px;
+		animation: 1s linear leftenter;
+		.contentbox {
+			width: 100%;
+			height: 280px;
+			margin-bottom: 20px;
+			padding: 10px 5%;
+			box-shadow: 0 0 5px 0 #272b2e,
+						2px 2px 20px 0 #272b2e;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: box-shadow .5s linear;
+			&:hover {
+				box-shadow: 0 0 5px 0 #272b2e;
+			}
+			a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+			}
+			h2 {
+				width: 100%;
+				font-size: 30px;
+				text-shadow: 2px 2px 5px #395985;
+				color: #5bd0fc;
+			}
+			.meta {
+				width: 100%;
+				height: 20px;
+				margin-bottom: 15px;
+				line-height: 20px;
+				.time {
+					width: 100%;
+					font-size: 14px;
+					color: #272b2e;
+				}
+			}
+			.aboutcon {
+				width: 100%;
+				height: 150px;
+				font-size: 16px;
+				color: #272b2e;
+				h3 {
+					width: 100%;
+					font-size: 28px;
+					margin-top: 10px;
+					padding-bottom: 5px;
+					text-indent: 1em;
+					border-bottom: 5px dotted #cef8e8;
+					color: #000;
+				}
+				.con {
+					overflow: hidden;
+					width: 100%;
+					height: 90px;
+					text-indent: 2em;
+					margin: 0;
+				}
+			}
+		}
+	}
+	@keyframes leftenter {
+		from {
+			margin-left: -1200px;
+			opacity: 0;
+		}
+		to {
+			margin-left: 0;
+			opacity: 1;
+		}
+	}
+	.rightbox {
+		width: 100%;
+		min-height: 800px;
+		background: #f00;
+		animation: 1s linear rightenter;
+	}
+	@keyframes rightenter {
+		from {
+			margin-left: 1200px;
+			opacity: 0;
+		}
+		to {
+			margin-left: 0;
+			opacity: 1;
 		}
 	}
 }

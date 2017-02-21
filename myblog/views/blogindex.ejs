@@ -148,119 +148,143 @@
 
 		/*****************************首页轮播效果****************************/
 		app.controller("bannerimg", function($scope, $http, $interval) {
-			// $http({
-			// 	url: "/blogindex",
-			// 	method: "POST",
-			// 	dataType: "json",
-			// 	data: {
-			// 		bannerget: 1
-			// 	}
-			// })
-			// .then(function(data) {
-			// 	console.log(data);
-			// 	$scope.imglist = data.data.arr;
-			// 	console.log($scope.imglist)
-			// })
-			// .catch(function(data) {
-			// 	console.log(data);
-			// });
-			$scope.imglist = [
-				{
-					img: "/images/loginbg2.jpg",
-					link: "www.baidu.com"
-				},
-				{
-					img: "/images/loginbg3.jpg",
-					link: "www.baidu.com"
-				},
-				{
-					img: "/images/loginbg4.jpg",
-					link: "www.baidu.com"
-				},
-				{
-					img: "/images/loginbg5.jpg",
-					link: "www.baidu.com"
-				},
-				{
-					img: "/images/loginbg6.jpg",
-					link: "www.jd.com"
-				},
-				{
-					img: "/images/loginbg1.jpg",
-					link: "www.jd.com"
+			$http({
+				url: "/blogindex",
+				method: "POST",
+				dataType: "json",
+				data: {
+					bannerget: 1
 				}
-			];
-			console.log($scope.imglist)
+			})
+			.then(function(data) {
+				$scope.imglist = data.data.arr;
 
-			//设置显示隐藏功能
-			$scope.imglist[0].imgshow = "lisel";
-			$scope.imglist[0].ordershow = "orderli";
+				//设置显示隐藏功能
+				$scope.imglist[0].imgshow = "lisel";
+				$scope.imglist[0].ordershow = "orderli";
 
-			var nums = 0;
-			function Mouse() {
-				nums++;
+				var nums = 0;
+				function Mouse() {
+					nums++;
 
-				if(nums >= $scope.imglist.length) {
-					nums = 0;
+					if(nums >= $scope.imglist.length) {
+						nums = 0;
+					}
+					for(var i = 0; i < $scope.imglist.length; i++) {
+						$scope.imglist[i].imgshow = "";
+						$scope.imglist[i].ordershow = "";
+					}
+
+					$scope.imglist[nums].imgshow = "lisel";
+					$scope.imglist[nums].ordershow = "orderli";
 				}
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-					$scope.imglist[i].ordershow = "";
+				var timers = $interval(Mouse, 2000);
+
+				//实现hover效果
+				$scope.mouseover = function() {
+					$interval.cancel(timers);
+				}
+				$scope.mouseleave = function() {
+					timers = $interval(Mouse, 2000);
 				}
 
-				$scope.imglist[nums].imgshow = "lisel";
-				$scope.imglist[nums].ordershow = "orderli";
-			}
-			var timers = $interval(Mouse, 2000);
+				//实现点击效果
+				$scope.Lefts = function() {
+					$interval.cancel(timers);
+					nums--;
+					if(nums < 0) {
+						nums = $scope.imglist.length - 1;
+					}
+					for(var i = 0; i < $scope.imglist.length; i++) {
+						$scope.imglist[i].imgshow = "";
+						$scope.imglist[i].ordershow = "";
+					}
 
-			//实现hover效果
-			$scope.mouseover = function() {
-				$interval.cancel(timers);
-			}
-			$scope.mouseleave = function() {
-				timers = $interval(Mouse, 2000);
-			}
-
-			//实现点击效果
-			$scope.Lefts = function() {
-				$interval.cancel(timers);
-				nums--;
-				if(nums < 0) {
-					nums = $scope.imglist.length - 1;
+					$scope.imglist[nums].imgshow = "lisel";
+					$scope.imglist[nums].ordershow = "orderli";
 				}
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-					$scope.imglist[i].ordershow = "";
+				$scope.Rights = function() {
+					$interval.cancel(timers);
+					nums++;
+					if(nums >= $scope.imglist.length) {
+						nums = 0;
+					}
+					for(var i = 0; i < $scope.imglist.length; i++) {
+						$scope.imglist[i].imgshow = "";
+						$scope.imglist[i].ordershow = "";
+					}
+					$scope.imglist[nums].imgshow = "lisel";
+					$scope.imglist[nums].ordershow = "orderli";
+
 				}
 
-				$scope.imglist[nums].imgshow = "lisel";
-				$scope.imglist[nums].ordershow = "orderli";
-			}
-			$scope.Rights = function() {
-				$interval.cancel(timers);
-				nums++;
-				if(nums >= $scope.imglist.length) {
-					nums = 0;
+				//点击切换banner
+				$scope.orderClick = function(ordernum) {
+					$interval.cancel(timers);
+					nums = ordernum;
+					for(var i = 0; i < $scope.imglist.length; i++) {
+						$scope.imglist[i].imgshow = "";
+						$scope.imglist[i].ordershow = "";
+					}
+					$scope.imglist[ordernum].imgshow = "lisel";
+					$scope.imglist[ordernum].ordershow = "orderli";
 				}
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-					$scope.imglist[i].ordershow = "";
-				}
-				$scope.imglist[nums].imgshow = "lisel";
-				$scope.imglist[nums].ordershow = "orderli";
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+		});
 
-			}
+		/*内容块控制器*/
+		app.controller("indexbigCtrl", function($scope) {
 
-			//点击切换banner
-			$scope.orderClick = function(ordernum) {
-				$interval.cancel(timers);
-				nums = ordernum;
-				for(var i = 0; i < $scope.imglist.length; i++) {
-					$scope.imglist[i].imgshow = "";
-					$scope.imglist[i].ordershow = "";
+		});
+
+		//返回顶部功能
+		app.directive("returnTop", function() {
+			return {
+				restrict: "A",
+				link: function(scope, jqlite, attrs) {
+					var posX = 0;
+			    	var scrollBottom = 50;
+			    	timer = 0;
+					window.onscroll = function() {
+						var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+						if(scrolltop >= 300) {
+							jqlite.css({
+								opacity: 1,
+								zIndex: 200
+							});
+						} else {
+							jqlite.css({
+								opacity: 0,
+								zIndex: -1
+							});
+						}
+					}
+					jqlite.on("click", function() {
+						function show() {
+			    			this.style.background = "url(/images/rocket.png) " + posX + "px 0px no-repeat";
+			    			document.body.scrollTop -= 30;
+			    			scrollBottom += 10;
+			    			console.log(scrollBottom)
+			    			this.style.bottom = scrollBottom + "px";
+			    			if(posX > -750) {
+			    				posX -= 150;
+			    			} else {
+			    				posX = -150;
+			    			}
+			    			if(document.body.scrollTop == 0) {
+			    				clearInterval(timer);
+			    				this.style.background = "url(/images/rocket.png) 0px 0px no-repeat";
+			    				posX = 0;
+			    				scrollBottom = 0;
+			    				this.style.bottom = 50 + "px";
+			    			}
+			    		}
+			    		timer = setInterval(show,16);
+					});
 				}
-				$scope.imglist[ordernum].imgshow = "lisel";
-				$scope.imglist[ordernum].ordershow = "orderli";
 			}
 		});
 	</script>

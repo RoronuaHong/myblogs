@@ -1,7 +1,11 @@
+<div class="returnTop" return-top>
+	<em class="em1"></em>
+	<em class ="em2"></em>
+</div>
 <div class="indexbannerbox" id="indexbannerboxs" ng-controller="bannerimg">
 	<div ng-repeat="imgitem in imglist" ng-class="{lisel: imgitem.imgshow}" ng-mouseover="mouseover()" ng-mouseleave="mouseleave()" class="imgli">
-		<a href="{{imgitem.links}}">
-			<img src="{{imgitem.src}}" alt="">
+		<a href="{{imgitem.link}}">
+			<img src="{{imgitem.img}}" alt="">
 		</a>
 	</div>
 	<div class="directionbox">
@@ -10,5 +14,43 @@
 		<ul class="orderlistbox clearfix">
 			<li ng-repeat="imgitem in imglist" ng-class="{ordershow: imgitem.ordershow}" ng-click="orderClick($index)"></li>
 		</ul>
+	</div>
+</div>
+<div class="indexbigbox" ng-controller="indexbigCtrl">
+	<div class="col-md-8 column">
+		<div class="leftbox">
+			<div class="contentbox">
+				<a href="">
+					<h2>JavaScript数组方法合集</h2>
+					<div class="meta">
+						<div class="time">2017-01-15 19:00:00</div>
+					</div>
+					<div class="aboutcon">
+						<h3>前言</h3>
+						<p class="con">12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。</p>
+					</div>
+				</a>
+			</div>
+			<div class="contentbox">
+				<a href="">
+					<h2></h2>
+				</a>
+			</div>
+			<div class="contentbox">
+				<a href="">
+					<h2></h2>
+				</a>
+			</div>
+			<div class="contentbox">
+				<a href="">
+					<h2></h2>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 column">
+		<div class="rightbox">
+			
+		</div>
 	</div>
 </div>
