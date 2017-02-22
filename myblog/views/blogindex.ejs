@@ -245,9 +245,15 @@
 			return {
 				restrict: "A",
 				link: function(scope, jqlite, attrs) {
+
+					//设置初始位置
+					jqlite.css({
+						top: ($(window).height() - 150) + "px"
+					});
+
 					var posX = 0;
-			    	var scrollBottom = 50;
 			    	timer = 0;
+
 					window.onscroll = function() {
 						var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
 						if(scrolltop >= 300) {
@@ -263,23 +269,36 @@
 						}
 					}
 					jqlite.on("click", function() {
+						$(".em2").show();
 						function show() {
-			    			this.style.background = "url(/images/rocket.png) " + posX + "px 0px no-repeat";
+							$(".em2").css({
+								background: "url(/images/rocket.png) " + (posX - 33) + "px -15px no-repeat",
+							});
+
 			    			document.body.scrollTop -= 30;
-			    			scrollBottom += 10;
-			    			console.log(scrollBottom)
-			    			this.style.bottom = scrollBottom + "px";
+			    			jqlite.css({
+			    				top: "-500px",
+			    				transition: "all linear 1s"
+			    			});
 			    			if(posX > -750) {
 			    				posX -= 150;
 			    			} else {
 			    				posX = -150;
 			    			}
 			    			if(document.body.scrollTop == 0) {
-			    				clearInterval(timer);
-			    				this.style.background = "url(/images/rocket.png) 0px 0px no-repeat";
-			    				posX = 0;
-			    				scrollBottom = 0;
-			    				this.style.bottom = 50 + "px";
+			    				var timers = setTimeout(function() {
+				    				clearInterval(timer);
+				    				$(".em2").hide();
+				    				$(".em2").css({
+										background: "url(/images/rocket.png) -33px -15px no-repeat"
+									});
+
+				    				posX = 0;
+			    					jqlite.css({
+										top: ($(window).height() - 150) + "px",
+										transition: "opacity linear 1s"
+									});
+			    				}, 500);
 			    			}
 			    		}
 			    		timer = setInterval(show,16);
