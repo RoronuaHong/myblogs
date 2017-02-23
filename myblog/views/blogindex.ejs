@@ -73,6 +73,19 @@
 				templateUrl: "/templates/myblog/joke/jokeindex.html",
 				controller: "jokeCtrl"
 			})
+			//游戏列表
+			.when("/thunderplane", {
+				templateUrl: "/templates/myblog/games/thunderplane.html",
+				controller: "thunderplaneCtrl"
+			})
+			.when("/pintu", {
+				templateUrl: "/templates/myblog/games/pintu.html",
+				controller: "pintuCtrl"
+			})
+			.when("/dabingkuai", {
+				templateUrl: "/templates/myblog/games/dabingkuai.html",
+				controller: "dabingkuaiCtrl"
+			})
 		});
 
 		//博客首页控制器
@@ -97,6 +110,16 @@
 
 		//joke首页控制器
 		app.controller("jokeCtrl", function($scope) {
+
+		});
+
+		//雷霆战机控制器
+		app.controller("thunderplaneCtrl", function($scope) {
+
+		});
+
+		//拼图控制器
+		app.controller("pintuCtrl", function($scope) {
 
 		});
 
@@ -146,6 +169,36 @@
 			}
 		});
 
+		//游戏列表控制器
+		app.controller("gamebigboxCtrl", function($scope) {
+			$scope.gamelist = [
+				{
+					face: "雷霆战机",
+					back: "屠龙宝刀，点击就送",
+					link: "#/thunderplane"
+				},
+				{
+					face: "拼图",
+					back: "九宫格拼图游戏",
+					link: "#/pintu"
+				},
+				{
+					face: "雷霆战机",
+					back: "屠龙宝刀，点击就送",
+					link: "#/dabingkuai"
+				},
+				{
+					face: "雷霆战机",
+					back: "屠龙宝刀，点击就送",
+					link: "#/bainsefangkuai"
+				},
+				{
+					face: "雷霆战机",
+					back: "屠龙宝刀，点击就送",
+					link: "#/gouwuche"
+				}
+			];
+		});
 		/*****************************首页轮播效果****************************/
 		app.controller("bannerimg", function($scope, $http, $interval) {
 			$http({

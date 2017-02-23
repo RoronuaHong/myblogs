@@ -343,7 +343,66 @@ a {
 			}
 		}
 		.jokevideobox {
-			width: 100%;
+			width: 90%;
+			margin: 0 5%;
+			background: #6a6663;
+			h4 {
+				width: 100%;
+				font-size: 30px;
+				text-align: center;
+				color: #d3d9d9;
+				text-shadow: 1px 1px 0 #5dcfc9,
+							-1px -1px 0 #3b4f4e;
+			}
+			.videolist {
+				width: 100%;
+				background: #e0c9bc;
+				li {
+					position: relative;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 35px;
+					line-height: 35px;
+					@keyframes LeftRight {
+						from {
+							transform: translateX(0px);
+						}
+						to {
+							transform: translateX(200px);
+						}
+					}
+					a {
+						display: block;
+						width: 100%;
+						height: 100%;
+						font-size: 20px;
+						text-align: center;
+						color: #fff;
+						&:hover {
+							color: #4fcdfa;
+						}
+					}
+				}
+				li:nth-child(odd) {
+					.liang {
+						position: absolute;
+						width: 5px;
+						height: 35px;
+						background: #e0c9bc;
+						animation: LeftRight 2s linear infinite;
+					}
+				}
+				li:nth-child(even) {
+					.liang {
+						position: absolute;
+						width: 10px;
+						height: 35px;
+						background: #e0c9bc;
+						animation: LeftRight 1s linear infinite;
+					}
+				}
+			}
 		}
 	}
 	@keyframes rightenter {

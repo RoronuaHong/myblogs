@@ -1,0 +1,29 @@
+<style>
+	#canvasimg {
+		display: block;
+		position: absolute;
+		top: 200px;
+		left: 50px;
+		width: 600px;
+		height: 600px;
+	}
+	#canvaswhiteimg {
+		display: block;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 200px;
+		height: 200px;
+		opacity: 0;
+	}
+	#mycanvas {
+		position: absolute;
+		top: 200px;
+		left: 700px;
+		border:  1px solid #c3c3c3;
+	}
+</style>
+<img src="/images/pintu/canvas2.jpg" alt="" id="canvasimg">
+<img src="/images/pintu/white.png" alt="" id="canvaswhiteimg">
+<canvas id="mycanvas" width="600", height="600"></canvas>
+<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/pintu.js'"/>

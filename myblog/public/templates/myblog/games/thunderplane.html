@@ -1,0 +1,206 @@
+<style>
+	html {
+		background: skyblue;
+	}
+	.wrap {
+		margin: 0 auto;
+	}
+	.wrap .world {
+		overflow: hidden;
+		position: relative;
+		margin: 30px auto;
+		width: 600px;
+		height: 860px;
+		background: url("/images/thunderplane/bg1.jpg") 0 -20px;
+		background-size: 100%;
+		border-radius: 5px;
+	}
+	.world .gamestart {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background: url("/images/thunderplane/gamestart.png") 0 0 no-repeat;
+		background-size: 100%;
+		z-index: 1;
+	}
+	.gamestart .startbox {
+		position: absolute;
+		top: 590px;
+		left: 230px;
+	}
+	.gamestart .startbox span {
+		display: block;
+		padding: 5px 10px;
+		font-size: 32px;
+		color: white;
+		cursor: pointer;
+	}
+	.gamestart span:hover {
+		color: #f93;
+	}
+	.world .thunderPlane {
+		position: absolute;
+		top: 600px; 
+		left: 280px;
+		width: 60px;
+		height: 60px;
+		background: url("/images/thunderplane/ThunderPlane.png") -89px 0 no-repeat;
+		background-size: 400%;
+	}
+
+	.world .enemyPlane span {
+		display: block;
+		position: absolute;
+		top: 100px; 
+		left: 280px;
+		width: 50px;
+		height: 40px;
+		background: url("/images/thunderplane/enemyPlane1.png") 0 0 no-repeat;
+		background-size: contain;
+	}
+	.world .enemyPlane em {
+		display: block;
+		position: absolute;
+		top: 0px; 
+		left: 20px;
+		width: 40px;
+		height: 40px;
+		background: url("/images/thunderplane/enemyPlane2.png") 0 0 no-repeat;
+		background-size: 342%;
+	}
+	.world .enemyPlane strong {
+		display: block;
+		position: absolute;
+		top: 0px; 
+		left: 20px;
+		width: 40px;
+		height: 60px;
+		background: url("/images/thunderplane/enemyPlane3.png") 0 0 no-repeat;
+		background-size: contain;
+	}
+	.world .thunderBullet span {
+		display: block;
+		position: absolute;
+		left: -500px;
+		width: 8px;
+		height: 20px;
+		background: url("/images/thunderplane/bullets.png") 0 0 no-repeat;
+		background-size: contain;
+	}
+	.world .enemyBullet span {
+		display: block;
+		position: absolute;
+		top: -100px;
+		left: 0;
+		width: 10px;
+		height: 10px;
+		background: url("/images/thunderplane/enemyBullets1.png") 0 0 no-repeat;
+		background-size: cover;
+	}
+	.world .enemyBullet em {
+		display: block;
+		position: absolute;
+		top: -100px;
+		left: 0;
+		width: 10px;
+		height: 10px;
+		background: url("/images/thunderplane/enemyBullets2.png") 0 0 no-repeat;
+		background-size: cover;
+	}
+	.world .enemyBullet strong {
+		display: block;
+		position: absolute;
+		top: -100px;
+		left: 0;
+		width: 10px;
+		height: 10px;
+		background: url("/images/thunderplane/enemyBullets3.png") 0 0 no-repeat;
+		background-size: cover;
+	}
+	.world p {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		font-family: "New York";
+		font-size: 32px;
+		font-weight: bold;
+		color: white;
+	}
+	.world ul {
+		position: absolute;
+		width: 150px;
+		height: 30px;
+		bottom: 0px;
+		left: 0px;
+	}
+	.world ul li {
+		float: left;
+		width: 30px;
+		height: 30px;
+		background: url("/images/thunderplane/thunderHP.png") 0 0 no-repeat;
+		background-size: contain;
+	}
+	.world .gameover {
+		display: none;
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background: url("/images/thunderplane/gameover.png") 0 0 no-repeat;
+		background-size: 100%;
+	}
+	.gameover .endbox {
+		position: absolute;
+		top: 350px;
+		left: 230px;
+	}
+	.gameover .endbox span {
+		display: block;
+		padding: 5px 10px;
+		font-size: 32px;
+		color: white;
+		cursor: pointer;
+	}
+	.gameover span:hover {
+		color: #f93;
+	}
+</style>
+<div class="wrap">
+	<div class="world" id="worlds">
+		<div class="gamestart" id="gamestarts">
+			<div class="startbox">
+				<span id="start">开始游戏</span>
+				<!-- <span id="goals">最高分数</span>	 -->
+			</div>
+		</div>
+		<div class="thunderPlane" id="thunderPlanes"></div>
+		<div class="thunderBullet" id="thunderBullets">
+			
+		</div>
+		<div class="enemyPlane" id="enemyPlanes">
+
+		</div>
+		<div class="enemyBullet" id="enemyBullets">
+			
+		</div>
+		<ul id="hps">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<p id="score"></p>
+		<div class="gameover" id="gameovers">
+			<div class="endbox">
+				<span id="restart">重新开始</span>
+				<!-- <span id="goals">最高分数</span> -->
+			</div>
+		</div>
+	</div>
+</div>
+<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/core.js'"/>
+<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/thunderplane.js'"/>
