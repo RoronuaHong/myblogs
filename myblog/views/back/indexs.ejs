@@ -54,10 +54,12 @@
 	<script src="/javascripts/angular-route.min.js"></script>
 	<script src="/javascripts/jquery.min.js"></script>
 	<script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/xheditor-1.2.2.min.js"></script>
+	<script src="/javascripts/xheditor_lang/zh-cn.js"></script>
 	<script>
 		var app = angular.module("myApp", ["ngRoute"]);
 
-		app.config(["$locationProvider",function($locationProvider){
+		app.config(["$locationProvider",function($locationProvider) {
 			$locationProvider.hashPrefix("");
 		}]);
 
@@ -234,6 +236,15 @@
 		//创建文章控制器
 		app.controller("createArticleCtrl", function($scope) {
 
+		});
+
+		app.directive("inputRight", function() {
+			return {
+				restrict: "A",
+				link: function(scope, jqlite, attr) {
+					console.log(scope);
+				}
+			}
 		});
 
 		//首页banner设置

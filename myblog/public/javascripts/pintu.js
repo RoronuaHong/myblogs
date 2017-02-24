@@ -121,7 +121,7 @@
 			this.WhitePosition();
 
 			switch(e.keyCode) {
-				case 87:case 38:
+				case 87: case 38:
 					this.newbottom = this.whitecheck + 3;
 
 					//交换位置
@@ -154,7 +154,7 @@
 						new ChangeOrder(ctx, img, whites, this.oldarray, this.sumarray, this.newarray, false);
 					};
 					break;
-				case 68:case 39:
+				case 68: case 39:
 					this.newleft = this.whitecheck - 1;
 
 					//交换位置
