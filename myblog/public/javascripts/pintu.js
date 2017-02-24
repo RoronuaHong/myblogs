@@ -12,12 +12,6 @@
 	}
 
 	/**
-	 * [onload description]
-	 * @return {[type]} [description]
-	 */
-	new MainGame();
-
-	/**
 	 * [DrawImages 绘制图片]
 	 * @param {[type]} ctx [画布设置]
 	 * @param {[type]} img [图片设置]
@@ -196,3 +190,9 @@
 			new ChangeOrder(ctx, img, whites, this.oldarray, this.sumarray, this.newarray, false);
 		}
 	}
+
+	/**
+	 * [onload description]
+	 * @return {[type]} [description]
+	 */
+	new MainGame();
