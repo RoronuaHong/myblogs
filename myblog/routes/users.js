@@ -4,6 +4,7 @@ var userModel = require("../models/UserModel");
 var PageListModel = require("../models/PageListModel");
 var skillModel = require("../models/SkillModel.js");
 var bannerModel = require("../models/BannerModel.js");
+var articleModel = require("../models/ArticleModel.js");
 
 /* GET users listing. */
 router.all('/', function(req, res, next) {
@@ -61,6 +62,10 @@ router.post('/indexs', function(req, res) {
 
 		//添加banner内容
 		bannerModel.changeBanner(req, res);
+	} else if(req.body["createart"]) {
+
+		//添加文章
+		articleModel.addArticle(req, res);
 	} else {
 
 		//获取名字

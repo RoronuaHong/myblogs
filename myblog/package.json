@@ -27,6 +27,7 @@
     "lodash.clonedeep": "^4.5.0",
     "mongodb": "^2.2.19",
     "set-immediate-shim": "^1.0.1",
+    "ueditor": "^1.2.0",
     "vinyl-sourcemaps-apply": "^0.2.1"
   }
 }

@@ -19,32 +19,26 @@
 <div class="indexbigbox" ng-controller="indexbigCtrl">
 	<div class="col-md-8 column">
 		<div class="leftbox">
-			<div class="contentbox">
+			<div class="contentbox" ng-repeat="items in prelist">
 				<a href="">
-					<h2>JavaScript数组方法合集</h2>
+					<h2 ng-bind="items.title"></h2>
 					<div class="meta">
-						<div class="time">2017-01-15 19:00:00</div>
+						<div class="time" ng-bind="items.times | date : 'yyyy-MM-dd HH:mm:ss'">
+						</div>
+						<div class="author" ng-bind="items.author"></div>
 					</div>
 					<div class="aboutcon">
 						<h3>前言</h3>
-						<p class="con">12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。12月19日，完美世界正式公布与俄罗斯厂商Gaijin Entertainment达成战略合作，代理其DIY载具对战游戏《创世战车》。19日下午14时，完美世界在751D·PARK北京时尚设计广场79罐召开4D沉浸式发布会，正式公布《创世战车》于12月23日12时开启燃擎首测。</p>
+						<p class="con" ng-bind="items.pre"></p>
 					</div>
 				</a>
 			</div>
-			<div class="contentbox">
-				<a href="">
-					<h2></h2>
-				</a>
-			</div>
-			<div class="contentbox">
-				<a href="">
-					<h2></h2>
-				</a>
-			</div>
-			<div class="contentbox">
-				<a href="">
-					<h2></h2>
-				</a>
+			<div class="pagelist clearfix">
+				<div class="preslist">上一页</div>
+				<ul class="numlist cleafix">
+					<li ng-repeat="items in pagelists" ng-bind="items.lens"></li>
+				</ul>
+				<div class="nextlist">下一页</div>
 			</div>
 		</div>
 	</div>

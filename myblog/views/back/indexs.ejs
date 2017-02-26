@@ -54,8 +54,9 @@
 	<script src="/javascripts/angular-route.min.js"></script>
 	<script src="/javascripts/jquery.min.js"></script>
 	<script src="/javascripts/bootstrap.min.js"></script>
-	<script src="/javascripts/xheditor-1.2.2.min.js"></script>
-	<script src="/javascripts/xheditor_lang/zh-cn.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"> </script>
 	<script>
 		var app = angular.module("myApp", ["ngRoute"]);
 
@@ -234,16 +235,75 @@
 		});
 
 		//创建文章控制器
-		app.controller("createArticleCtrl", function($scope) {
+		app.controller("createArticleCtrl", function($scope, $http) {
 
-		});
-
-		app.directive("inputRight", function() {
-			return {
-				restrict: "A",
-				link: function(scope, jqlite, attr) {
-					console.log(scope);
+			//文章类型列表
+			$scope.btnlist = [
+				{
+					btn: "JavaScript"
+				},
+				{
+					btn: "NodeJS"
+				},
+				{
+					btn: "Web框架"
 				}
+			];
+
+			$scope.subArticle = function() {
+				var btnsel = 0;
+				for(var i in $scope.btnlist) {
+					if($scope.btnlist[i].btnsels == "btnspe") {
+						btnsel++;
+					}
+				}
+
+				if($scope.btnspe || btnsel == 1) {
+					$http({
+						url: "/users/indexs#/createarticle",
+						method: "POST",
+						dataType: "json",
+						data: {
+							btnspe: $scope.btnspe,
+							btnsel: $scope.btnlist[i].btn,
+							createart: 1,
+							title: $scope.titles,
+							author: $scope.authors,
+							pre: $scope.pre,
+							content: $scope.material.content.content,
+							times: (new Date()).getTime()
+						}
+					})
+					.then(function(data) {
+						console.log(data);
+						$scope.messages = data.data.messages;
+						$scope.isShow = true;
+					})
+					.catch(function(data) {
+						console.log(data);
+					});
+				} else {
+					$scope.messages = "请选择文章分类";
+					$scope.isShow = false;
+				}
+			}
+
+			//设置是否为精选文章
+			$scope.btnSpe = function() {
+				if($scope.btnspe) {
+					$scope.btnspe = "";
+				} else {
+					$scope.btnspe = "btnspe";
+				}
+			}
+
+			//为文章 添加分类
+			$scope.Btnsels = function(items) {
+				for(var i in $scope.btnlist) {
+					$scope.btnlist[i].btnsels = "";
+				}
+
+				items.btnsels = "btnspe";
 			}
 		});
 
@@ -480,7 +540,7 @@
 				})
 				.catch(function(data) {
 					console.log(data.data);
-				})
+				});
 			}
 		});
 
@@ -738,6 +798,126 @@
 				}
 			}
 		});
+
+		//百度ueditor
+		app.factory('Common', [
+		  '$http', '$q', function($http, $q) {
+			    return {
+				    loadScript: function(url, callback) {
+				    var head = document.getElementsByTagName("head")[0];
+				    var script = document.createElement("script");
+				    script.setAttribute("type", "text/javascript");
+				    script.setAttribute("src", url);
+				    script.setAttribute("async", true);
+				    script.setAttribute("defer", true);
+				    head.appendChild(script);
+				    //fuck ie! duck type
+				    if (document.all) {
+				      	script.onreadystatechange = function() {
+				       	var state = this.readyState;
+				       	if (state === 'loaded' || state === 'complete') {
+				        	callback && callback();
+				       	}
+			      	}
+			    } else {
+			      	//firefox, chrome
+			      	script.onload = function() {
+			       		callback && callback();
+			      	}
+			    }
+		    },
+		    loadCss: function(url) {
+			    var ele = document.createElement('link');
+			    ele.href = url;
+		    	ele.rel = 'stylesheet';
+		     	if (ele.onload == null) {
+		      		ele.onload = function() {
+		      	};
+		    } else {
+			    ele.onreadystatechange = function() {
+			    };
+		    }
+		    angular.element(document.querySelector('body')).prepend(ele);
+		    }
+		   }
+		  }
+		]);
+
+		app.directive('ueditor', [
+		  'Common',
+		  '$rootScope',
+		  function(Common, $rootScope) {
+		   return {
+		    restrict: 'EA',
+		    require: 'ngModel',
+		    link: function(scope, ele, attrs, ctrl) {
+		     $rootScope.$emit('loading', '初始化编辑器...');//广播loading事件，可以删除
+		     var _self = this,
+		       _initContent,
+		       editor,
+		       editorReady = false,
+		       base = '', //ueditor目录
+		       _id = attrs.ueditor;
+		     var editorHandler = {
+		      init: function() {
+		       window.UEDITOR_HOME_URL = base + '/';
+		       var _self = this;
+		       if (typeof UE != 'undefined') {
+		        	editor = UE.getEditor(_id, {
+		         	toolbars: [
+			          	[
+			           		'fontsize', '|',
+				           	'blockquote', 'horizontal', '|',
+				           	'removeformat', '|',
+				           	'insertimage', '|',
+				           	'bold', 'italic', 'underline', 'forecolor', 'backcolor', '|',
+				           	'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',
+				           	'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+				           	'insertorderedlist', 'insertunorderedlist', '|',
+				           	'link', 'unlink', '|',
+				           	'emotion'
+			          	]
+		         	]
+		        });
+		        editor.ready(function() {
+		         	editor.setHeight(800);
+		         	editorReady = true;
+           		 	$rootScope.$emit('loading', '');//编辑器初始化完成
+		         	editor.addListener('contentChange', function() {//双向绑定
+		          		if (!scope.$$phase) {
+			           		scope.$apply(function() {
+			            		ctrl.$setViewValue(editor.getContent());
+			           		});
+			          	}
+		         	});
+		        });
+		       }
+		       else {
+		        	Common.loadScript(base + '/ueditor.config.js', null);
+		        	Common.loadScript(base + '/ueditor.all.min.js', function() {
+		        	 	_self.init();
+		        	});
+		       	}
+	        },
+	      		setContent: function(content) {
+			        if (editor && editorReady) {
+			        	editor.setContent(content);
+			        }
+		      	}
+		     };
+		     ctrl.$render = function() {
+		      	_initContent = ctrl.$isEmpty(ctrl.$viewValue) ? '' : ctrl.$viewValue;
+		      editorHandler.setContent(_initContent);//双向绑定
+		     };
+		     editorHandler.init();
+		     // 事件
+		     $rootScope.$on('$routeChangeStart', function() {
+  				editor && editor.destroy();
+		     });
+		    }
+		   }
+		  }
+		 ]);
 	</script>
 </body>
 </html>

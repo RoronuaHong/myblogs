@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var skillmodel = require("../models/SkillModel.js");
 var bannerModel = require("../models/BannerModel.js");
+var articleModel = require("../models/ArticleModel.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,6 +24,10 @@ router.post("/blogindex", function(req, res, next) {
 
 		//获取banner内容
 		bannerModel.showBanner(req, res);
+	} else if(req.body["indexbig"]) {
+
+		//显示精选文章
+		articleModel.showArticle(req, res);
 	}
 });
 

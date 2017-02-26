@@ -284,8 +284,33 @@
 		});
 
 		/*内容块控制器*/
-		app.controller("indexbigCtrl", function($scope) {
+		app.controller("indexbigCtrl", function($scope, $http) {
+			$http({
+				url: "/blogindex",
+				method: "POST",
+				type: "json",
+				data: {
+					indexbig: 1,
+					num: 5
+				}
+			})
+			.then(function(data) {
+				console.log(data.data);
+				var n = data.data.titleArr[0].len;
+				$scope.pagelists = [];
 
+				$scope.prelist = data.data.titleArr;
+
+				for(var i = 0; i < n; i++) {
+					$scope.pagelists.push({
+						"lens": (i + 1)
+					})
+				}
+				console.log($scope.pagelists);
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
 		});
 
 		//返回顶部功能

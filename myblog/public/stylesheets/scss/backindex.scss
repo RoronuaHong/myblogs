@@ -444,4 +444,23 @@ body {
 	.col-md-4 {
 		text-align: center;
 	}
+	.btnul {
+		width: 100%;
+		height: 80px;
+		line-height: 80px;
+		li {
+			float: left;
+			width: 100px;
+			margin-right: 5%;
+			height: 35px;
+			text-align: center;
+			color: #fff;
+		}
+		.btnspe {
+			background: #72c5fc;
+			color: #c4d5e0;
+			border-radius: 5px;
+			border-color: #c4d5e0;
+		}
+	}
 }

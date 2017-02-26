@@ -10,7 +10,7 @@
 					<h4 class="modal-title" id="myModalLabel" ng-bind="messages"></h4>
 				</div>
 				<div class="modal-footer">
-					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains">
+					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains" ng-show="isShow">
 						确定
 					</a>
 				</div>
@@ -23,6 +23,12 @@
 	<div class="container">
 		<form action="" name="articleform">
 			<div class="col-md-12 column">
+				<div class="row">
+					<ul class="btnul clearfix">
+						<li ng-class="btnspe" ng-click="btnSpe()" style="line-height: 40px; box-shadow: 0 0 1px #f3f3f3; cursor: pointer;">精选</li>
+						<li ng-repeat="item in btnlist" ng-bind="item.btn" class="btn btn-danger" ng-class="{btnspe: item.btnsels}" ng-click="Btnsels(item)"></li>
+					</ul>
+				</div>
 				<div class="row">
 					<div class="col-md-2 column"></div>
 					<div class="col-md-8 column">
@@ -50,13 +56,15 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 column">
-						<textarea type="text" class="form-control contenttextarea xheditor"></textarea>
+						<!-- <textarea id="container" type="text" class="form-control contenttextarea"></textarea> -->
+						<!-- <script id="container" name="content" type="text/plain" style="height: 800px"></script> -->
+						<div ueditor="editor" ng-required="true" ng-model="material.content.content" id="editor"></div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 column"></div>
 					<div class="col-md-4 column">
-						<button class="btn btn-warning" ng-disabled="articleform.$invalid" data-toggle="modal" data-target="#myModal">提交文章</button>
+						<div class="btn btn-warning" ng-disabled="articleform.$invalid" data-toggle="modal" data-target="#myModal" ng-click="subArticle()">提交文章</div>
 					</div>
 					<div class="col-md-4 column"></div>
 				</div>
@@ -64,5 +72,3 @@
 		</form>
 	</div>
 </div>
-<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/xheditor-1.2.2.min.js'"/>
-<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/xheditor_lang/zh-cn.js'"/>
