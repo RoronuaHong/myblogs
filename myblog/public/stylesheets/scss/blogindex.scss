@@ -257,12 +257,15 @@ a {
 				font-style: bold;
 				text-align: center;
 				color: #272822;
+				box-shadow: 0 0 1px #272822;
 				cursor: pointer;
 				&:hover {
+					box-shadow: 0 0 1px #47b2fa;
 					color: #47b2fa;
 				}
 			}
 			.numlist {
+				/* overflow: hidden; */
 				float: left;
 				width: 60%;
 				height: 50px;

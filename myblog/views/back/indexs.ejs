@@ -252,8 +252,10 @@
 
 			$scope.subArticle = function() {
 				var btnsel = 0;
+				var indexs = 0;
 				for(var i in $scope.btnlist) {
 					if($scope.btnlist[i].btnsels == "btnspe") {
+						indexs = i;
 						btnsel++;
 					}
 				}
@@ -265,7 +267,7 @@
 						dataType: "json",
 						data: {
 							btnspe: $scope.btnspe,
-							btnsel: $scope.btnlist[i].btn,
+							btnsel: $scope.btnlist[indexs].btn,
 							createart: 1,
 							title: $scope.titles,
 							author: $scope.authors,

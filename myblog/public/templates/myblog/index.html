@@ -34,11 +34,11 @@
 				</a>
 			</div>
 			<div class="pagelist clearfix">
-				<div class="preslist">上一页</div>
+				<div class="preslist" ng-click="prebtn()">上一页</div>
 				<ul class="numlist cleafix">
-					<li ng-repeat="items in pagelists" ng-bind="items.lens"></li>
+					<li ng-repeat="items in pagelists | limitTo:5:start" ng-bind="items.lens" ng-class="{pagesels: items.pagesels}" ng-click="ThisPage(items.lens)"></li>
 				</ul>
-				<div class="nextlist">下一页</div>
+				<div class="nextlist" ng-click="nextbtn()">下一页</div>
 			</div>
 		</div>
 	</div>
@@ -53,36 +53,6 @@
 							<span class="back" ng-bind="item.back"></span>
 						</a>
 					</li>
-					<!-- <li>
-						<a href="">
-							<span class="face">啊实打实的</span>
-							<span class="back">什么都不怕</span>
-						</a>
-					</li>
-					<li>
-						<a href="">
-							<span class="face">啊实打实的啊实打实的</span>
-							<span class="back">什么都不怕阿斯顿</span>
-						</a>
-					</li>
-					<li>
-						<a href="">
-							<span class="face">啊实打实的阿斯顿</span>
-							<span class="back">什么都不怕阿斯顿</span>
-						</a>
-					</li>
-					<li>
-						<a href="">
-							<span class="face">啊实</span>
-							<span class="back">什么都不怕</span>
-						</a>
-					</li>
-					<li>
-						<a href="">
-							<span class="face">啊实打实的阿斯顿</span>
-							<span class="back">什么都不怕</span>
-						</a>
-					</li> -->
 				</ul>
 			</div>
 			<div class="jokevideobox">

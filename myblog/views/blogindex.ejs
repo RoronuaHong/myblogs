@@ -285,32 +285,79 @@
 
 		/*内容块控制器*/
 		app.controller("indexbigCtrl", function($scope, $http) {
-			$http({
-				url: "/blogindex",
-				method: "POST",
-				type: "json",
-				data: {
-					indexbig: 1,
-					num: 5
-				}
-			})
-			.then(function(data) {
-				console.log(data.data);
-				var n = data.data.titleArr[0].len;
-				$scope.pagelists = [];
+			var shownum = 1;
+			var pagesizes = 5;
 
-				$scope.prelist = data.data.titleArr;
+			function GetAjax() {
+				$http({
+					url: "/blogindex",
+					method: "POST",
+					type: "json",
+					data: {
+						indexbig: 1,
+						pagesize: pagesizes,
+						pagenum: shownum
+					}
+				})
+				.then(function(data) {
+					console.log(data.data);
+					var n = data.data.result;
 
-				for(var i = 0; i < n; i++) {
-					$scope.pagelists.push({
-						"lens": (i + 1)
-					})
-				}
-				console.log($scope.pagelists);
-			})
-			.catch(function(data) {
-				console.log(data);
-			});
+					$scope.pagelists = [];
+
+					$scope.prelist = data.data.titleArr;
+
+					for(var i = 0; i < n; i++) {
+						$scope.pagelists.push({
+							"lens": (i + 1)
+						});
+					}
+
+					//添加类名
+					for(var i in $scope.pagelists) {
+						$scope.pagelists[i].pagesels = "";
+					}
+					$scope.pagelists[shownum - 1].pagesels = "pagesels";
+
+					//上一页
+					$scope.prebtn = function() {
+						if(shownum > 1) {
+							shownum--;
+						}
+
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+
+						if(shownum <= pagesizes) {
+							$scope.start = 0;
+						}
+						new GetAjax();
+					}
+
+					//下一页
+					$scope.nextbtn = function() {
+						if(shownum < n) {
+							shownum++;
+						}
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+						new GetAjax();
+					}
+
+					//显示当前页
+					$scope.ThisPage = function(len) {
+						shownum = len;
+						new GetAjax();
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			new GetAjax();
 		});
 
 		//返回顶部功能
