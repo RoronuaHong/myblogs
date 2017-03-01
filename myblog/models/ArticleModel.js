@@ -70,55 +70,81 @@ module.exports = {
 			if(req.body["indexbig"]) {
 				var selectspeSql = "select title, author, pre, times from spearticle limit ?,?";
 				var specountSql = "select count(*) from spearticle";
+			}
 
-				var pageSize = req.body["pagesize"];
-				var page = req.body["pagenum"];
+			if(req.body["jsindex"]) {
+				var selectspeSql = "select title, author, pre, times from jsarticle limit ?,?";
+				var specountSql = "select count(*) from jsarticle";
+			}
 
-				//开始的页面数
-				var pointStart = (page - 1) * pageSize;
-				var params = [pointStart, pageSize];
+			if(req.body["nodeindex"]) {
+				var selectspeSql = "select title, author, pre, times from nodearticle limit ?,?";
+				var specountSql = "select count(*) from nodearticle";
+			}
 
-				//获取对象
-				var titleArr = [];
+			if(req.body["webindex"]) {
+				var selectspeSql = "select title, author, pre, times from webarticle limit ?,?";
+				var specountSql = "select count(*) from webarticle";
+			}
 
-				async.series({
-					one: function(callback) {
-						conn.query(specountSql, [], function(err, rs) {
-							if(err) {
-								res.send("获取连接错误,错误原因:" + err.message);
-								return;
-							}
+			var pageSize = req.body["pagesize"];
+			var page = req.body["pagenum"];
 
-							callback(null, rs);
-						});
-					},
-					two: function(callback) {
-						conn.query(selectspeSql, params, function(err, rs) {
-							if(err) {
-								res.send("获取连接错误,错误原因:" + err.message);
-								return;
-							}
+			//开始的页面数
+			var pointStart = (page - 1) * pageSize;
+			var params = [pointStart, pageSize];
 
-							for(var i = 0; i < rs.length; i++) {
-								titleArr.push({
-									"title": rs[i].title,
-									"author": rs[i].author,
-									"pre": rs[i].pre,
-									"times": rs[i].times
-								});
-							}
-							callback(null, rs);
-						});
-					}
-				}, function(err, results) {
-					res.json({
-						titleArr: titleArr,
-						result: Math.ceil(results.one[0]["count(*)"] / pageSize)
+			//获取对象
+			var titleArr = [];
+
+			async.series({
+				one: function(callback) {
+					conn.query(specountSql, [], function(err, rs) {
+						if(err) {
+							res.send("获取连接错误,错误原因:" + err.message);
+							return;
+						}
+
+						callback(null, rs);
 					});
-					console.log(Math.ceil(results.one[0]["count(*)"] / pageSize))
+				},
+				two: function(callback) {
+					conn.query(selectspeSql, params, function(err, rs) {
+						if(err) {
+							res.send("获取连接错误,错误原因:" + err.message);
+							return;
+						}
+
+						for(var i = 0; i < rs.length; i++) {
+							titleArr.push({
+								"title": rs[i].title,
+								"author": rs[i].author,
+								"pre": rs[i].pre,
+								"times": rs[i].times
+							});
+						}
+						callback(null, rs);
+					});
+				}
+			}, function(err, results) {
+				res.json({
+					titleArr: titleArr,
+					result: Math.ceil(results.one[0]["count(*)"] / pageSize)
 				});
-				conn.release();
+				console.log(Math.ceil(results.one[0]["count(*)"] / pageSize))
+			});
+			conn.release();
+		});
+	},
+	showallArticle: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
 			}
 		});
+
 	}
 }

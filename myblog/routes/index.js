@@ -28,6 +28,18 @@ router.post("/blogindex", function(req, res, next) {
 
 		//显示精选文章
 		articleModel.showArticle(req, res);
+	} else if(req.body["jsindex"]) {
+
+		//显示JavaScript文章
+		articleModel.showArticle(req, res);
+	} else if(req.body["nodeindex"]) {
+
+		//显示Node文章
+		articleModel.showArticle(req, res);
+	} else if(req.body["webindex"]) {
+
+		//显示web文章
+		articleModel.showArticle(req, res);
 	}
 });
 

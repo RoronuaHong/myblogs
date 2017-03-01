@@ -1,0 +1,56 @@
+<style>
+	.wrap {
+		position: relative;
+		width: 1200px;
+		height: 1200px;
+		margin: 50px auto;
+	}
+	.box {
+		margin: 50px auto;
+		width: 800px;
+		height: 800px;
+		box-shadow: 0 0 0 5px #70f;
+	}
+	.box span {
+		float: left;
+		display: block;
+		width: 800px;
+		height: 800px;
+		background: skyblue;
+		box-shadow: inset 0 0 0 5px white;
+	}
+	.box .select {
+		background: #f8f;
+	}
+	.score {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 150px;
+		margin: 0 auto;
+		background: #ccc;
+		font-size: 32px;
+		color: white;
+	}
+	.score em {
+		display: block;
+	}
+	.score strong {
+		display: block;
+		width: 150px;
+		height: 50px;
+		cursor: pointer;
+		background: skyblue;
+		box-shadow: 0 0 0 1px #f8f;
+	}
+</style>
+<div class="wrap">
+	<div class="box" id="boxs">
+	</div>
+	<div class="score" id="score">
+		<em id="theLevel">关卡：1</em>
+		<span id="goals">记录：0</span>
+		<strong id="restart">重新开始</strong>
+	</div>
+</div>
+<img style="display: none;" src="about:blank" onerror="document.body.appendChild(document.createElement('script')).src='/javascripts/changecolor.js'"/>

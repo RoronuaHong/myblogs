@@ -1,1 +1,36 @@
-<h1>nodejs</h1>
+<div class="returnTop" return-top>
+	<em class="em1"></em>
+	<em class ="em2"></em>
+</div>
+<div class="indexnodebox">
+	<div class="col-md-8 column">
+		<div class="leftbox">
+			<div class="contentbox" ng-repeat="items in prelist">
+				<a href="">
+					<h2 ng-bind="items.title"></h2>
+					<div class="meta">
+						<div class="time" ng-bind="items.times | date : 'yyyy-MM-dd HH:mm:ss'">
+						</div>
+						<div class="author" ng-bind="items.author"></div>
+					</div>
+					<div class="aboutcon">
+						<h3>前言</h3>
+						<p class="con" ng-bind="items.pre"></p>
+					</div>
+				</a>
+			</div>
+			<div class="pagelist clearfix">
+				<div class="preslist" ng-click="prebtn()">上一页</div>
+				<ul class="numlist cleafix">
+					<li ng-repeat="items in pagelists | limitTo:5:start" ng-bind="items.lens" ng-class="{pagesels: items.pagesels}" ng-click="ThisPage(items.lens)"></li>
+				</ul>
+				<div class="nextlist" ng-click="nextbtn()">下一页</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 column">
+		<div class="rightbox">
+			
+		</div>
+	</div>
+</div>

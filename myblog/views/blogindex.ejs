@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Slim。微博主页</title>
+	<title>Slim。博客主页</title>
 	<link rel="stylesheet" href="/stylesheets/blogindex.css">
 	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 	<link rel="shortcut icon" href="/images/favicon.ico">
@@ -86,6 +86,10 @@
 				templateUrl: "/templates/myblog/games/dabingkuai.html",
 				controller: "dabingkuaiCtrl"
 			})
+			.when("/changecolor", {
+				templateUrl: "/templates/myblog/games/changecolor.html",
+				controller: "changecolorCtrl"
+			});
 		});
 
 		//博客首页控制器
@@ -94,18 +98,234 @@
 		});
 
 		//JavaScript首页控制器
-		app.controller("jsindexCtrl", function($scope) {
+		app.controller("jsindexCtrl", function($scope, $http) {
+			var shownum = 1;
+			var pagesizes = 10;
 
+			function GetAjax() {
+				$http({
+					url: "/blogindex/#/javascript",
+					method: "POST",
+					dataType: "json",
+					data: {
+						jsindex: 1,
+						pagesize: pagesizes,
+						pagenum: shownum
+					}
+				})
+				.then(function(data) {
+					console.log(data.data);
+					var n = data.data.result;
+
+					$scope.pagelists = [];
+
+					$scope.prelist = data.data.titleArr;
+
+					for(var i = 0; i < n; i++) {
+						$scope.pagelists.push({
+							"lens": (i + 1)
+						});
+					}
+
+					//添加类名
+					for(var i in $scope.pagelists) {
+						$scope.pagelists[i].pagesels = "";
+					}
+					$scope.pagelists[shownum - 1].pagesels = "pagesels";
+
+					//上一页
+					$scope.prebtn = function() {
+						if(shownum > 1) {
+							shownum--;
+						}
+
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+
+						if(shownum <= pagesizes) {
+							$scope.start = 0;
+						}
+						new GetAjax();
+					}
+
+					//下一页
+					$scope.nextbtn = function() {
+						if(shownum < n) {
+							shownum++;
+						}
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+						new GetAjax();
+					}
+
+					//显示当前页
+					$scope.ThisPage = function(len) {
+						shownum = len;
+						new GetAjax();
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			new GetAjax();
 		});
 
 		//NodeJS首页控制器
-		app.controller("nodejsCtrl", function($scope) {
+		app.controller("nodejsCtrl", function($scope, $http) {
+			var shownum = 1;
+			var pagesizes = 10;
 
+			function GetAjax() {
+				$http({
+					url: "/blogindex/#/javascript",
+					method: "POST",
+					dataType: "json",
+					data: {
+						nodeindex: 1,
+						pagesize: pagesizes,
+						pagenum: shownum
+					}
+				})
+				.then(function(data) {
+					console.log(data.data);
+					var n = data.data.result;
+
+					$scope.pagelists = [];
+
+					$scope.prelist = data.data.titleArr;
+
+					for(var i = 0; i < n; i++) {
+						$scope.pagelists.push({
+							"lens": (i + 1)
+						});
+					}
+
+					//添加类名
+					for(var i in $scope.pagelists) {
+						$scope.pagelists[i].pagesels = "";
+					}
+					$scope.pagelists[shownum - 1].pagesels = "pagesels";
+
+					//上一页
+					$scope.prebtn = function() {
+						if(shownum > 1) {
+							shownum--;
+						}
+
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+
+						if(shownum <= pagesizes) {
+							$scope.start = 0;
+						}
+						new GetAjax();
+					}
+
+					//下一页
+					$scope.nextbtn = function() {
+						if(shownum < n) {
+							shownum++;
+						}
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+						new GetAjax();
+					}
+
+					//显示当前页
+					$scope.ThisPage = function(len) {
+						shownum = len;
+						new GetAjax();
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			new GetAjax();
 		});
 
 		//webframework首页控制器
-		app.controller("webframeworkCtrl", function($scope) {
+		app.controller("webframeworkCtrl", function($scope, $http) {
+			var shownum = 1;
+			var pagesizes = 10;
 
+			function GetAjax() {
+				$http({
+					url: "/blogindex/#/javascript",
+					method: "POST",
+					dataType: "json",
+					data: {
+						webindex: 1,
+						pagesize: pagesizes,
+						pagenum: shownum
+					}
+				})
+				.then(function(data) {
+					console.log(data.data);
+					var n = data.data.result;
+
+					$scope.pagelists = [];
+
+					$scope.prelist = data.data.titleArr;
+
+					for(var i = 0; i < n; i++) {
+						$scope.pagelists.push({
+							"lens": (i + 1)
+						});
+					}
+
+					//添加类名
+					for(var i in $scope.pagelists) {
+						$scope.pagelists[i].pagesels = "";
+					}
+					$scope.pagelists[shownum - 1].pagesels = "pagesels";
+
+					//上一页
+					$scope.prebtn = function() {
+						if(shownum > 1) {
+							shownum--;
+						}
+
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+
+						if(shownum <= pagesizes) {
+							$scope.start = 0;
+						}
+						new GetAjax();
+					}
+
+					//下一页
+					$scope.nextbtn = function() {
+						if(shownum < n) {
+							shownum++;
+						}
+						if(shownum > pagesizes) {
+							$scope.start = Math.floor(shownum / pagesizes) * pagesizes;
+						}
+						new GetAjax();
+					}
+
+					//显示当前页
+					$scope.ThisPage = function(len) {
+						shownum = len;
+						new GetAjax();
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			new GetAjax();
 		});
 
 		//joke首页控制器
@@ -128,6 +348,12 @@
 
 		});
 
+		//变色方块控制器
+		app.controller("changecolorCtrl", function($scope) {
+
+		});
+
+		//导航栏控制器
 		app.controller("navCtrl", function($scope, $location) {
 
 			//实现导航栏模块
@@ -191,6 +417,11 @@
 					face: "打冰块",
 					back: "体验打冰块的快感",
 					link: "#/dabingkuai"
+				},
+				{
+					face: "变色方块",
+					back: "我变，我变，我变变变",
+					link: "#/changecolor"
 				}
 			];
 		});
