@@ -33,10 +33,10 @@ function boxObject(level) {
 				_this.change(e, e.target.index + 1);
 			}
 			if(e.target.index >= _this.level) {
-				_this.change(e, e.target.index - _this.level);		
+				_this.change(e, e.target.index - _this.level);
 			}
 			if(e.target.index <= _this.level * (_this.level - 1) - 1) {
-				_this.change(e, e.target.index + _this.level);		
+				_this.change(e, e.target.index + _this.level);
 			}
 			var num = 0;
 			for(var j = 0; j < _this.level * _this.level; j++) {

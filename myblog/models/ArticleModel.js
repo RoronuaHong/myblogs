@@ -68,22 +68,22 @@ module.exports = {
 			}
 
 			if(req.body["indexbig"]) {
-				var selectspeSql = "select title, author, pre, times from spearticle limit ?,?";
+				var selectspeSql = "select id, title, author, pre, times from spearticle limit ?,?";
 				var specountSql = "select count(*) from spearticle";
 			}
 
 			if(req.body["jsindex"]) {
-				var selectspeSql = "select title, author, pre, times from jsarticle limit ?,?";
+				var selectspeSql = "select id, title, author, pre, times from jsarticle limit ?,?";
 				var specountSql = "select count(*) from jsarticle";
 			}
 
 			if(req.body["nodeindex"]) {
-				var selectspeSql = "select title, author, pre, times from nodearticle limit ?,?";
+				var selectspeSql = "select id, author, pre, times from nodearticle limit ?,?";
 				var specountSql = "select count(*) from nodearticle";
 			}
 
 			if(req.body["webindex"]) {
-				var selectspeSql = "select title, author, pre, times from webarticle limit ?,?";
+				var selectspeSql = "select id, title, author, pre, times from webarticle limit ?,?";
 				var specountSql = "select count(*) from webarticle";
 			}
 
@@ -117,6 +117,7 @@ module.exports = {
 
 						for(var i = 0; i < rs.length; i++) {
 							titleArr.push({
+								"id": rs[i].id,
 								"title": rs[i].title,
 								"author": rs[i].author,
 								"pre": rs[i].pre,
@@ -131,7 +132,6 @@ module.exports = {
 					titleArr: titleArr,
 					result: Math.ceil(results.one[0]["count(*)"] / pageSize)
 				});
-				console.log(Math.ceil(results.one[0]["count(*)"] / pageSize))
 			});
 			conn.release();
 		});
@@ -144,6 +144,49 @@ module.exports = {
 				res.send("获取连接错误,错误原因:" + err.message);
 				return;
 			}
+
+			var totalArr = [];
+
+			if(req.body["contentid"]) {
+				var showallSql = "select title, author, pre, times, content from spearticle where id=?";
+				var params = [req.body["contentid"]];
+			}
+
+			if(req.body["jscontentid"]) {
+				var showallSql = "select title, author, pre, times, content from jsarticle where id=?";
+				var params = [req.body["jscontentid"]];
+			}
+
+			if(req.body["nodecontentid"]) {
+				var showallSql = "select title, author, pre, times, content from nodearticle where id=?";
+				var params = [req.body["nodecontentid"]];
+			}
+
+			if(req.body["webcontentid"]) {
+				var showallSql = "select title, author, pre, times, content from webarticle where id=?";
+				var params = [req.body["webcontentid"]];
+			}
+
+			totalArr.splice(0, totalArr.length);
+
+			conn.query(showallSql, params, function(err, rs) {
+				if(err) {
+					res.send("获取连接错误,错误原因:" + err.message);
+					return;
+				}
+
+				totalArr.push({
+					title: rs[0].title,
+					author: rs[0].author,
+					pre: rs[0].pre,
+					times: rs[0].times,
+					content: rs[0].content
+				});
+
+				res.json({
+					totalArr: totalArr
+				});
+			});
 		});
 
 	}

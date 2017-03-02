@@ -21,7 +21,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a href="/blogindex" class="navbar-brand">Slim。的博客</a>
+						<a href="/blogindex#/blogindex" class="navbar-brand" ng-click="Shows()">Slim。的博客</a>
 					</div>
 					<div class="collapse navbar-collapse" id="example-navbar-collapse">
 						<ul class="navbar-nav">
@@ -53,7 +53,7 @@
 
 			//配置导航栏
 			$routeProvider
-			.when("/", {
+			.when("/blogindex", {
 				templateUrl: "/templates/myblog/index.html",
 				controller: "indexCtrl"
 			})
@@ -89,7 +89,23 @@
 			.when("/changecolor", {
 				templateUrl: "/templates/myblog/games/changecolor.html",
 				controller: "changecolorCtrl"
-			});
+			})
+			.when("/content", {
+				templateUrl: "/templates/myblog/content.html",
+				controller: "contentCtrl"
+			})
+			.when("/jscontent", {
+				templateUrl: "/templates/myblog/javascript/jscontent.html",
+				controller: "jscontentCtrl"
+			})
+			.when("/nodecontent", {
+				templateUrl: "/templates/myblog/nodejs/nodecontent.html",
+				controller: "nodecontentCtrl"
+			})
+			.when("/webcontent", {
+				templateUrl: "/templates/myblog/webframework/webcontent.html",
+				controller: "webcontentCtrl"
+			})
 		});
 
 		//博客首页控制器
@@ -333,6 +349,90 @@
 
 		});
 
+		//精选文章内容控制器
+		app.controller("contentCtrl", function($scope, $http, $location, $sce) {
+			$http({
+				url: "/blogindex#/content",
+				method: "POST",
+				dataType: "json",
+				data: {
+					content: 1,
+					contentid: $location.$$url.split("?")[1]
+				}
+			})
+			.then(function(data) {
+				console.log(data.data);
+				$scope.conlist = data.data.totalArr[0];
+				$scope.conlist.contents = $sce.trustAsHtml(data.data.totalArr[0].content);
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+		});
+
+		//js文章内容控制器
+		app.controller("jscontentCtrl", function($scope, $http, $location, $sce) {
+			$http({
+				url: "/blogindex#/jscontent",
+				method: "POST",
+				dataType: "json",
+				data: {
+					content: 1,
+					jscontentid: $location.$$url.split("?")[1]
+				}
+			})
+			.then(function(data) {
+				console.log(data.data);
+				$scope.conlist = data.data.totalArr[0];
+				$scope.conlist.contents = $sce.trustAsHtml(data.data.totalArr[0].content);
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+		});
+
+		//nodejs文章内容控制器
+		app.controller("nodecontentCtrl", function($scope, $http, $location, $sce) {
+			$http({
+				url: "/blogindex#/jscontent",
+				method: "POST",
+				dataType: "json",
+				data: {
+					content: 1,
+					nodecontentid: $location.$$url.split("?")[1]
+				}
+			})
+			.then(function(data) {
+				console.log(data.data);
+				$scope.conlist = data.data.totalArr[0];
+				$scope.conlist.contents = $sce.trustAsHtml(data.data.totalArr[0].content);
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+		});
+
+		//web文章内容控制器
+		app.controller("webcontentCtrl", function($scope, $http, $location, $sce) {
+			$http({
+				url: "/blogindex#/jscontent",
+				method: "POST",
+				dataType: "json",
+				data: {
+					content: 1,
+					webcontentid: $location.$$url.split("?")[1]
+				}
+			})
+			.then(function(data) {
+				console.log(data.data);
+				$scope.conlist = data.data.totalArr[0];
+				$scope.conlist.contents = $sce.trustAsHtml(data.data.totalArr[0].content);
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+		});
+
 		//雷霆战机控制器
 		app.controller("thunderplaneCtrl", function($scope) {
 
@@ -360,7 +460,7 @@
 			$scope.lilist = [
 				{
 					title: "首页",
-					link: "/blogindex/#"
+					link: "#/blogindex"
 				},
 				{
 					title: "JavaScript",
@@ -384,9 +484,15 @@
 				}
 			];
 
-			//根据路径实现TAB切换
+			$scope.Shows = function() {
+				for(var i in $scope.lilist) {
+					$scope.lilist[i].classnames = "";
+				}
+				$scope.lilist[0].classnames = "lisel";
+			}
+
 			for(var i in $scope.lilist) {
-				if($location.$$path == ($scope.lilist[i].link).split("#")[1] || ($scope.lilist[i].link).split("#")[1] == "") {
+				if($location.$$path == ($scope.lilist[i].link).split("#")[1]) {
 					$scope.lilist[i].classnames = "lisel";
 				}
 			}

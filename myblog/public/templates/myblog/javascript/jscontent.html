@@ -1,0 +1,20 @@
+<div class="returnTop" return-top>
+	<em class="em1"></em>
+	<em class ="em2"></em>
+</div>
+<div class="contentbox">
+	<div class="col-md-12 column">
+		<div class="leftbox">
+			<h2 ng-bind="conlist.title"></h2>
+			<div class="meta">
+				<div class="times" ng-bind="conlist.times | date : 'yyyy-MM-dd HH:mm:ss'"></div>
+				<div class="author" ng-bind="conlist.author"></div>
+			</div>
+			<div class="pre">
+				<h3>前言</h3>
+				<div class="con" ng-bind="conlist.pre"></div>
+			</div>
+			<div class="contents" ng-bind-html="conlist.contents"></div>
+		</div>
+	</div>
+</div>

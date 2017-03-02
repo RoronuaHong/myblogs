@@ -253,7 +253,7 @@ a {
 				float: left;
 				width: 20%;
 				height: 50px;
-				font-size: 20px;
+				font-size: 14px;
 				font-style: bold;
 				text-align: center;
 				color: #272822;
@@ -299,7 +299,7 @@ a {
 	}
 	.rightbox {
 		width: 100%;
-		padding: 20px;
+		padding: 30px 0;
 		min-height: 800px;
 		animation: 1s linear rightenter;
 		.gamebigbox {
@@ -461,6 +461,68 @@ a {
 		to {
 			margin-left: 0;
 			opacity: 1;
+		}
+	}
+}
+/*内容页面布局*/
+.contentbox {
+	width: 100%;
+	margin-top: 20px;
+	.leftbox {
+		width: 100%;
+		padding: 20px;
+		min-height: 500px;
+		background: #fff;
+		box-shadow: 0 0 0 3px #09c6ff,
+					inset 0 0 20px #a7fdea;
+		border-radius: 5px;
+		h2 {
+			width: 100%;
+			font-size: 40px;
+			text-align: center;
+			color: #75757c;
+			text-shadow: 2px 2px 0 #dedeef;
+		}
+		.meta {
+			width: 60%;
+			height: 20px;
+			line-height: 20px;
+			margin: 20px auto;
+			.times {
+				float: left;
+				width: 50%;
+				height: 20px;
+				font-size: 18px;
+				text-align: center;
+				color: #232331;
+			}
+			.author {
+				float: left;
+				width: 50%;
+				height: 20px;
+				font-size: 20px;
+				text-align: right;
+				color: #70f;
+			}
+		}
+		.pre {
+			width: 100%;
+			h3 {
+				width: 100%;
+				height: 30px;
+				margin: 0 auto;
+				line-height: 30px;
+				font-size: 28px;
+				text-align: center;
+				color: #020202;
+			}
+			.con {
+				text-indent: 2em;
+			}
+		}
+		.contents {
+			width: 100%;
+			text-indent: 2em;
 		}
 	}
 }

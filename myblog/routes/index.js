@@ -40,6 +40,10 @@ router.post("/blogindex", function(req, res, next) {
 
 		//显示web文章
 		articleModel.showArticle(req, res);
+	} else if(req.body["content"]) {
+
+		//显示文章内容
+		articleModel.showallArticle(req, res);
 	}
 });
 
