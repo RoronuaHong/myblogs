@@ -98,11 +98,11 @@
 				controller: "blogbannersCtrl"
 			})
 			.when("/articlelist/:pageNum", {
-				templateUrl: "/templates/articles/info.html",
+				templateUrl: "/templates/articles/list.html",
 				controller: "articleListCtrl"
 			})
 			.when("/articleinfo/:articleId", {
-				templateUrl: "/templates/articles/list.html",
+				templateUrl: "/templates/articles/info.html",
 				controller: "articleInfoCtrl"
 			})
 			.when("/myskill", {
@@ -253,6 +253,7 @@
 			$scope.subArticle = function() {
 				var btnsel = 0;
 				var indexs = 0;
+
 				for(var i in $scope.btnlist) {
 					if($scope.btnlist[i].btnsels == "btnspe") {
 						indexs = i;
@@ -429,9 +430,58 @@
 
 		});
 
-		//创建文章列表控制器
-		app.controller("articleListCtrl", function($scope) {
+		//文章列表控制器
+		app.controller("articleListCtrl", function($scope, $http, $location) {
 
+			//文章列表
+			$scope.arttitlist = [
+				{
+					titles: "精选",
+					links: "#/articlelist/1"
+				},
+				{
+					titles: "JavaScript",
+					links: "#/articlelist/2"
+				},
+				{
+					titles: "Node",
+					links: "#/articlelist/3"
+				},
+				{
+					titles: "Web",
+					links: "#/articlelist/4"
+				}
+			];
+
+
+			var artnum = 1;
+			var artsizes = 5;
+
+			var nums = parseInt($location.$$path.split("/")[2]);
+
+			function GetArtAjax(mainEle) {
+				$http({
+					url: "/users/indexs#/articlelist/",
+					method: "POST",
+					dataType: "json",
+					data: {
+						artalls: mainEle,
+						artnum: artnum,
+						artsizes: artsizes
+					}
+				})
+				.then(function(data) {
+					console.log(data);
+					$scope.arttitlist[nums - 1].active = true;
+					$scope.artlist = data.data.artlistArr;
+
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
+
+			new GetArtAjax(nums);
 		});
 
 		// 我的技能控制器

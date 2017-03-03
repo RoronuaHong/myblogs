@@ -263,6 +263,7 @@ body {
 	}
 }
 .deletes {
+	text-align: center;
 	cursor: pointer;
 	color: #fc0404;
 }
@@ -461,6 +462,40 @@ body {
 			color: #c4d5e0;
 			border-radius: 5px;
 			border-color: #c4d5e0;
+		}
+	}
+}
+/*文章列表页面布局*/
+.artlistbox {
+	width: 100%;
+	.arttabcon {
+		width: 100%;
+		li {
+			margin-top: 2%;
+			font-size: 24px;
+			text-align: center;
+			a {
+				color: #996cec;
+			}
+		}
+	}
+	.artcontent {
+		width: 100%;
+		.title {
+			padding-bottom: 20px;
+			font-size: 20px;
+			text-align: center;
+			color: #f93;
+		}
+		.conts {
+			text-align: center;
+			color: #fff;
+			.row {
+				min-height: 40px;
+			}
+			a {
+				color: #fff9a7;
+			}
 		}
 	}
 }

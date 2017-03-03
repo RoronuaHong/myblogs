@@ -187,7 +187,63 @@ module.exports = {
 					totalArr: totalArr
 				});
 			});
+			conn.release();
 		});
+	},
+	showArtList: function(req, res) {
+		pool = connPool();
 
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			var artlistArr = [];
+
+			if(req.body["artalls"] === 1) {
+				var artSql = "select id, title, author, pre, times from spearticle";
+				var params = [];
+			}
+
+			if(req.body["artalls"] === 2) {
+				var artSql = "select id, title, author, pre, times from jsarticle";
+				var params = [];
+			}
+
+			if(req.body["artalls"] === 3) {
+				var artSql = "select id, title, author, pre, times from nodearticle";
+				var params = [];
+			}
+
+			if(req.body["artalls"] === 4) {
+				var artSql = "select id, title, author, pre, times from webarticle";
+				var params = [];
+			}
+
+			conn.query(artSql, params, function(err, rs) {
+				if(err) {
+					res.send("获取连接错误,错误原因:" + err.message);
+					return;
+				}
+				console.log(rs);
+				artlistArr.splice(0, artlistArr.length);
+
+				for(var i = 0; i < rs.length; i++) {
+					artlistArr.push({
+						id: rs[i].id,
+						title: rs[i].title,
+						author: rs[i].author,
+						pre: rs[i].pre,
+						times: rs[i].times
+					});
+				}
+
+				res.json({
+					artlistArr: artlistArr
+				});
+			});
+			conn.release();
+		});
 	}
 }

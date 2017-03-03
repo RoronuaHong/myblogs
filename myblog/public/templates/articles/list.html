@@ -1,1 +1,37 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-list-alt"></i>文章列表</h1>
+<div class="container">
+	<div class="artlistbox">
+		<ul class="arttabcon nav nav-tabs">
+			<li ng-class="{active:items.active}" ng-repeat="items in arttitlist"">
+				<a ng-href="{{items.links}}" ng-bind="items.titles"></a>
+			</li>
+		</ul>
+		<div class="contitle">
+			<img src="/images/slimlogo.png" alt="" class="mylogo">
+		</div>
+		<div class="artcontent">
+			<div class="col-md-12 column">
+				<div class="row title">
+					<div class="col-md-3">文章名称</div>
+					<div class="col-md-2">文章创建时间</div>
+					<div class="col-md-1">作者</div>
+					<div class="col-md-4">前言</div>
+					<div class="col-md-1">修改</div>
+					<div class="col-md-1">删除</div>
+				</div>
+				<div class="conts">
+					<div class="row" ng-repeat="items in artlist">
+						<div class="col-md-3" ng-bind="items.title"></div>
+						<div class="col-md-2" ng-bind="items.times | date : 'yyyy-MM-dd HH:mm:ss'">文章创建时间</div>
+						<div class="col-md-1" ng-bind="items.author">作者</div>
+						<div class="col-md-4" ng-bind="items.pre">前言</div>
+						<div class="col-md-1">
+							<a href="">修改</a>
+						</div>
+						<div class="col-md-1 deletes">×</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

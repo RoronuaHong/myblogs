@@ -66,6 +66,10 @@ router.post('/indexs', function(req, res) {
 
 		//添加文章
 		articleModel.addArticle(req, res);
+	} else if(req.body["artalls"]) {
+
+		//显示文章列表
+		articleModel.showArtList(req, res);
 	} else {
 
 		//获取名字
