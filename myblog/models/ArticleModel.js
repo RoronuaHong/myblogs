@@ -30,7 +30,6 @@ module.exports = {
 					}
 				},
 				two: function(callback) {
-					console.log(req.body["btnsel"])
 					if(req.body["btnsel"] == "JavaScript") {
 						var insertSql = "insert into jsarticle (title, author, pre, content, times) value (?,?,?,?,?)";
 					} else if(req.body["btnsel"] == "NodeJS") {
@@ -39,7 +38,6 @@ module.exports = {
 						var insertSql = "insert into webarticle (title, author, pre, content, times) value (?,?,?,?,?)";
 					}
 
-					console.log(params);
 					conn.query(insertSql, params, function(err, rs) {
 						if(err) {
 							res.send("获取连接错误,错误原因:" + err.message);
@@ -50,7 +48,6 @@ module.exports = {
 					});
 				}
 			}, function(err, results) {
-				console.log(results);
 				res.json({
 					messages: "创建文章成功"
 				});
@@ -203,30 +200,26 @@ module.exports = {
 
 			if(req.body["artalls"] === 1) {
 				var artSql = "select id, title, author, pre, times from spearticle";
-				var params = [];
 			}
 
 			if(req.body["artalls"] === 2) {
 				var artSql = "select id, title, author, pre, times from jsarticle";
-				var params = [];
 			}
 
 			if(req.body["artalls"] === 3) {
 				var artSql = "select id, title, author, pre, times from nodearticle";
-				var params = [];
 			}
 
 			if(req.body["artalls"] === 4) {
 				var artSql = "select id, title, author, pre, times from webarticle";
-				var params = [];
 			}
 
-			conn.query(artSql, params, function(err, rs) {
+			conn.query(artSql, [], function(err, rs) {
 				if(err) {
 					res.send("获取连接错误,错误原因:" + err.message);
 					return;
 				}
-				console.log(rs);
+
 				artlistArr.splice(0, artlistArr.length);
 
 				for(var i = 0; i < rs.length; i++) {
@@ -241,6 +234,47 @@ module.exports = {
 
 				res.json({
 					artlistArr: artlistArr
+				});
+			});
+			conn.release();
+		});
+	},
+	delArtList: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			if(req.body["delnums"] === 1) {
+				var delSql = "delete from spearticle where id=?";
+			}
+
+			if(req.body["delnums"] === 2) {
+				var delSql = "delete from jsarticle where id=?";
+			}
+
+			if(req.body["delnums"] === 3) {
+				var delSql = "delete from nodearticle where id=?";
+			}
+
+			if(req.body["delnums"] === 4) {
+				var delSql = "delete from webarticle where id=?";
+			}
+
+			var params = [req.body["artdel"]];
+			var detailart = [];
+
+			conn.query(delSql, params, function(err, rs) {
+				if(err) {
+					res.send("获取连接错误,错误原因:" + err.message);
+					return;
+				}
+
+				res.json({
+					result: 1
 				});
 			});
 			conn.release();

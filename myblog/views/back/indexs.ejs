@@ -482,6 +482,28 @@
 			}
 
 			new GetArtAjax(nums);
+
+			//实现删除功能
+			$scope.Delete = function(ids) {
+				$http({
+					url: "/users/indexs#/articlelist/",
+					method: "POST",
+					dataType: "json",
+					data: {
+						artdel: ids,
+						delnums: nums
+					}
+				})
+				.then(function(data) {
+					console.log(data);
+					if(data.data.result == 1) {
+						new GetArtAjax(nums);
+					}
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
 		});
 
 		// 我的技能控制器

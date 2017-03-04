@@ -70,6 +70,10 @@ router.post('/indexs', function(req, res) {
 
 		//显示文章列表
 		articleModel.showArtList(req, res);
+	} else if(req.body["artdel"]) {
+
+		//删除文章列表
+		articleModel.delArtList(req, res);
 	} else {
 
 		//获取名字
