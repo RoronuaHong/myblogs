@@ -279,5 +279,98 @@ module.exports = {
 			});
 			conn.release();
 		});
+	},
+	showAllArtList: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			var artMsg = [];
+
+			if(req.body["artid"] === 1) {
+				var artSql = "select title, author, pre, content from spearticle where id=?";
+			}
+
+			if(req.body["artid"] === 2) {
+				var artSql = "select title, author, pre, content from jsarticle where id=?";
+			}
+
+			if(req.body["artid"] === 3) {
+				var artSql = "select title, author, pre, content from nodearticle where id=?";
+			}
+
+			if(req.body["artid"] === 4) {
+				var artSql = "select title, author, pre, content from webarticle where id=?";
+			}
+
+			var params = req.body["infoid"];
+
+			conn.query(artSql, params, function(err, rs) {
+				if(err) {
+					res.send("获取连接错误,错误原因:" + err.message);
+					return;
+				}
+
+				artMsg.splice(0, artMsg.length);
+
+				artMsg.push({
+					title: rs[0].title,
+					author: rs[0].author,
+					pre: rs[0].pre,
+					content: rs[0].content
+				});
+
+				res.json({
+					artMsg: artMsg
+				});
+			});
+			conn.release();
+		});
+	},
+	reviseArtList: function(req, res) {
+		pool = connPool();
+
+		pool.getConnection(function(err, conn) {
+			if(err) {
+				res.send("获取连接错误,错误原因:" + err.message);
+				return;
+			}
+
+			var artMsg = [];
+
+			if(req.body["artid"] === 1) {
+				var artSql = "update spearticle set title=?, author=?, pre=?, content=?, times=? where id=?";
+			}
+
+			if(req.body["artid"] === 2) {
+				var artSql = "update jsarticle set title=?, author=?, pre=?, content=?, times=? where id=?";
+			}
+
+			if(req.body["artid"] === 3) {
+				var artSql = "update nodearticle set title=?, author=?, pre=?, content=?, times=? where id=?";
+			}
+
+			if(req.body["artid"] === 4) {
+				var artSql = "update webarticle set title=?, author=?, pre=?, content=?, times=? where id=?";
+			}
+
+			var params = [req.body["title"], req.body["author"], req.body["pre"], req.body["content"], req.body["times"], req.body["infoid"]];
+
+			conn.query(artSql, params, function(err, rs) {
+				if(err) {
+					res.send("获取连接错误,错误原因:" + err.message);
+					return;
+				}
+
+				res.json({
+					messages: "修改文章成功"
+				});
+			});
+			conn.release();
+		});
 	}
 }

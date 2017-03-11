@@ -1,1 +1,66 @@
 <h1 class="htitle"><i class="glyphicon glyphicon-list-alt"></i>文章信息</h1>
+<div class="createarticlebox">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel" ng-bind="messages"></h4>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript: location.href='/users/indexs'" type="button" class="btn btn-default" name="contains" ng-show="isShow">
+						确定
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="contitle">
+		<img src="/images/slimlogo.png" alt="" class="mylogo">
+	</div>
+	<div class="container">
+		<form action="" name="articleform">
+			<div class="col-md-12 column">
+				<div class="row">
+					<div class="col-md-2 column"></div>
+					<div class="col-md-8 column">
+						<div class="articletitle clearfix">
+							<span class="title">标题:</span>
+							<input type="text" class="form-control titleinput" placeholder="请输入标题" name="titless" ng-model="titles" ng-required="true">
+						</div>
+					</div>
+					<div class="col-md-2 column"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 column"></div>
+					<div class="col-md-4 column">
+						<div class="articletitle clearfix">
+							<span class="title">作者:</span>
+							<input type="text" class="form-control authorinput" placeholder="请输入作者" ng-model="authors" ng-required="true">
+						</div>
+					</div>
+					<div class="col-md-4 column"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 column">
+						<textarea type="text" class="form-control pretextarea" placeholder="请输入前言" ng-required="true" ng-model="pre"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 column">
+						<div ueditors="editor" ng-required="true" ng-model="material.content.content" id="editor" con="{{con}}"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 column"></div>
+					<div class="col-md-4 column">
+						<div class="btn btn-warning" ng-disabled="articleform.$invalid" data-toggle="modal" data-target="#myModal" ng-click="subArticles()">修改文章</div>
+					</div>
+					<div class="col-md-4 column"></div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

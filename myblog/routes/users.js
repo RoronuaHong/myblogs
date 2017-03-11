@@ -74,6 +74,14 @@ router.post('/indexs', function(req, res) {
 
 		//删除文章列表
 		articleModel.delArtList(req, res);
+	} else if(req.body["artinfo"]) {
+
+		//显示文章详情
+		articleModel.showAllArtList(req, res);
+	} else if(req.body["artrevise"]) {
+
+		//修改文章列表
+		articleModel.reviseArtList(req, res);
 	} else {
 
 		//获取名字

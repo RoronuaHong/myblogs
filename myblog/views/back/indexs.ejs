@@ -101,7 +101,7 @@
 				templateUrl: "/templates/articles/list.html",
 				controller: "articleListCtrl"
 			})
-			.when("/articleinfo/:articleId", {
+			.when("/articleinfo/:pageNum", {
 				templateUrl: "/templates/articles/info.html",
 				controller: "articleInfoCtrl"
 			})
@@ -426,8 +426,56 @@
 		});
 
 		//文章信息控制器
-		app.controller("articleInfoCtrl", function($scope) {
+		app.controller("articleInfoCtrl", function($scope, $http, $location) {
+			$scope.nums = parseInt($location.$$path.split("/")[2]);
+			$scope.artid = parseInt($location.$$url.split("?")[1]);
 
+			$http({
+				url: "/users/indexs#/articleinfo",
+				method: "POST",
+				dataType: "json",
+				data: {
+					artinfo: 1,
+					artid: $scope.nums,
+					infoid: $scope.artid
+				}
+			})
+			.then(function(data) {
+				console.log(data);
+				$scope.titles = data.data.artMsg[0].title;
+				$scope.authors = data.data.artMsg[0].author;
+				$scope.pre = data.data.artMsg[0].pre;
+				$scope.con = data.data.artMsg[0].content;
+			})
+			.catch(function(data) {
+				console.log(data);
+			});
+
+			$scope.subArticles = function() {
+				$http({
+					url: "/users/indexs#/articleinfo",
+					method: "POST",
+					dataType: "json",
+					data: {
+						artrevise: 1,
+						artid: $scope.nums,
+						infoid: $scope.artid,
+						title: $scope.titles,
+						author: $scope.authors,
+						pre: $scope.pre,
+						content: $scope.material.content.content,
+						times: (new Date()).getTime()
+					}
+				})
+				.then(function(data) {
+					console.log(data);
+					$scope.messages = data.data.messages;
+					$scope.isShow = true;
+				})
+				.catch(function(data) {
+					console.log(data);
+				});
+			}
 		});
 
 		//文章列表控制器
@@ -457,7 +505,7 @@
 			var artnum = 1;
 			var artsizes = 5;
 
-			var nums = parseInt($location.$$path.split("/")[2]);
+			$scope.nums = parseInt($location.$$path.split("/")[2]);
 
 			function GetArtAjax(mainEle) {
 				$http({
@@ -472,7 +520,7 @@
 				})
 				.then(function(data) {
 					console.log(data);
-					$scope.arttitlist[nums - 1].active = true;
+					$scope.arttitlist[$scope.nums - 1].active = true;
 					$scope.artlist = data.data.artlistArr;
 
 				})
@@ -481,7 +529,7 @@
 				});
 			}
 
-			new GetArtAjax(nums);
+			new GetArtAjax($scope.nums);
 
 			//实现删除功能
 			$scope.Delete = function(ids) {
@@ -491,13 +539,13 @@
 					dataType: "json",
 					data: {
 						artdel: ids,
-						delnums: nums
+						delnums: $scope.nums
 					}
 				})
 				.then(function(data) {
 					console.log(data);
 					if(data.data.result == 1) {
-						new GetArtAjax(nums);
+						new GetArtAjax($scope.nums);
 					}
 				})
 				.catch(function(data) {
@@ -955,6 +1003,83 @@
 		        editor.ready(function() {
 		         	editor.setHeight(800);
 		         	editorReady = true;
+           		 	$rootScope.$emit('loading', '');//编辑器初始化完成
+		         	editor.addListener('contentChange', function() {//双向绑定
+		          		if (!scope.$$phase) {
+			           		scope.$apply(function() {
+			            		ctrl.$setViewValue(editor.getContent());
+			           		});
+			          	}
+		         	});
+		        });
+		       }
+		       else {
+		        	Common.loadScript(base + '/ueditor.config.js', null);
+		        	Common.loadScript(base + '/ueditor.all.min.js', function() {
+		        	 	_self.init();
+		        	});
+		       	}
+	        },
+	      		setContent: function(content) {
+			        if (editor && editorReady) {
+			        	editor.setContent(content);
+			        }
+		      	}
+		     };
+		     ctrl.$render = function() {
+		      	_initContent = ctrl.$isEmpty(ctrl.$viewValue) ? '' : ctrl.$viewValue;
+		      editorHandler.setContent(_initContent);//双向绑定
+		     };
+		     editorHandler.init();
+		     // 事件
+		     $rootScope.$on('$routeChangeStart', function() {
+  				editor && editor.destroy();
+		     });
+		    }
+		   }
+		  }
+		 ]);
+
+		//修改文章ueditor
+		app.directive('ueditors', [
+		  'Common',
+		  '$rootScope',
+		  function(Common, $rootScope) {
+		   return {
+		    restrict: 'EA',
+		    require: 'ngModel',
+		    link: function(scope, ele, attrs, ctrl) {
+		     $rootScope.$emit('loading', '初始化编辑器...');//广播loading事件，可以删除
+		     var _self = this,
+		       _initContent,
+		       editor,
+		       editorReady = false,
+		       base = '', //ueditor目录
+		       _id = attrs.ueditors;
+		     var editorHandler = {
+		      init: function() {
+		       window.UEDITOR_HOME_URL = base + '/';
+		       var _self = this;
+		       if (typeof UE != 'undefined') {
+		        	editor = UE.getEditor(_id, {
+		         	toolbars: [[
+			            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+			            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+			            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+			            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+			            'directionalityltr', 'directionalityrtl', 'indent', '|',
+			            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+			            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+			            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+			            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+			            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+			            'print', 'preview', 'searchreplace', 'drafts', 'help'
+			        ]]
+		        });
+		        editor.ready(function() {
+		         	editor.setHeight(800);
+		         	editorReady = true;
+		         	editor.setContent(attrs.con);
            		 	$rootScope.$emit('loading', '');//编辑器初始化完成
 		         	editor.addListener('contentChange', function() {//双向绑定
 		          		if (!scope.$$phase) {
