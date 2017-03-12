@@ -109,7 +109,9 @@ html, body {
 		z-index: 1;
 		p {
 			width: 100%;
-			line-height: 20px;
+			margin: 0 0 0;
+			padding: 10px;
+			line-height: 30px;
 			font-size: 18px;
 			text-align: left;
 			color: #000;
@@ -117,9 +119,6 @@ html, body {
 	}
 }
 .slimunderwritebox {
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: 300px;
 	z-index: -1;
@@ -129,13 +128,81 @@ html, body {
 	}
 }
 .mainbox {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 500%;
-	height: 50px;
+	width: 92%;
+	padding: 0 4%;
 	margin: 0 auto;
-	/* background: #ccc; */
+	font-family: "Microsoft YaHei";
+	h2 {
+		width: 100%;
+		padding-bottom: 15px;
+		color: #70f;
+		border-bottom: 5px solid #70f;
+	}
+	.title {
+		width: 100%;
+		.mymessage {
+			width: 100%;
+			li {
+				float: left;
+				width: 40%;
+				line-height: 50px;
+				text-align: left;
+				span {
+					display: inline-block;
+				}
+				.name {
+					font-weight: bold;
+					font-size: 24px;
+				}
+				.cons {
+					font-size: 20px;
+				}
+			}
+			li:nth-child(2n + 1) {
+				width: 60%;
+			}
+		}
+	}
+	.projectbox {
+		width: 100%;
+		.webproject {
+			float: left;
+			width: 75%;
+			padding-left: 5%;
+			a {
+				color: #f00;
+			}
+			li {
+				width: 100%;
+				line-height: 50px;
+				.name {
+					font-weight: bold;
+					font-size: 24px;
+				}
+				.cons {
+					font-size: 20px;
+				}
+			}
+		}
+		.imgbox {
+			float: right;
+			width: 25%;
+			height: 25%;
+		}
+	}
+	.aboutmebox {
+		width: 100%;
+		.aboutul {
+			width: 100%;
+			li {
+				width: 100%;
+				line-height: 50px;
+				font-size: 24px;
+				text-indent: 2em;
+			}
+		}
+	}
+	h3 {
+		text-indent: 2em;
+	}
 }

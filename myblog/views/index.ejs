@@ -30,13 +30,108 @@
         <div class="slimunderwritebox">
             <canvas id="myCanvas"></canvas>
         </div>
-        <!-- <div class="mainbox" id="mainboxs">
-
-        </div> -->
+        <div class="mainbox" id="mainboxs" mainboxs="mainboxs">
+            <div class="title">
+                <h2>个人资料:</h2>
+                <ul class="mymessage clearfix">
+                    <li>
+                        <span class="name">姓名:&emsp;</span>
+                        <span class="cons">陈鸿</span>
+                    </li>
+                    <li>
+                        <span class="name">出生年月:&emsp;</span>
+                        <span class="cons">1992.07.11</span>
+                    </li>
+                    <li>
+                        <span class="name">学历:&emsp;</span>
+                        <span class="cons">本科</span>
+                    </li>
+                     <li>
+                        <span class="name">邮箱:&emsp;</span>
+                        <span class="cons">807672412@qq.com</span>
+                    </li>
+                     <li>
+                        <span class="name">专业:&emsp;</span>
+                        <span class="cons">软件工程</span>
+                    </li>
+                     <li>
+                        <span class="name">电话:&emsp;</span>
+                        <span class="cons">18606977713</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="projectbox">
+                <h2>项目经验:</h2>
+                <div class="probox clearfix">
+                    <h3>移动端项目:</h3>
+                    <ul class="webproject">
+                        <li>
+                            <span class="name">项目名称:&emsp;</span>
+                            <span class="cons"><a href="wx.cheertea.com">掌上工厂</a></span>
+                        </li>
+                        <li>
+                            <span class="name">兼容平台:&emsp;</span>
+                            <span class="cons">I0S6.0+、Android4.0+、微信平台</span>
+                        </li>
+                        <li>
+                            <span class="name">项目描述:&emsp;</span>
+                            <span class="cons">掌上工厂是一家以卖茶叶为主，商家入驻为一体的网站平台</span>
+                        </li>
+                        <li>
+                            <span class="name">项目相关技术:<br></span>
+                            <span class="cons">
+                                1.利用DIV+CSS、 淘宝框架flexible框架实现移动端页面布局;<br>
+                                2.使用seajs完成js模块化, 使用scss预编译css;<br>
+                                3.使用zepto实现页面交互效果;<br>
+                                4.使用gulp进行自动化构建,实现js压缩, css压缩, scss编译成css等。<br>
+                            </span>
+                        </li>
+                    </ul>
+                    <img src="/images/zhangshanggongchang.png" alt="" class="imgbox">
+                </div>
+                <div class="probox clearfix">
+                    <h3>个人博客网站:</h3>
+                    <ul class="webproject">
+                        <li>
+                            <span class="name">项目名称:&emsp;</span>
+                            <span class="cons"><a href="">Slim。&emsp;</a>|&emsp;<a href="">Slim。后台管理系统</a></span>
+                        </li>
+                        <li>
+                            <span class="name">兼容平台:&emsp;</span>
+                            <span class="cons">Chrome、Firefox 4+、I0S6.0+、Android4.0+</span>
+                        </li>
+                        <li>
+                            <span class="name">项目描述:&emsp;</span>
+                            <span class="cons">个人博客测试版</span>
+                        </li>
+                        <li>
+                            <span class="name">项目相关技术:<br></span>
+                            <span class="cons">
+                                1.利用DIV+CSS、 bootstrap、 angular1框架和ejs模板完成页面布局;<br>
+                                2.使用node的express框架完成后台部分<br>
+                                3.使用原生js和jquery实现页面交互效果;<br>
+                                4.数据库使用mySQL进行数据存储;<br>
+                                5.使用gulp进行自动化构建,实现js压缩、 css压缩、 autoprefixer自动补全前缀、scss编译成css等。<br>
+                            </span>
+                        </li>
+                    </ul>
+                    <img src="" alt="" class="imgbox">
+                </div>
+            </div>
+            <div class="aboutmebox">
+                <h2>自我评价:</h2>
+                <ul class="aboutul">
+                    <li>1.善于思考，喜欢研究页面交互效果，会尝试找不同的方法实现同一种效果</li>
+                    <li>2.能及时利用工作外空闲的时间，对工作上自身存在不足的知识进行学习补充。</li>
+                    <li>3.做事严谨，在开发过程中书写代码时注重规范，追求代码的严谨性还有精简性，同时有详细注释的习惯。</li>
+                </ul>
+            </div>
+        </div>
     </body>
     <script src="/javascripts/angular.min.js"></script>
     <script src="/javascripts/angular-route.min.js"></script>
     <script src="/javascripts/resumeindex.js"></script>
+    <script src="/javascripts/jquery.min.js"></script>
     <script>
         var app = angular.module("myApp", ["ngRoute"]);
 
@@ -76,6 +171,46 @@
             .catch(function(data) {
                 console.log(data.data);
             });
+        });
+
+        //个人资料自定义效果
+        app.directive("mainboxs", function() {
+            return {
+                restrict: "A",
+                link: function(scope, elem, attrs) {
+                    (function() {
+                        $.fn.typewriter = function() {
+                            this.each(function() {
+                                var ele = $(this),
+                                    htmls = ele.html(),
+                                    progress = 0,
+                                    boolean = true;
+                                ele.html("");
+                                var timer = setInterval(function() {
+                                    var current = htmls.substr(progress, 1);
+
+                                    if(current == '<') {
+                                        progress = htmls.indexOf('>',progress) + 1;
+                                    } else {
+                                        progress++;
+                                    }
+                                    if(boolean) {
+                                        if((ele.height() + ele[0].offsetTop) > document.body.offsetHeight) {
+                                            ele.css({
+                                                height: (ele.height() + ele[0].offsetTop + 1000)
+                                            });
+                                            boolean = false;
+                                        }
+                                    }
+                                    ele.html(htmls.substring(0, progress) + (progress & "_" ? '_': ''));
+                                }, 16);
+                            });
+                        }
+                    })(jQuery);
+
+                    $(elem).typewriter();
+                }
+            }
         });
     </script>
 </html>
